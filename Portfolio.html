@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aura — Agentic AI & Full-Stack Engineer</title>
+    <meta name="description" content="Senior agentic AI & full-stack engineer. 7+ years shipping AI agents, automation pipelines, Web3 infrastructure, and enterprise dashboards." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet" />
+
+    <style>
+      :root {
+        --bg: #07080a;
+        --bg-elev: #0d0e11;
+        --bg-card: #0f1115;
+        --line: rgba(255, 255, 255, 0.07);
+        --line-strong: rgba(255, 255, 255, 0.14);
+        --text: #f4f5f7;
+        --text-dim: #a4a8b3;
+        --text-faint: #6b7080;
+        --accent: #7c5cff;
+        --accent-2: #00d4ff;
+        --accent-glow: rgba(124, 92, 255, 0.35);
+        --good: #4ade80;
+        --warn: #fbbf24;
+        --danger: #f87171;
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.6),
+          0 0 0 1px var(--line);
+        --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+        --font-mono: "Geist Mono", "SF Mono", ui-monospace, monospace;
+        --font-serif: "Instrument Serif", Georgia, serif;
+      }
+
+      [data-theme="light"] {
+        --bg: #fbfbfa;
+        --bg-elev: #ffffff;
+        --bg-card: #ffffff;
+        --line: rgba(0, 0, 0, 0.07);
+        --line-strong: rgba(0, 0, 0, 0.13);
+        --text: #0b0c0f;
+        --text-dim: #4a4e58;
+        --text-faint: #8a8f9a;
+        --accent: #6b46ff;
+        --accent-2: #0099cc;
+        --accent-glow: rgba(107, 70, 255, 0.18);
+        --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.12),
+          0 0 0 1px var(--line);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-feature-settings: "ss01", "cv11";
+        -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
+      }
+      body {
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+      ::selection {
+        background: var(--accent);
+        color: white;
+      }
+
+      /* scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--line-strong);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-faint);
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      /* shared utilities */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      @media (max-width: 720px) {
+        .container { padding: 0 20px; }
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent-glow);
+      }
+
+      /* glass panel */
+      .panel {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      /* fade-in on scroll */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+          transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* shimmer for loading bars */
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.85); }
+      }
+      @keyframes blink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+      @keyframes float-up {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes scroll-y {
+        from { transform: translateY(0); }
+        to { transform: translateY(-50%); }
+      }
+      @keyframes glow-pulse {
+        0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+        50% { box-shadow: 0 0 40px var(--accent-glow); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React 18 -->
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+    <script type="text/babel" src="tweaks-panel.jsx"></script>
+    <script type="text/babel" src="src/icons.jsx"></script>
+    <script type="text/babel" src="src/data.jsx"></script>
+    <script type="text/babel" src="src/nav.jsx"></script>
+    <script type="text/babel" src="src/hero.jsx"></script>
+    <script type="text/babel" src="src/sections.jsx"></script>
+    <script type="text/babel" src="src/projects.jsx"></script>
+    <script type="text/babel" src="src/agent-showcase.jsx"></script>
+    <script type="text/babel" src="src/timeline-contact.jsx"></script>
+    <script type="text/babel" src="src/command-palette.jsx"></script>
+    <script type="text/babel" src="src/app.jsx"></script>
+  </body>
+</html>
