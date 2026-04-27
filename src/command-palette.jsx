@@ -21,8 +21,8 @@ const CommandPalette = ({ open, onClose }) => {
       { group: "Navigate", label: "Go to Agent showcase", icon: Icons.Sparkles, action: () => location.hash = "#agents" },
       { group: "Navigate", label: "Go to Timeline", icon: Icons.Bolt, action: () => location.hash = "#timeline" },
       { group: "Navigate", label: "Go to Contact", icon: Icons.Mail, action: () => location.hash = "#contact" },
-      ...D.projects.map(p => ({
-        group: "Projects",
+      ...D.services.map(p => ({
+        group: "Services",
         label: p.name,
         sub: p.kind,
         icon: Icons.Cube,

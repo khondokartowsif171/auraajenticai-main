@@ -129,7 +129,7 @@ const ProjectCard = ({ p }) => {
         }}>
           <div>
             <div style={{
-              fontSize: featured ? 22 : 18,
+              fontSize: 18,
               fontWeight: 500,
               letterSpacing: "-0.01em",
               color: tint.text,
