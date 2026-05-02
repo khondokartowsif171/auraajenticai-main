@@ -83,6 +83,7 @@ const PORTFOLIO_DATA = {
       stack: ["SvelteKit", "Next.js", "React", "Tailwind", "PostgreSQL"],
       impact: { primary: "50k+", secondary: "daily users served" },
       color: "violet",
+      demo: "https://demo-autostudio-ecomercewebsite.vercel.app",
     },
     {
       id: "ai-agent-automation",
@@ -94,6 +95,7 @@ const PORTFOLIO_DATA = {
       stack: ["Anthropic Claude", "n8n", "LangGraph", "Node.js", "Hono"],
       impact: { primary: "1.2M+", secondary: "agent runs / month" },
       color: "cyan",
+      demo: "https://demo-agenticai-website.vercel.app",
     },
     {
       id: "web3-blockchain",
@@ -105,6 +107,7 @@ const PORTFOLIO_DATA = {
       stack: ["Solidity", "viem", "wagmi", "Cloudflare Workers"],
       impact: { primary: "12 chains", secondary: "EVM + Solana" },
       color: "green",
+      demo: "https://demo-cryptotradeanalysis-website.vercel.app",
     },
     {
       id: "mt5-ea-trading",
@@ -116,6 +119,7 @@ const PORTFOLIO_DATA = {
       stack: ["MQL5", "Go", "ClickHouse", "WebSockets", "React"],
       impact: { primary: "<80ms", secondary: "tick-to-render latency" },
       color: "amber",
+      demo: "https://ea-dashboard-blush.vercel.app",
     },
     {
       id: "scraping-data-pipeline",
@@ -127,6 +131,7 @@ const PORTFOLIO_DATA = {
       stack: ["Playwright", "Puppeteer", "Python", "Airflow", "PostgreSQL"],
       impact: { primary: "10M+", secondary: "records extracted / month" },
       color: "violet",
+      demo: "https://portfolio-website-tan-six-24.vercel.app",
     },
     {
       id: "infra-devops",
