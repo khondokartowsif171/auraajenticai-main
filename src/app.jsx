@@ -82,6 +82,7 @@ function App() {
       <T.Footer />
 
       <T.CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <T.ChatboxWidget />
 
       <window.TweaksPanel title="Tweaks">
         <window.TweakSection label="Theme" />
