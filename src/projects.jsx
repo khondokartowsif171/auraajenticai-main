@@ -152,16 +152,20 @@ const ProjectCard = ({ p }) => {
               borderRadius: 8,
               color: "var(--text-dim)",
             }} title="GitHub"><Icons.Github size={14} /></button>
-            <button style={{
-              padding: "0 14px", height: 34,
-              display: "inline-flex", alignItems: "center", gap: 6,
-              background: "var(--text)",
-              color: "var(--bg)",
-              border: "none",
-              borderRadius: 8,
-              fontSize: 13,
-              fontWeight: 500,
-            }}>Demo <Icons.ArrowUpRight size={12} /></button>
+            {p.demo && (
+              <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{
+                padding: "0 14px", height: 34,
+                display: "inline-flex", alignItems: "center", gap: 6,
+                background: "var(--text)",
+                color: "var(--bg)",
+                border: "none",
+                borderRadius: 8,
+                fontSize: 13,
+                fontWeight: 500,
+                textDecoration: "none",
+                cursor: "pointer",
+              }}>Demo <Icons.ArrowUpRight size={12} /></a>
+            )}
           </div>
         </div>
       </div>

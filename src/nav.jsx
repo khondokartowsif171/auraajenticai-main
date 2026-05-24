@@ -1,7 +1,17 @@
 // Top nav — minimal, sticky, blurred — mobile-responsive
+const DASHBOARD = 'https://aura.auraajenticai.cloud'
+const NAV_FALLBACK = [
+  { id: "work", label: "Services", url: "#work" },
+  { id: "stack", label: "Stack", url: "#stack" },
+  { id: "agents", label: "Agents", url: "#agents" },
+  { id: "timeline", label: "Timeline", url: "#timeline" },
+  { id: "contact", label: "Contact", url: "#contact" },
+]
+
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [links, setLinks] = React.useState(NAV_FALLBACK);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -9,13 +19,28 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang }) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = [
-    { id: "work", label: "Services" },
-    { id: "stack", label: "Stack" },
-    { id: "agents", label: "Agents" },
-    { id: "timeline", label: "Timeline" },
-    { id: "contact", label: "Contact" },
-  ];
+  // Fetch nav links from Control Center API (stale-while-revalidate)
+  React.useEffect(() => {
+    const CACHE_KEY = 'aura_nav_links'
+    const CACHE_TTL = 5 * 60 * 1000 // 5 min
+    const cached = sessionStorage.getItem(CACHE_KEY)
+    if (cached) {
+      try {
+        const { data, ts } = JSON.parse(cached)
+        if (Date.now() - ts < CACHE_TTL) { setLinks(data.length ? data : NAV_FALLBACK); return }
+      } catch {}
+    }
+    fetch(`${DASHBOARD}/api/public/links?page=home`, { signal: AbortSignal.timeout(3000) })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map(l => ({ id: l.id, label: l.label, url: l.url }))
+          setLinks(mapped)
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: mapped, ts: Date.now() }))
+        }
+      })
+      .catch(() => {})
+  }, []);
 
   return (
     <>
@@ -55,7 +80,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang }) => {
           {/* Center links — hidden on mobile */}
           <div style={{ display: "flex", gap: 4, alignItems: "center" }} className="nav-links">
             {links.map(l => (
-              <a key={l.id} href={"#" + l.id} style={{
+              <a key={l.id} href={l.url || `#${l.id}`} style={{
                 fontSize: 13.5,
                 color: "var(--text-dim)",
                 padding: "6px 12px",
@@ -216,7 +241,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang }) => {
           {links.map(l => (
             <a
               key={l.id}
-              href={"#" + l.id}
+              href={l.url || `#${l.id}`}
               onClick={() => setMenuOpen(false)}
               style={{
                 fontSize: 15,
