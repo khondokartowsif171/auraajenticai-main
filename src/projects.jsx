@@ -144,14 +144,25 @@ const ProjectCard = ({ p }) => {
             }}>{p.impact.secondary}</div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
-            <button style={{
-              width: 34, height: 34,
-              display: "grid", placeItems: "center",
-              background: "transparent",
-              border: "1px solid var(--line)",
-              borderRadius: 8,
-              color: "var(--text-dim)",
-            }} title="GitHub"><Icons.Github size={14} /></button>
+            {p.gitRepo ? (
+              <a href={p.gitRepo} target="_blank" rel="noopener noreferrer" style={{
+                width: 34, height: 34,
+                display: "grid", placeItems: "center",
+                background: "transparent",
+                border: "1px solid var(--line)",
+                borderRadius: 8,
+                color: "var(--text-dim)",
+                textDecoration: "none",
+              }} title="View repository"><Icons.Github size={14} /></a>
+            ) : (
+              <span style={{
+                width: 34, height: 34,
+                display: "grid", placeItems: "center",
+                border: "1px solid var(--line)",
+                borderRadius: 8,
+                color: "var(--line-strong)",
+              }} title="No repository linked"><Icons.Github size={14} /></span>
+            )}
             {p.demo && (
               <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{
                 padding: "0 14px", height: 34,
@@ -302,8 +313,57 @@ const ProjectVisual = ({ id, tint, hover }) => {
   return null;
 };
 
+// Merge Dashboard API data (demo/git links, active state) into local static data
+function mergeServices(local, apiData) {
+  const byId = {};
+  apiData.forEach(s => { byId[s.serviceId] = s; });
+  return local
+    .filter(s => !byId[s.id] || byId[s.id].isActive !== false)
+    .map(s => {
+      const api = byId[s.id];
+      if (!api) return s;
+      return {
+        ...s,
+        demo: api.demoUrl || s.demo || null,
+        gitRepo: api.gitRepo || null,
+        name: api.name || s.name,
+        nameBn: api.nameBn || s.nameBn,
+        impact: {
+          primary: api.impactPrimary || s.impact.primary,
+          secondary: api.impactSecondary || s.impact.secondary,
+        },
+      };
+    });
+}
+
 const Projects = () => {
   const D = PORTFOLIO_DATA;
+  const [services, setServices] = React.useState(D.services);
+
+  React.useEffect(() => {
+    const CACHE_KEY = 'aura_services_v1';
+    const CACHE_TTL = 5 * 60 * 1000;
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const { data, ts } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL && data.length > 0) {
+          setServices(mergeServices(D.services, data));
+          return;
+        }
+      } catch {}
+    }
+    fetch('https://aura.auraajenticai.cloud/api/public/services', { signal: AbortSignal.timeout(3000) })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
+          setServices(mergeServices(D.services, data));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <section id="work" style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
@@ -319,7 +379,7 @@ const Projects = () => {
           gridTemplateColumns: "repeat(2, 1fr)",
           gap: 16,
         }} className="proj-grid">
-          {D.services.map(p => <ProjectCard key={p.id} p={p} />)}
+          {services.map(p => <ProjectCard key={p.id} p={p} />)}
         </div>
 
         <style>{`
