@@ -670,7 +670,30 @@ const BLOG_COLORS = {
 const BlogPage = () => {
   const D = PORTFOLIO_DATA;
   const [active, setActive] = React.useState(null);
-  const article = active ? D.blogArticles.find(a => a.slug === active) : null;
+  const [articles, setArticles] = React.useState(D.blogArticles || []);
+
+  React.useEffect(() => {
+    const CACHE_KEY = 'aura_blog_v1';
+    const CACHE_TTL = 10 * 60 * 1000;
+    try {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data, ts } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL && data.length) { setArticles(data); return; }
+      }
+    } catch {}
+    fetch(`${DASHBOARD_API}/api/public/blog`, { signal: AbortSignal.timeout(3000) })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (Array.isArray(data) && data.length) {
+          setArticles(data);
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const article = active ? articles.find(a => a.slug === active) : null;
 
   if (article) {
     const c = BLOG_COLORS[article.color] || BLOG_COLORS.violet;
@@ -755,7 +778,7 @@ const BlogPage = () => {
       <section style={{ padding: "80px 0 120px" }}>
         <div className="container">
           <div style={{ display: "grid", gap: 20 }}>
-            {D.blogArticles.map((post, i) => {
+            {articles.map((post, i) => {
               const c = BLOG_COLORS[post.color] || BLOG_COLORS.violet;
               return (
                 <div
