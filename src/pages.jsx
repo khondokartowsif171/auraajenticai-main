@@ -44,7 +44,7 @@ const ServicesPage = ({ lang }) => {
 
   // Fetch demo/repo overrides from Dashboard (stale-while-revalidate)
   React.useEffect(() => {
-    const CACHE_KEY = 'aura_svc_links';
+    const CACHE_KEY = 'aura_svc_links_v2';
     const CACHE_TTL = 10 * 60 * 1000;
     try {
       const cached = sessionStorage.getItem(CACHE_KEY);
