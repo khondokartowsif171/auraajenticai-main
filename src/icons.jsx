@@ -43,17 +43,22 @@ const Icons = {
   Send: (p) => <Icon {...p}><path d="m22 2-7 20-4-9-9-4 20-7z" /></Icon>,
   Globe: (p) => <Icon {...p}><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></Icon>,
   Terminal: (p) => <Icon {...p}><path d="m4 17 6-6-6-6M12 19h8" /></Icon>,
-  Logo: ({ size = 28 }) => (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="logoG" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--accent)" />
-          <stop offset="1" stopColor="var(--accent-2)" />
-        </linearGradient>
-      </defs>
-      <rect x="2" y="2" width="28" height="28" rx="8" fill="none" stroke="url(#logoG)" strokeWidth="1.5" />
-      <path d="M10 22 L16 8 L22 22 M12.5 17 H19.5" stroke="url(#logoG)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
+  Logo: ({ size = 28, full = false }) => (
+    <img
+      src="logo.png"
+      width={full ? size * 4 : size}
+      height={size}
+      alt="Aura Agentic AI"
+      style={{
+        objectFit: "contain",
+        objectPosition: "center",
+        borderRadius: full ? 0 : 4,
+        mixBlendMode: "screen",
+        display: "block",
+        flexShrink: 0,
+      }}
+      onError={e => { e.currentTarget.style.display = "none"; }}
+    />
   ),
 };
 

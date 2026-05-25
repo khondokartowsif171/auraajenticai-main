@@ -35,9 +35,36 @@ const PageHero = ({ eyebrow, title, sub, children }) => (
 
 // ─── SERVICES PAGE ────────────────────────────────────────────────────────────
 
+const DASHBOARD_API = 'https://aura.auraajenticai.cloud';
+
 const ServicesPage = ({ lang }) => {
   const D = PORTFOLIO_DATA;
   const [active, setActive] = React.useState(null);
+  const [svcLinks, setSvcLinks] = React.useState({});
+
+  // Fetch demo/repo overrides from Dashboard (stale-while-revalidate)
+  React.useEffect(() => {
+    const CACHE_KEY = 'aura_svc_links';
+    const CACHE_TTL = 10 * 60 * 1000;
+    try {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data, ts } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL) { setSvcLinks(data); return; }
+      }
+    } catch {}
+    fetch(`${DASHBOARD_API}/api/public/services`, { signal: AbortSignal.timeout(3000) })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (Array.isArray(data)) {
+          const map = {};
+          data.forEach(s => { if (s.id) map[s.id] = { demo: s.demo, repo: s.repo }; });
+          setSvcLinks(map);
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: map, ts: Date.now() }));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <main>
@@ -53,6 +80,8 @@ const ServicesPage = ({ lang }) => {
             {D.services.map((svc, i) => {
               const c = COLOR_MAP[svc.color] || COLOR_MAP.violet;
               const isOpen = active === svc.id;
+              const demo = (svcLinks[svc.id]?.demo) || svc.demo;
+              const repo = (svcLinks[svc.id]?.repo) || svc.repo;
               const isNew = !!svc.badge;
               return (
                 <div
@@ -144,11 +173,11 @@ const ServicesPage = ({ lang }) => {
                           </div>
 
                           {/* Demo / Repo links */}
-                          {(svc.demo || svc.repo) && (
+                          {(demo || repo) && (
                             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                              {svc.demo && (
+                              {demo && (
                                 <a
-                                  href={svc.demo}
+                                  href={demo}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onClick={e => e.stopPropagation()}
@@ -167,9 +196,9 @@ const ServicesPage = ({ lang }) => {
                                   Live Demo
                                 </a>
                               )}
-                              {svc.repo && (
+                              {repo && (
                                 <a
-                                  href={svc.repo}
+                                  href={repo}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onClick={e => e.stopPropagation()}
