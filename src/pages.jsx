@@ -800,10 +800,260 @@ const BlogPage = () => {
   );
 };
 
-window.ServicesPage = ServicesPage;
-window.StackPage    = StackPage;
-window.AgentsPage   = AgentsPage;
-window.TimelinePage = TimelinePage;
-window.ContactPage  = ContactPage;
-window.PricingPage  = PricingPage;
-window.BlogPage     = BlogPage;
+// ─── SERVICE DETAIL PAGE ──────────────────────────────────────────────────────
+
+const SVC_EXTRA = {
+  'web-app-dev': {
+    useCases: [
+      { icon: '🛒', title: 'E-commerce & Marketplace', body: 'Product catalogs, cart flows, payment integrations, and seller dashboards — all built to handle real traffic from day one.' },
+      { icon: '📊', title: 'SaaS Dashboards', body: 'Multi-tenant apps with role-based access, live data, Stripe billing, and the kind of UX that keeps customers from churning.' },
+      { icon: '🚀', title: 'Landing Pages that Convert', body: 'Fast, opinionated landing pages with A/B-ready structures — we\'ve seen >5% conversion on cold paid traffic.' },
+    ],
+    process: ['Scope & wireframe in Figma (3–5 days)', 'Build core flows, DB schema, auth (2–4 weeks)', 'QA, performance audit, deploy to production'],
+  },
+  'ai-agent-automation': {
+    useCases: [
+      { icon: '💬', title: 'Customer Support Triage', body: 'Agents that classify, route, and draft responses for support tickets — cutting first-response time from hours to seconds.' },
+      { icon: '📈', title: 'Internal Reporting & Analysis', body: 'Agents that pull data from your tools, summarize it, and push scheduled reports to Slack or email — no analyst required.' },
+      { icon: '🎯', title: 'Lead Qualification & CRM Automation', body: 'AI that scores inbound leads, enriches profiles, and books meetings without a human touching the pipeline.' },
+    ],
+    process: ['Define the agent\'s scope and tool integrations (1–3 days)', 'Build, prompt-engineer, and eval the agent (1–3 weeks)', 'Deploy with monitoring, retry logic, and a kill switch'],
+  },
+  'web3-blockchain': {
+    useCases: [
+      { icon: '🔐', title: 'DAO & Multi-sig Interfaces', body: 'Governance UIs, proposal voting, and treasury management — making on-chain decisions feel as simple as a web form.' },
+      { icon: '🖼️', title: 'NFT Minting & Marketplace', body: 'ERC-721/1155 contracts, lazy minting, royalty enforcement, and storefront UIs that don\'t look like it\'s 2021.' },
+      { icon: '🌉', title: 'Cross-chain Bridges & Gasless UX', body: 'Bridge infrastructure with abstract-away gas complexity — users just click "confirm" without touching ETH.' },
+    ],
+    process: ['Contract design & security review (3–5 days)', 'Smart contract deployment + frontend integration (2–4 weeks)', 'Audit, testnet, mainnet launch'],
+  },
+  'mt5-ea-trading': {
+    useCases: [
+      { icon: '📉', title: 'Automated Trading Strategies', body: 'Trend-following, mean-reversion, and multi-symbol EAs with hard risk limits, drawdown stops, and real-time alerts.' },
+      { icon: '🏦', title: 'Prop Firm Dashboards', body: 'Live P&L tracking, account-level risk envelopes, one-click kill switches, and challenge-pass analytics for prop trading firms.' },
+      { icon: '📋', title: 'Copy Trading Infrastructure', body: 'Master-slave signal distribution across hundreds of follower accounts with sub-100ms latency and full trade history.' },
+    ],
+    process: ['Strategy specification & backtest design (2–5 days)', 'MQL5 development, forward test on demo (1–3 weeks)', 'Live deployment with monitoring and kill switches'],
+  },
+  'scraping-data-pipeline': {
+    useCases: [
+      { icon: '🏷️', title: 'Competitor Price Monitoring', body: 'Real-time price intelligence across thousands of SKUs — normalized, deduplicated, and delivered to your dashboard or DB.' },
+      { icon: '🏘️', title: 'Real Estate & Listing Aggregation', body: 'Multi-source property data collected, structured, and refreshed on schedule — feeding analytics or ML models.' },
+      { icon: '💹', title: 'Financial Data ETL', body: 'Earnings reports, regulatory filings, and market data extracted from public sources and piped into your warehouse.' },
+    ],
+    process: ['Site analysis & proxy strategy (1–2 days)', 'Scraper build with error handling & rotation (1–2 weeks)', 'ETL pipeline, scheduling, and delivery to your DB'],
+  },
+  'infra-devops': {
+    useCases: [
+      { icon: '💸', title: 'Cut Cloud Bills by 60%+', body: 'Move from AWS/GCP managed services to self-hosted Coolify on a bare-metal VPS — same reliability, fraction of the cost.' },
+      { icon: '🔄', title: 'Zero-downtime CI/CD Pipelines', body: 'GitHub Actions → Docker → Traefik with blue/green deploys, automatic SSL, and rollback on health-check failure.' },
+      { icon: '🔭', title: 'Observability for AI Workloads', body: 'Structured logging, Prometheus metrics, and alerting for long-running agent tasks — know before your users do.' },
+    ],
+    process: ['Audit current infra and cost (1 day)', 'Provision, configure, migrate (3–7 days)', 'CI/CD setup, monitoring, runbook handoff'],
+  },
+  'meta-ads-ai': {
+    useCases: [
+      { icon: '🛍️', title: 'E-commerce Scaling ($10k+/mo spend)', body: 'AI that manages bid adjustments, budget reallocation, and creative rotation across campaigns — every 15 minutes, not twice a day.' },
+      { icon: '🏢', title: 'Agencies with Multiple Client Accounts', body: 'One AI system managing dozens of accounts simultaneously, surfacing anomalies and generating client-ready reports automatically.' },
+      { icon: '📣', title: 'Product Launches & Rapid Testing', body: '100+ ad variants generated and tested by AI in the first 48 hours — finding your winning creative before your budget runs out.' },
+    ],
+    process: ['Connect Meta Ads API + brief the AI on goals (1 day)', 'Deploy optimization agent, set guardrails & budget caps (2–3 days)', 'Monitor KPIs, iterate on creative strategy weekly'],
+  },
+};
+
+const ServiceDetailPage = ({ svc }) => {
+  const extra = SVC_EXTRA[svc.id] || {};
+  const c = COLOR_MAP[svc.color] || COLOR_MAP.violet;
+  const demo = svc.demo;
+  const repo = svc.repo;
+
+  return (
+    <main>
+      <PageHero
+        eyebrow={svc.kind}
+        title={svc.name}
+        sub={svc.description}
+      >
+        <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+          {demo && (
+            <a href={demo} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '10px 20px', borderRadius: 9,
+              background: c.bg, border: `1px solid ${c.border}`,
+              color: c.text, fontSize: 13.5, fontWeight: 500,
+              textDecoration: 'none', fontFamily: 'var(--font-mono)',
+            }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              Live Demo
+            </a>
+          )}
+          <a
+            href={`mailto:hello@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '10px 20px', borderRadius: 9,
+              background: 'var(--text)', color: 'var(--bg)',
+              fontSize: 13.5, fontWeight: 500, textDecoration: 'none',
+            }}
+          >Get a Quote →</a>
+        </div>
+      </PageHero>
+
+      {/* Impact metric + stack */}
+      <section style={{ padding: '64px 0', borderBottom: '1px solid var(--line)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }} className="svc-detail-top">
+            <div>
+              <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-faint)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Key metric</div>
+              <div style={{ fontSize: 52, fontWeight: 700, color: c.text, lineHeight: 1 }}>{svc.impact.primary}</div>
+              <div style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 8 }}>{svc.impact.secondary}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-faint)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Stack</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {svc.stack.map(s => (
+                  <span key={s} style={{
+                    fontSize: 12.5, padding: '5px 12px', borderRadius: 7,
+                    background: c.bg, border: `1px solid ${c.border}`,
+                    color: c.text, fontFamily: 'var(--font-mono)',
+                  }}>{s}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights */}
+      {svc.highlights && (
+        <section style={{ padding: '72px 0', borderBottom: '1px solid var(--line)' }}>
+          <div className="container">
+            <div className="eyebrow" style={{ marginBottom: 32 }}>What's included</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+              {svc.highlights.map((h, i) => (
+                <div key={i} className="reveal" style={{
+                  padding: '20px 24px', borderRadius: 'var(--radius)',
+                  background: c.bg, border: `1px solid ${c.border}`,
+                  display: 'flex', gap: 12, alignItems: 'flex-start',
+                }}>
+                  <span style={{ color: c.text, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+                  <span style={{ fontSize: 14.5, lineHeight: 1.5 }}>{h}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Use cases */}
+      {extra.useCases && (
+        <section style={{ padding: '72px 0', borderBottom: '1px solid var(--line)' }}>
+          <div className="container">
+            <div className="eyebrow" style={{ marginBottom: 12 }}>Use cases</div>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 500, letterSpacing: '-0.02em', margin: '0 0 48px' }}>
+              Who hires us for this
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
+              {extra.useCases.map((uc, i) => (
+                <div key={i} className="reveal" style={{
+                  padding: '28px 28px', borderRadius: 'var(--radius)',
+                  background: 'var(--bg-card)', border: '1px solid var(--line)',
+                }}>
+                  <div style={{ fontSize: 28, marginBottom: 14 }}>{uc.icon}</div>
+                  <h3 style={{ margin: '0 0 10px', fontSize: 16, fontWeight: 600 }}>{uc.title}</h3>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--text-dim)' }}>{uc.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Process */}
+      {extra.process && (
+        <section style={{ padding: '72px 0', borderBottom: '1px solid var(--line)' }}>
+          <div className="container">
+            <div className="eyebrow" style={{ marginBottom: 12 }}>Process</div>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 500, letterSpacing: '-0.02em', margin: '0 0 48px' }}>
+              How we work
+            </h2>
+            <div style={{ display: 'grid', gap: 0, maxWidth: 640 }}>
+              {extra.process.map((step, i) => (
+                <div key={i} className="reveal" style={{
+                  display: 'flex', gap: 24, paddingBottom: 32,
+                  borderLeft: i < extra.process.length - 1 ? `1px solid ${c.border}` : 'none',
+                  paddingLeft: 32, marginLeft: 16, position: 'relative',
+                }}>
+                  <div style={{
+                    position: 'absolute', left: -8, top: 4,
+                    width: 15, height: 15, borderRadius: '50%',
+                    background: c.bg, border: `2px solid ${c.text}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 9, fontWeight: 700, color: c.text,
+                    fontFamily: 'var(--font-mono)',
+                  }}>{i + 1}</div>
+                  <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: 'var(--text-dim)' }}>{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA */}
+      <section style={{ padding: '80px 0 120px' }}>
+        <div className="container">
+          <div style={{
+            padding: '48px 56px', borderRadius: 'var(--radius)',
+            background: c.bg, border: `1px solid ${c.border}`,
+            display: 'grid', gridTemplateColumns: '1fr auto',
+            gap: 32, alignItems: 'center',
+          }} className="svc-cta-row">
+            <div>
+              <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(20px, 3vw, 30px)', fontWeight: 500, letterSpacing: '-0.01em' }}>
+                Ready to ship {svc.name}?
+              </h2>
+              <p style={{ margin: 0, fontSize: 15, color: 'var(--text-dim)' }}>
+                Describe your project — we'll respond within 24 hours with a scoped proposal.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a
+                href={`mailto:hello@auraajenticai.cloud?subject=Project: ${svc.name}`}
+                style={{
+                  padding: '12px 28px', background: 'var(--text)', color: 'var(--bg)',
+                  borderRadius: 10, fontSize: 14, fontWeight: 500,
+                  textDecoration: 'none', whiteSpace: 'nowrap',
+                }}
+              >Start a Project →</a>
+              <a href="#/services" style={{
+                padding: '12px 20px',
+                background: 'transparent', border: `1px solid ${c.border}`,
+                color: c.text, borderRadius: 10, fontSize: 14,
+                textDecoration: 'none', whiteSpace: 'nowrap',
+              }}>All Services</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        @media (max-width: 720px) {
+          .svc-detail-top { grid-template-columns: 1fr !important; }
+          .svc-cta-row { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </main>
+  );
+};
+
+window.ServicesPage     = ServicesPage;
+window.StackPage        = StackPage;
+window.AgentsPage       = AgentsPage;
+window.TimelinePage     = TimelinePage;
+window.ContactPage      = ContactPage;
+window.PricingPage      = PricingPage;
+window.BlogPage         = BlogPage;
+window.ServiceDetailPage = ServiceDetailPage;

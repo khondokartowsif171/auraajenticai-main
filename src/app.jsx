@@ -71,6 +71,60 @@ function App() {
     document.documentElement.style.setProperty("--accent-glow", tweaks.accent + "59");
   }, [tweaks.accent, tweaks.accent2]);
 
+  // Dynamic meta tags per route
+  React.useEffect(() => {
+    const BASE = 'Aura Agentic AI';
+    const SERVICE_IDS = (PORTFOLIO_DATA.services || []).reduce((m, s) => {
+      m['services/' + s.id] = { title: `${s.name} — ${BASE}`, desc: s.description };
+      return m;
+    }, {});
+    const META = {
+      '': {
+        title: `${BASE} — AI Agents, Automation & Full-Stack Dev`,
+        desc: 'We build custom AI agents, automation pipelines, Web3 infrastructure, MT5 trading systems, and enterprise web apps. Based in Dhaka, serving clients worldwide.',
+      },
+      services: {
+        title: `Services — ${BASE}`,
+        desc: 'AI agents, web development, Web3, MT5 trading automation, data pipelines, DevOps, and Meta Ads AI — 7 production-ready services that ship to production.',
+      },
+      stack: {
+        title: `Tech Stack — ${BASE}`,
+        desc: 'Production-tested stack: React, SvelteKit, Next.js, Node.js, Python, Anthropic Claude, n8n, Solidity, Docker, and more — across 40+ production agents.',
+      },
+      agents: {
+        title: `AI Agents — ${BASE}`,
+        desc: 'Live demos of AI agents built with Anthropic Claude, LangGraph, and n8n. Agents that triage, decide, and execute with tool access, memory, and audit trails.',
+      },
+      timeline: {
+        title: `Experience — ${BASE}`,
+        desc: '7 years of shipping production AI systems — from fintech infrastructure to MT5 trading bots to founding Aura Agentic AI in Dhaka, Bangladesh.',
+      },
+      contact: {
+        title: `Contact — ${BASE}`,
+        desc: 'Get a quote for AI agents, automation, web development, Web3, or MT5 trading systems. Based in Dhaka, Bangladesh. Response within 24 hours.',
+      },
+      pricing: {
+        title: `Pricing — ${BASE}`,
+        desc: 'Transparent pricing for AI agents, automation, and full-stack development. Starter, Growth, and Enterprise tiers. Fixed scope, no surprises.',
+      },
+      blog: {
+        title: `Blog — ${BASE}`,
+        desc: 'Technical deep-dives on building AI agents, MT5 Expert Advisors, Meta Ads automation, and the infrastructure behind Aura Agentic AI.',
+      },
+      ...SERVICE_IDS,
+    };
+
+    const m = META[route] || META[''];
+    document.title = m.title;
+    const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', val); };
+    setMeta('meta[name="description"]', m.desc);
+    setMeta('meta[property="og:title"]', m.title);
+    setMeta('meta[property="og:description"]', m.desc);
+    setMeta('meta[property="og:url"]', `https://auraajenticai.cloud/${route ? '#/' + route : ''}`);
+    setMeta('meta[name="twitter:title"]', m.title);
+    setMeta('meta[name="twitter:description"]', m.desc);
+  }, [route]);
+
   // scroll reveal (re-run on route change)
   React.useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -92,6 +146,15 @@ function App() {
   };
 
   const renderPage = () => {
+    // Service detail pages: #/services/:id
+    if (route.startsWith('services/')) {
+      const id = route.slice('services/'.length);
+      const svc = (PORTFOLIO_DATA.services || []).find(s => s.id === id);
+      if (svc) return <T.ServiceDetailPage svc={svc} />;
+      window.location.hash = '#/services';
+      return null;
+    }
+
     switch (route) {
       case 'services':
         return <T.ServicesPage lang={lang} />;
