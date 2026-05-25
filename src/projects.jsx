@@ -369,8 +369,8 @@ const Projects = () => {
       <div className="container">
         <SectionHeader
           eyebrow="What we build"
-          num="03 / 06"
-          title={<>Six services. One team. All <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>production-grade</span>.</>}
+          num={`03 / 06`}
+          title={<>{['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine'][services.length] || services.length} service{services.length !== 1 ? 's' : ''}. One team. All <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>production-grade</span>.</>}
           sub="From landing pages to AI agent runtimes — we take your idea from spec to live deployment."
         />
 
