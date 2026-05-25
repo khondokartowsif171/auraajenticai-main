@@ -1,6 +1,5 @@
 // Top nav — minimal, sticky, blurred — mobile-responsive
-const DASHBOARD = 'https://aura.auraajenticai.cloud'
-const NAV_FALLBACK = [
+const NAV_LINKS = [
   { id: "services", label: "Services", url: "#/services" },
   { id: "stack", label: "Stack", url: "#/stack" },
   { id: "agents", label: "Agents", url: "#/agents" },
@@ -11,35 +10,12 @@ const NAV_FALLBACK = [
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const [links, setLinks] = React.useState(NAV_FALLBACK);
+  const links = NAV_LINKS;
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Fetch nav links from Control Center API (stale-while-revalidate)
-  React.useEffect(() => {
-    const CACHE_KEY = 'aura_nav_links'
-    const CACHE_TTL = 5 * 60 * 1000 // 5 min
-    const cached = sessionStorage.getItem(CACHE_KEY)
-    if (cached) {
-      try {
-        const { data, ts } = JSON.parse(cached)
-        if (Date.now() - ts < CACHE_TTL) { setLinks(data.length ? data : NAV_FALLBACK); return }
-      } catch {}
-    }
-    fetch(`${DASHBOARD}/api/public/links?page=home`, { signal: AbortSignal.timeout(3000) })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const mapped = data.map(l => ({ id: l.id, label: l.label, url: l.url }))
-          setLinks(mapped)
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: mapped, ts: Date.now() }))
-        }
-      })
-      .catch(() => {})
   }, []);
 
   return (
