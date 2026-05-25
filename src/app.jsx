@@ -103,6 +103,10 @@ function App() {
         return <T.TimelinePage />;
       case 'contact':
         return <T.ContactPage lang={lang} />;
+      case 'pricing':
+        return <T.PricingPage />;
+      case 'blog':
+        return <T.BlogPage />;
       default:
         return (
           <main style={density === "compact" ? { fontSize: 14.5 } : undefined}>
@@ -111,6 +115,7 @@ function App() {
             <T.Skills />
             <T.Projects />
             <T.AgentShowcase />
+            <T.Testimonials />
             <T.Timeline />
             <T.Contact lang={lang} />
           </main>

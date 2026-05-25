@@ -387,8 +387,21 @@ const ContactPage = ({ lang }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1000));
-    setSent(true);
+    try {
+      const res = await fetch(`${DASHBOARD_API}/api/public/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (res.ok) {
+        setSent(true);
+      } else {
+        alert('Something went wrong. Please email us directly at hello@auraajenticai.cloud');
+      }
+    } catch {
+      alert('Could not send message. Please email us at hello@auraajenticai.cloud');
+    }
     setLoading(false);
   };
 
@@ -512,8 +525,285 @@ const ContactPage = ({ lang }) => {
   );
 };
 
+// ─── PRICING PAGE ─────────────────────────────────────────────────────────────
+
+const PRICING_COLORS = {
+  violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
+  cyan:   { bg: "rgba(0,212,255,0.07)",  border: "rgba(0,212,255,0.20)",  text: "#67e8f9" },
+  amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
+};
+
+const PricingPage = () => {
+  const D = PORTFOLIO_DATA;
+  return (
+    <main>
+      <PageHero
+        eyebrow="Pricing"
+        title={<>Transparent pricing. <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>No surprises.</span></>}
+        sub="Fixed-scope projects. No retainers for decks. Every tier ends with production code on your domain."
+      />
+      <section style={{ padding: "80px 0 120px" }}>
+        <div className="container">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 24, alignItems: "start",
+          }} className="pricing-grid">
+            {D.pricingTiers.map((tier, i) => {
+              const c = PRICING_COLORS[tier.color] || PRICING_COLORS.violet;
+              const isPopular = tier.badge === "Most Popular";
+              return (
+                <div
+                  key={i}
+                  className="reveal"
+                  style={{
+                    background: isPopular ? c.bg : "var(--bg-card)",
+                    border: `1px solid ${isPopular ? c.border : "var(--line)"}`,
+                    borderRadius: "var(--radius)",
+                    padding: "32px",
+                    position: "relative",
+                  }}
+                >
+                  {tier.badge && (
+                    <div style={{
+                      position: "absolute", top: -12, left: "50%",
+                      transform: "translateX(-50%)",
+                      background: isPopular ? c.text : "var(--bg-elev)",
+                      color: isPopular ? "var(--bg)" : "var(--text-faint)",
+                      fontSize: 10.5, fontWeight: 600,
+                      padding: "3px 12px", borderRadius: 999,
+                      fontFamily: "var(--font-mono)",
+                      border: `1px solid ${c.border}`,
+                      whiteSpace: "nowrap",
+                    }}>{tier.badge}</div>
+                  )}
+
+                  <div style={{ marginBottom: 24 }}>
+                    <h3 style={{ margin: "0 0 6px", fontSize: 20, fontWeight: 600 }}>{tier.name}</h3>
+                    <p style={{ margin: 0, fontSize: 13.5, color: "var(--text-dim)", lineHeight: 1.5 }}>{tier.description}</p>
+                  </div>
+
+                  <div style={{ marginBottom: 28 }}>
+                    {tier.price ? (
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                        <span style={{ fontSize: 13, color: "var(--text-faint)" }}>USD</span>
+                        <span style={{ fontSize: 40, fontWeight: 700, letterSpacing: "-0.03em", color: c.text }}>${tier.price.toLocaleString()}</span>
+                        <span style={{ fontSize: 13, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>{tier.period}</span>
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: 28, fontWeight: 700, color: c.text }}>Custom Quote</div>
+                    )}
+                  </div>
+
+                  <ul style={{ margin: "0 0 28px", padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
+                    {tier.features.map((f, fi) => (
+                      <li key={fi} style={{ display: "flex", gap: 10, fontSize: 13.5, color: "var(--text-dim)", lineHeight: 1.45 }}>
+                        <span style={{ color: c.text, flexShrink: 0, marginTop: 1, fontWeight: 700 }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={tier.href}
+                    style={{
+                      display: "block", textAlign: "center",
+                      padding: "12px 24px",
+                      background: isPopular ? c.text : "var(--bg-elev)",
+                      color: isPopular ? "var(--bg)" : "var(--text)",
+                      border: `1px solid ${isPopular ? c.text : "var(--line)"}`,
+                      borderRadius: 10, fontSize: 14, fontWeight: 500,
+                      textDecoration: "none",
+                      transition: "opacity 0.15s",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+                    onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+                  >{tier.cta} →</a>
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{
+            marginTop: 64, padding: "32px 40px",
+            background: "var(--bg-card)", border: "1px solid var(--line)",
+            borderRadius: "var(--radius)",
+            display: "grid", gridTemplateColumns: "1fr auto",
+            gap: 24, alignItems: "center",
+          }} className="pricing-cta-row">
+            <div>
+              <h3 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 500 }}>Not sure which tier fits your project?</h3>
+              <p style={{ margin: 0, fontSize: 14, color: "var(--text-dim)" }}>Email us a brief description — we'll scope it and get back within 24 hours.</p>
+            </div>
+            <a
+              href="mailto:hello@auraajenticai.cloud?subject=Project Scoping"
+              style={{
+                padding: "12px 24px", background: "var(--text)", color: "var(--bg)",
+                borderRadius: 10, fontSize: 14, fontWeight: 500,
+                textDecoration: "none", whiteSpace: "nowrap",
+              }}
+            >Get a Quote →</a>
+          </div>
+        </div>
+      </section>
+      <style>{`
+        @media (max-width: 900px) {
+          .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; }
+        }
+        @media (max-width: 600px) {
+          .pricing-cta-row { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </main>
+  );
+};
+
+// ─── BLOG PAGE ────────────────────────────────────────────────────────────────
+
+const BLOG_COLORS = {
+  amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
+  rose:   { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" },
+  cyan:   { bg: "rgba(0,212,255,0.07)",  border: "rgba(0,212,255,0.20)",  text: "#67e8f9" },
+  violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
+};
+
+const BlogPage = () => {
+  const D = PORTFOLIO_DATA;
+  const [active, setActive] = React.useState(null);
+  const article = active ? D.blogArticles.find(a => a.slug === active) : null;
+
+  if (article) {
+    const c = BLOG_COLORS[article.color] || BLOG_COLORS.violet;
+    return (
+      <main>
+        <section style={{ padding: "140px 0 80px" }}>
+          <div className="container" style={{ maxWidth: 720 }}>
+            <button
+              onClick={() => setActive(null)}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                fontSize: 12.5, color: "var(--text-faint)", background: "none",
+                border: "none", cursor: "pointer", marginBottom: 40,
+                fontFamily: "var(--font-mono)", padding: 0,
+              }}
+            >← All Articles</button>
+
+            <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20 }}>
+              <span style={{
+                fontSize: 11, padding: "3px 10px", borderRadius: 999,
+                background: c.bg, border: `1px solid ${c.border}`,
+                color: c.text, fontFamily: "var(--font-mono)",
+              }}>{article.category}</span>
+              <span style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+                {article.date} · {article.readTime} read
+              </span>
+            </div>
+
+            <h1 style={{
+              fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 500,
+              letterSpacing: "-0.02em", lineHeight: 1.1, margin: "0 0 48px",
+            }}>{article.title}</h1>
+
+            <div style={{ display: "grid", gap: 20 }}>
+              {article.content.map((block, i) => {
+                if (block.type === "h2") return (
+                  <h2 key={i} style={{
+                    fontSize: 20, fontWeight: 600, margin: "16px 0 0",
+                    letterSpacing: "-0.01em",
+                  }}>{block.text}</h2>
+                );
+                return (
+                  <p key={i} style={{
+                    margin: 0, fontSize: 16, lineHeight: 1.75,
+                    color: "var(--text-dim)",
+                  }}>{block.text}</p>
+                );
+              })}
+            </div>
+
+            <div style={{
+              marginTop: 64, padding: "28px 32px",
+              background: c.bg, border: `1px solid ${c.border}`,
+              borderRadius: "var(--radius)",
+            }}>
+              <p style={{ margin: "0 0 16px", fontSize: 15, fontWeight: 500 }}>
+                Want to build something like this?
+              </p>
+              <a
+                href={`mailto:hello@auraajenticai.cloud?subject=Enquiry from blog: ${article.title}`}
+                style={{
+                  display: "inline-flex", padding: "10px 22px",
+                  background: "var(--text)", color: "var(--bg)",
+                  borderRadius: 9, fontSize: 13.5, fontWeight: 500,
+                  textDecoration: "none",
+                }}
+              >Get in Touch →</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main>
+      <PageHero
+        eyebrow="Blog"
+        title={<>How we build — <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>openly</span></>}
+        sub="Technical deep-dives on AI agents, trading systems, and the infrastructure behind Aura."
+      />
+      <section style={{ padding: "80px 0 120px" }}>
+        <div className="container">
+          <div style={{ display: "grid", gap: 20 }}>
+            {D.blogArticles.map((post, i) => {
+              const c = BLOG_COLORS[post.color] || BLOG_COLORS.violet;
+              return (
+                <div
+                  key={i}
+                  className="reveal"
+                  onClick={() => setActive(post.slug)}
+                  style={{
+                    background: "var(--bg-card)", border: "1px solid var(--line)",
+                    borderRadius: "var(--radius)", padding: "28px 32px",
+                    cursor: "pointer", transition: "border-color 0.15s, background 0.15s",
+                    display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "center",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = c.bg; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--line)"; e.currentTarget.style.background = "var(--bg-card)"; }}
+                >
+                  <div>
+                    <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 12 }}>
+                      <span style={{
+                        fontSize: 10.5, padding: "2px 9px", borderRadius: 999,
+                        background: c.bg, border: `1px solid ${c.border}`,
+                        color: c.text, fontFamily: "var(--font-mono)",
+                      }}>{post.category}</span>
+                      <span style={{ fontSize: 11.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+                        {post.date} · {post.readTime} read
+                      </span>
+                    </div>
+                    <h3 style={{ margin: "0 0 10px", fontSize: 18, fontWeight: 500, letterSpacing: "-0.01em" }}>
+                      {post.title}
+                    </h3>
+                    <p style={{ margin: 0, fontSize: 14, color: "var(--text-dim)", lineHeight: 1.55 }}>
+                      {post.excerpt}
+                    </p>
+                  </div>
+                  <div style={{ fontSize: 20, color: "var(--text-faint)", flexShrink: 0 }}>→</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
 window.ServicesPage = ServicesPage;
 window.StackPage    = StackPage;
 window.AgentsPage   = AgentsPage;
 window.TimelinePage = TimelinePage;
 window.ContactPage  = ContactPage;
+window.PricingPage  = PricingPage;
+window.BlogPage     = BlogPage;

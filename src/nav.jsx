@@ -1,8 +1,8 @@
 // Top nav — minimal, sticky, blurred — mobile-responsive
 const NAV_LINKS = [
   { id: "services", label: "Services", url: "#/services" },
-  { id: "stack", label: "Stack", url: "#/stack" },
-  { id: "agents", label: "Agents", url: "#/agents" },
+  { id: "pricing", label: "Pricing", url: "#/pricing" },
+  { id: "blog", label: "Blog", url: "#/blog" },
   { id: "timeline", label: "Timeline", url: "#/timeline" },
   { id: "contact", label: "Contact", url: "#/contact" },
 ]

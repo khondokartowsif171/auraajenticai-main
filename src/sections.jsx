@@ -237,6 +237,91 @@ const Skills = () => {
   );
 };
 
+// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
+
+const TESTIMONIAL_COLORS = {
+  cyan:   { bg: "rgba(0,212,255,0.07)",  border: "rgba(0,212,255,0.20)",  text: "#67e8f9" },
+  amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
+  rose:   { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" },
+  green:  { bg: "rgba(34,197,94,0.07)",  border: "rgba(34,197,94,0.20)",  text: "#86efac" },
+  violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
+};
+
+const Testimonials = () => {
+  const D = PORTFOLIO_DATA;
+  return (
+    <section style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
+      <div className="container">
+        <SectionHeader
+          eyebrow="Client Results"
+          num="05 / 06"
+          title={<>What clients say after we <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ship</span></>}
+          sub="Real projects. Real metrics. No stock-photo testimonials."
+        />
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: 20,
+        }} className="testimonials-grid">
+          {D.testimonials.map((t, i) => {
+            const c = TESTIMONIAL_COLORS[t.color] || TESTIMONIAL_COLORS.cyan;
+            return (
+              <div
+                key={i}
+                className="reveal panel"
+                style={{
+                  padding: "28px 32px",
+                  border: `1px solid ${c.border}`,
+                  background: c.bg,
+                  borderRadius: "var(--radius)",
+                }}
+              >
+                <div style={{
+                  fontSize: 32, lineHeight: 1, color: c.text,
+                  marginBottom: 16, fontFamily: "var(--font-serif)",
+                }}>"</div>
+                <p style={{
+                  margin: "0 0 24px", fontSize: 15.5,
+                  lineHeight: 1.65, color: "var(--text)",
+                }}>{t.text}</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: "50%",
+                    background: c.bg, border: `1px solid ${c.border}`,
+                    display: "grid", placeItems: "center",
+                    fontSize: 12, fontWeight: 600, color: c.text,
+                    fontFamily: "var(--font-mono)", flexShrink: 0,
+                  }}>{t.avatar}</div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 500 }}>{t.name}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+                      {t.role} · {t.company}
+                    </div>
+                  </div>
+                  <div style={{ marginLeft: "auto" }}>
+                    <span style={{
+                      fontSize: 10.5, padding: "3px 9px", borderRadius: 999,
+                      background: "var(--bg-elev)", border: "1px solid var(--line)",
+                      color: "var(--text-faint)", fontFamily: "var(--font-mono)",
+                      whiteSpace: "nowrap",
+                    }}>{t.service}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <style>{`
+          @media (max-width: 720px) {
+            .testimonials-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+      </div>
+    </section>
+  );
+};
+
 window.About = About;
 window.Skills = Skills;
 window.SectionHeader = SectionHeader;
+window.Testimonials = Testimonials;
