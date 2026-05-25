@@ -313,27 +313,20 @@ const ProjectVisual = ({ id, tint, hover }) => {
   return null;
 };
 
-// Merge Dashboard API data (demo/git links, active state) into local static data
+// Merge Dashboard API data (demo/repo links) into local static data
+// Public API returns: { id, name, demo, repo, position }
 function mergeServices(local, apiData) {
   const byId = {};
-  apiData.forEach(s => { byId[s.serviceId] = s; });
-  return local
-    .filter(s => !byId[s.id] || byId[s.id].isActive !== false)
-    .map(s => {
-      const api = byId[s.id];
-      if (!api) return s;
-      return {
-        ...s,
-        demo: api.demoUrl || s.demo || null,
-        gitRepo: api.gitRepo || null,
-        name: api.name || s.name,
-        nameBn: api.nameBn || s.nameBn,
-        impact: {
-          primary: api.impactPrimary || s.impact.primary,
-          secondary: api.impactSecondary || s.impact.secondary,
-        },
-      };
-    });
+  apiData.forEach(s => { byId[s.id] = s; });
+  return local.map(s => {
+    const api = byId[s.id];
+    if (!api) return s;
+    return {
+      ...s,
+      demo: api.demo || s.demo || null,
+      gitRepo: api.repo || null,
+    };
+  });
 }
 
 const Projects = () => {
