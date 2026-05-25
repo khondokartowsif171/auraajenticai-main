@@ -144,6 +144,26 @@ const PORTFOLIO_DATA = {
       impact: { primary: "99.98%", secondary: "uptime maintained" },
       color: "cyan",
     },
+    {
+      id: "meta-ads-ai",
+      name: "AI-Powered Meta Ads",
+      nameBn: "এআই-চালিত মেটা অ্যাডস",
+      kind: "Growth Service",
+      badge: "NEW · Meta MCP",
+      description:
+        "AI agents connected directly to Meta's official API — optimizing bids, rotating creatives, and reallocating budgets every 15 minutes. Not a human checking ads twice a day. A system that never sleeps.",
+      stack: ["Meta MCP", "Meta Ads API", "n8n", "Claude AI", "Anthropic"],
+      impact: { primary: "5×", secondary: "ROAS vs. manual management" },
+      color: "rose",
+      highlights: [
+        "Real-time bid & budget optimization every 15 min",
+        "100+ ad variants A/B tested simultaneously by AI",
+        "Automated audience expansion & lookalike generation",
+        "Creative fatigue detection — pauses before burnout",
+        "Daily AI-written performance reports to your inbox",
+        "Full Meta API access via official MCP integration",
+      ],
+    },
   ],
 
   agentRun: [

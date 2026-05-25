@@ -341,8 +341,8 @@ const Projects = () => {
   const [services, setServices] = React.useState(D.services);
 
   React.useEffect(() => {
-    const CACHE_KEY = 'aura_services_v1';
-    const CACHE_TTL = 5 * 60 * 1000;
+    const CACHE_KEY = 'aura_services_v2';
+    const CACHE_TTL = 60 * 1000;
     const cached = sessionStorage.getItem(CACHE_KEY);
     if (cached) {
       try {
