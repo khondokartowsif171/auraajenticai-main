@@ -362,7 +362,7 @@ const PORTFOLIO_DATA = {
       tagline: "AI-Powered Clothing Ecosystem",
       description:
         "Aura's own multi-vendor clothing marketplace for Bangladesh. Vendors register, list products, and sell — while Gemini AI handles style refinement, virtual try-on, fraud audits, and a 24/7 Bengali-language chat assistant. Built end-to-end on Aura's stack.",
-      url: "https://snehalata.com",
+      url: "https://snehalata-ecosystem-aura-ai-clothing-qyyhwhpz5.vercel.app",
       badge: "Ecosystem",
       stack: ["SvelteKit", "Supabase", "Gemini AI", "Tailwind", "Vercel"],
       features: [
