@@ -111,6 +111,10 @@ function App() {
         title: `Blog — ${BASE}`,
         desc: 'Technical deep-dives on building AI agents, MT5 Expert Advisors, Meta Ads automation, and the infrastructure behind Aura Agentic AI.',
       },
+      products: {
+        title: `Our Products — ${BASE}`,
+        desc: 'GlamourTouch — Aura\'s own live e-commerce store in beauty & lifestyle. A real, production product built on our stack. See exactly what we ship for clients.',
+      },
       ...SERVICE_IDS,
     };
 
@@ -177,6 +181,7 @@ function App() {
             <T.About />
             <T.Skills />
             <T.Projects />
+            <T.FlagshipProduct />
             <T.AgentShowcase />
             <T.Testimonials />
             <T.Timeline />

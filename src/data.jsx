@@ -83,7 +83,7 @@ const PORTFOLIO_DATA = {
       stack: ["SvelteKit", "Next.js", "React", "Tailwind", "PostgreSQL"],
       impact: { primary: "50k+", secondary: "daily users served" },
       color: "violet",
-      demo: "https://demo-autostudio-ecomercewebsite.vercel.app",
+      demo: "https://glamourstouch.com",
     },
     {
       id: "ai-agent-automation",
@@ -353,6 +353,33 @@ const PORTFOLIO_DATA = {
     { t: 4100, kind: "thought", text: "All checks passed. Drafting reconciliation summary for the CFO digest." },
     { t: 4900, kind: "output", text: "Reconciliation complete. 12 outliers flagged · 1 above-threshold (member_4419 · $7,420). Audit trail written." },
     { t: 5400, kind: "system", text: "session.end :: tokens=8,412 · cost=$0.083 · duration=5.4s" },
+  ],
+
+  ownProducts: [
+    {
+      id: "glamourstouch",
+      name: "Glamours Touch",
+      tagline: "Beauty & Lifestyle E-Commerce",
+      description:
+        "Aura's own fully-operational e-commerce store in the beauty & lifestyle space. Built end-to-end on our stack — custom storefront, product catalog, cart, payment integration, and admin dashboard. Clients see exactly what we ship for them.",
+      url: "https://glamourstouch.com",
+      badge: "Live Product",
+      stack: ["Next.js", "Stripe", "PostgreSQL", "Tailwind", "Vercel"],
+      features: [
+        "Full product catalog with variants & inventory management",
+        "Stripe + local payment gateway integration",
+        "Mobile-first responsive storefront design",
+        "Admin dashboard for orders, products & analytics",
+        "SEO-optimized product pages with structured data",
+        "Real-time stock tracking & secure checkout flow",
+      ],
+      color: "rose",
+      stats: [
+        { label: "Products live", value: "50+" },
+        { label: "Avg load time", value: "<1.2s" },
+        { label: "Mobile score", value: "98/100" },
+      ],
+    },
   ],
 
   experience: [
