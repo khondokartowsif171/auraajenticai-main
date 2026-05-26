@@ -357,6 +357,25 @@ const PORTFOLIO_DATA = {
 
   ownProducts: [
     {
+      id: "snehalata",
+      name: "Snehalata",
+      tagline: "AI-Powered Clothing Ecosystem",
+      description:
+        "Aura's own multi-vendor clothing marketplace for Bangladesh. Vendors register, list products, and sell — while Gemini AI handles style refinement, virtual try-on, fraud audits, and a 24/7 Bengali-language chat assistant. Built end-to-end on Aura's stack.",
+      url: "https://snehalata.com",
+      badge: "Ecosystem",
+      stack: ["SvelteKit", "Supabase", "Gemini AI", "Tailwind", "Vercel"],
+      features: [
+        "Multi-vendor marketplace with AI-powered vendor onboarding audit",
+        "Gemini-powered virtual try-on and style transfer for every product",
+        "24/7 Bengali AI chat assistant for shopping guidance",
+        "Bangladesh district-level vendor & product filtering",
+        "Full order lifecycle: placement → quality check → delivery tracking",
+        "CEO & vendor dashboards with real-time ecosystem stats",
+      ],
+      color: "violet",
+    },
+    {
       id: "glamourstouch",
       name: "Glamours Touch",
       tagline: "Beauty & Lifestyle E-Commerce",

@@ -321,12 +321,158 @@ const Testimonials = () => {
   );
 };
 
-// ─── FLAGSHIP PRODUCT ────────────────────────────────────────────────────────
+// ─── FLAGSHIP PRODUCTS ───────────────────────────────────────────────────────
+
+const PRODUCT_COLORS = {
+  rose:   { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" },
+  violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
+  cyan:   { bg: "rgba(0,212,255,0.07)",  border: "rgba(0,212,255,0.20)",  text: "#67e8f9" },
+  green:  { bg: "rgba(34,197,94,0.07)",  border: "rgba(34,197,94,0.20)",  text: "#86efac" },
+  amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
+};
+
+const OwnProductCard = ({ product }) => {
+  const c = PRODUCT_COLORS[product.color] || PRODUCT_COLORS.violet;
+  return (
+    <div className="reveal" style={{
+      borderRadius: "var(--radius)", border: `1px solid ${c.border}`,
+      background: "var(--bg-card)", overflow: "hidden",
+      display: "flex", flexDirection: "column",
+    }}>
+      {/* Card header */}
+      <div style={{
+        background: `linear-gradient(145deg, ${c.bg.replace('0.08', '0.13')} 0%, rgba(0,0,0,0) 100%)`,
+        padding: "36px 36px 28px", borderBottom: `1px solid ${c.border}`,
+        position: "relative", overflow: "hidden",
+      }}>
+        <div style={{
+          position: "absolute", top: -50, right: -50, width: 180, height: 180,
+          borderRadius: "50%", pointerEvents: "none",
+          background: `radial-gradient(circle, ${c.bg.replace('0.08', '0.18')} 0%, transparent 65%)`,
+        }} />
+
+        {/* Badges */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20, position: "relative" }}>
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 5,
+            background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.28)",
+            borderRadius: 999, padding: "3px 10px 3px 7px",
+            fontSize: 10, fontFamily: "var(--font-mono)", color: "#4ade80", fontWeight: 600,
+          }}>
+            <span style={{
+              width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
+              boxShadow: "0 0 6px rgba(34,197,94,0.9)", display: "inline-block",
+              animation: "glamour-pulse 2s ease-in-out infinite",
+            }} />
+            LIVE
+          </span>
+          {product.badge && (
+            <span style={{
+              fontSize: 10, fontFamily: "var(--font-mono)", color: c.text,
+              padding: "3px 9px", borderRadius: 999,
+              background: c.bg, border: `1px solid ${c.border}`,
+            }}>{product.badge}</span>
+          )}
+          <span style={{
+            fontSize: 10, color: "var(--text-faint)", fontFamily: "var(--font-mono)",
+            padding: "3px 9px", borderRadius: 999,
+            background: "var(--bg-elev)", border: "1px solid var(--line)",
+            marginLeft: "auto",
+          }}>Built by Aura</span>
+        </div>
+
+        {/* Brand name */}
+        <div style={{ position: "relative" }}>
+          <h3 style={{
+            margin: "0 0 6px",
+            fontSize: "clamp(22px, 2.5vw, 32px)",
+            fontWeight: 700, fontFamily: "var(--font-serif)", fontStyle: "italic",
+            letterSpacing: "-0.01em",
+            background: `linear-gradient(135deg, ${c.text} 0%, #fff 80%)`,
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>{product.name}</h3>
+          <p style={{
+            margin: 0, fontSize: 11.5, color: "var(--text-faint)",
+            fontFamily: "var(--font-mono)", letterSpacing: "0.1em",
+            textTransform: "uppercase",
+          }}>{product.tagline}</p>
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div style={{ padding: "28px 36px 32px", display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
+        <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.65, color: "var(--text-dim)" }}>
+          {product.description}
+        </p>
+
+        {/* Top 3 features */}
+        <div style={{ display: "grid", gap: 8 }}>
+          {product.features.slice(0, 3).map((f, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, fontSize: 13, color: "var(--text)" }}>
+              <span style={{ color: c.text, flexShrink: 0, fontSize: 11, marginTop: 2 }}>✓</span>
+              {f}
+            </div>
+          ))}
+          {product.features.length > 3 && (
+            <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)", paddingLeft: 21 }}>
+              +{product.features.length - 3} more capabilities
+            </div>
+          )}
+        </div>
+
+        {/* Stack */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+          {product.stack.map(s => (
+            <span key={s} style={{
+              fontSize: 11, padding: "3px 9px", borderRadius: 5,
+              background: c.bg, border: `1px solid ${c.border}`,
+              color: c.text, fontFamily: "var(--font-mono)",
+            }}>{s}</span>
+          ))}
+        </div>
+
+        {/* CTAs */}
+        <div style={{ display: "flex", gap: 10, marginTop: "auto", paddingTop: 4 }}>
+          <a
+            href={product.url} target="_blank" rel="noopener noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 7,
+              padding: "10px 20px",
+              background: `linear-gradient(135deg, ${c.bg.replace('0.08','0.6')}, ${c.bg.replace('0.08','0.4')})`,
+              color: "#fff", borderRadius: 9, fontSize: 13, fontWeight: 600,
+              textDecoration: "none", border: `1px solid ${c.border}`,
+              transition: "opacity 0.15s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.82"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Visit →
+          </a>
+          <a href="#/services/web-app-dev" style={{
+            display: "inline-flex", alignItems: "center", gap: 7,
+            padding: "10px 16px",
+            background: "transparent", border: `1px solid ${c.border}`,
+            color: c.text, borderRadius: 9, fontSize: 13,
+            textDecoration: "none", transition: "background 0.15s",
+          }}
+            onMouseEnter={e => e.currentTarget.style.background = c.bg}
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+          >Build Mine →</a>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const FlagshipProduct = () => {
   const D = PORTFOLIO_DATA;
-  const product = (D.ownProducts || [])[0];
-  if (!product) return null;
+  const products = D.ownProducts || [];
+  if (!products.length) return null;
 
   const rose   = { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" };
   const violet = { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" };
@@ -335,237 +481,46 @@ const FlagshipProduct = () => {
     <section style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="In-House Product"
+          eyebrow="Our Own Products"
           num="03.5 / 06"
           title={<>We don't just build for clients — we build for <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ourselves.</span></>}
-          sub="GlamourTouch is Aura's own live e-commerce store — proof that we ship real products, not just client work. Visit it. Buy from it. That's what we build for you."
+          sub="These are Aura's own live products — real businesses we built, run, and grow. Visit them. That's exactly what we ship for you."
         />
 
-        {/* Main showcase card */}
-        <div className="reveal glamour-card-grid" style={{
+        {/* Products grid */}
+        <div className="own-products-grid" style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1.15fr",
-          borderRadius: "var(--radius)",
-          border: `1px solid ${rose.border}`,
-          overflow: "hidden",
-          background: "var(--bg-card)",
+          gridTemplateColumns: `repeat(${Math.min(products.length, 2)}, 1fr)`,
+          gap: 20,
         }}>
-
-          {/* ── LEFT: Brand panel ────────────────────────────────── */}
-          <div style={{
-            background: "linear-gradient(145deg, rgba(244,63,94,0.10) 0%, rgba(124,92,255,0.09) 60%, rgba(0,212,255,0.05) 100%)",
-            padding: "52px 44px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            position: "relative",
-            overflow: "hidden",
-            minHeight: 380,
-            borderRight: `1px solid rgba(244,63,94,0.13)`,
-          }}>
-            {/* Subtle radial glows */}
-            <div style={{
-              position: "absolute", top: -60, right: -60, width: 260, height: 260,
-              borderRadius: "50%", pointerEvents: "none",
-              background: "radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 65%)",
-            }} />
-            <div style={{
-              position: "absolute", bottom: -40, left: -40, width: 180, height: 180,
-              borderRadius: "50%", pointerEvents: "none",
-              background: "radial-gradient(circle, rgba(124,92,255,0.11) 0%, transparent 65%)",
-            }} />
-
-            {/* Top: live badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative" }}>
-              <span style={{
-                display: "inline-flex", alignItems: "center", gap: 6,
-                background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.28)",
-                borderRadius: 999, padding: "4px 12px 4px 8px",
-                fontSize: 11, fontFamily: "var(--font-mono)", color: "#4ade80", fontWeight: 600,
-                letterSpacing: "0.06em",
-              }}>
-                <span style={{
-                  width: 6, height: 6, borderRadius: "50%",
-                  background: "#22c55e", boxShadow: "0 0 7px rgba(34,197,94,0.9)",
-                  display: "inline-block", animation: "glamour-pulse 2s ease-in-out infinite",
-                }} />
-                LIVE
-              </span>
-              <span style={{
-                fontSize: 10.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)",
-                padding: "3px 10px", borderRadius: 999,
-                background: "var(--bg-elev)", border: "1px solid var(--line)",
-              }}>Our Own Product</span>
-            </div>
-
-            {/* Center: brand identity */}
-            <div style={{ position: "relative", textAlign: "center" }}>
-              <div style={{
-                fontSize: "clamp(30px, 4vw, 52px)",
-                fontWeight: 700, letterSpacing: "-0.02em",
-                fontFamily: "var(--font-serif)", fontStyle: "italic",
-                background: "linear-gradient(135deg, #fda4af 0%, #c084fc 50%, #67e8f9 100%)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                lineHeight: 1.1, marginBottom: 12,
-              }}>Glamours Touch</div>
-              <div style={{
-                fontSize: 11.5, color: "var(--text-faint)",
-                fontFamily: "var(--font-mono)", letterSpacing: "0.14em",
-                textTransform: "uppercase",
-              }}>Beauty · Lifestyle · E-Commerce</div>
-
-              {/* Divider line */}
-              <div style={{
-                width: 48, height: 2, margin: "20px auto",
-                background: "linear-gradient(90deg, #fda4af, #a78bfa)",
-                borderRadius: 2,
-              }} />
-
-              <p style={{
-                margin: 0, fontSize: 14, lineHeight: 1.6,
-                color: "var(--text-faint)", maxWidth: 280, marginLeft: "auto", marginRight: "auto",
-              }}>
-                A real, live store — browse it, buy from it. This is what Aura ships.
-              </p>
-            </div>
-
-            {/* Bottom: real URL link */}
-            <div style={{ position: "relative", textAlign: "center" }}>
-              <a
-                href="https://glamourstouch.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 7,
-                  fontSize: 13, fontFamily: "var(--font-mono)",
-                  color: "#fda4af", textDecoration: "none",
-                  padding: "8px 18px",
-                  background: "rgba(244,63,94,0.09)",
-                  border: "1px solid rgba(244,63,94,0.22)",
-                  borderRadius: 8, transition: "all 0.15s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(244,63,94,0.17)"; e.currentTarget.style.borderColor = "rgba(244,63,94,0.38)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(244,63,94,0.09)"; e.currentTarget.style.borderColor = "rgba(244,63,94,0.22)"; }}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-                glamourstouch.com ↗
-              </a>
-            </div>
-          </div>
-
-          {/* ── RIGHT: Details ───────────────────────────────────── */}
-          <div style={{ padding: "48px 44px", display: "flex", flexDirection: "column", gap: 24 }}>
-
-            <div>
-              <div style={{
-                fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--text-faint)",
-                textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12,
-              }}>About the product</div>
-              <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "var(--text-dim)" }}>
-                {product.description}
-              </p>
-            </div>
-
-            {/* Features */}
-            <div style={{ display: "grid", gap: 9 }}>
-              {product.features.map((f, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, fontSize: 13.5, color: "var(--text)" }}>
-                  <span style={{ color: rose.text, flexShrink: 0, marginTop: 1, fontSize: 12 }}>✓</span>
-                  {f}
-                </div>
-              ))}
-            </div>
-
-            {/* Stack */}
-            <div>
-              <div style={{
-                fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--text-faint)",
-                textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10,
-              }}>Stack</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {product.stack.map(s => (
-                  <span key={s} style={{
-                    fontSize: 11.5, padding: "4px 10px", borderRadius: 6,
-                    background: rose.bg, border: `1px solid ${rose.border}`,
-                    color: rose.text, fontFamily: "var(--font-mono)",
-                  }}>{s}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: "auto", paddingTop: 4 }}>
-              <a
-                href={product.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  padding: "12px 26px",
-                  background: "linear-gradient(135deg, rgba(244,63,94,0.85), rgba(124,92,255,0.85))",
-                  color: "#fff", borderRadius: 10, fontSize: 14, fontWeight: 600,
-                  textDecoration: "none", transition: "opacity 0.15s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.opacity = "0.82"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15,3 21,3 21,9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-                Visit Store →
-              </a>
-              <a
-                href="#/services/web-app-dev"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  padding: "12px 20px",
-                  background: "transparent",
-                  border: `1px solid ${rose.border}`,
-                  color: rose.text, borderRadius: 10, fontSize: 14,
-                  textDecoration: "none", transition: "background 0.15s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.background = rose.bg}
-                onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-              >Build Mine →</a>
-            </div>
-          </div>
+          {products.map(p => <OwnProductCard key={p.id} product={p} />)}
         </div>
 
-        {/* "Want one like this?" bottom nudge */}
+        {/* Bottom nudge */}
         <div className="reveal" style={{
           marginTop: 20, padding: "22px 32px",
-          background: rose.bg, border: `1px solid ${rose.border}`,
+          background: "var(--bg-card)", border: "1px solid var(--line)",
           borderRadius: "var(--radius)",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           flexWrap: "wrap", gap: 16,
         }}>
           <div>
             <span style={{ fontSize: 15, fontWeight: 500, color: "var(--text)" }}>
-              Want a store like GlamourTouch for your brand?
+              Want Aura to build your product?
             </span>
             <span style={{
               display: "block", fontSize: 13, color: "var(--text-faint)",
               marginTop: 3, fontFamily: "var(--font-mono)",
             }}>
-              Starter e-commerce from $499 · Delivered in 2–4 weeks
+              E-commerce · AI marketplace · SaaS — from $499 · Delivered in 2–4 weeks
             </span>
           </div>
-          <a
-            href="#/services/web-app-dev"
-            style={{
-              padding: "11px 24px",
-              background: "var(--text)", color: "var(--bg)",
-              borderRadius: 9, fontSize: 13.5, fontWeight: 500,
-              textDecoration: "none", whiteSpace: "nowrap",
-              flexShrink: 0,
-            }}
-          >Get a Quote →</a>
+          <a href="#/contact" style={{
+            padding: "11px 24px",
+            background: "var(--text)", color: "var(--bg)",
+            borderRadius: 9, fontSize: 13.5, fontWeight: 500,
+            textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,
+          }}>Start a Project →</a>
         </div>
       </div>
 
@@ -575,7 +530,7 @@ const FlagshipProduct = () => {
           50% { opacity: 0.55; box-shadow: 0 0 2px rgba(34,197,94,0.3); }
         }
         @media (max-width: 860px) {
-          .glamour-card-grid { grid-template-columns: 1fr !important; }
+          .own-products-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
