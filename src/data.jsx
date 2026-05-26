@@ -361,7 +361,7 @@ const PORTFOLIO_DATA = {
       name: "Glamours Touch",
       tagline: "Beauty & Lifestyle E-Commerce",
       description:
-        "Aura's own fully-operational e-commerce store in the beauty & lifestyle space. Built end-to-end on our stack — custom storefront, product catalog, cart, payment integration, and admin dashboard. Clients see exactly what we ship for them.",
+        "Aura's own live e-commerce brand in the beauty & lifestyle space. We built it, we run it, we sell from it — end to end. Custom storefront, product catalog, cart, payment integration, and admin dashboard. Not a demo. A real business.",
       url: "https://glamourstouch.com",
       badge: "Live Product",
       stack: ["Next.js", "Stripe", "PostgreSQL", "Tailwind", "Vercel"],
@@ -374,11 +374,6 @@ const PORTFOLIO_DATA = {
         "Real-time stock tracking & secure checkout flow",
       ],
       color: "rose",
-      stats: [
-        { label: "Products live", value: "50+" },
-        { label: "Avg load time", value: "<1.2s" },
-        { label: "Mobile score", value: "98/100" },
-      ],
     },
   ],
 

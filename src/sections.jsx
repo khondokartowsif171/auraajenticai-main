@@ -351,9 +351,9 @@ const FlagshipProduct = () => {
           background: "var(--bg-card)",
         }}>
 
-          {/* ── LEFT: Visual preview ─────────────────────────────── */}
+          {/* ── LEFT: Brand panel ────────────────────────────────── */}
           <div style={{
-            background: "linear-gradient(135deg, rgba(244,63,94,0.14) 0%, rgba(124,92,255,0.12) 55%, rgba(0,212,255,0.07) 100%)",
+            background: "linear-gradient(145deg, rgba(244,63,94,0.10) 0%, rgba(124,92,255,0.09) 60%, rgba(0,212,255,0.05) 100%)",
             padding: "52px 44px",
             display: "flex",
             flexDirection: "column",
@@ -361,21 +361,21 @@ const FlagshipProduct = () => {
             position: "relative",
             overflow: "hidden",
             minHeight: 380,
-            borderRight: `1px solid rgba(244,63,94,0.14)`,
+            borderRight: `1px solid rgba(244,63,94,0.13)`,
           }}>
-            {/* Decorative blobs */}
+            {/* Subtle radial glows */}
             <div style={{
-              position: "absolute", top: -80, right: -80,
-              width: 280, height: 280, borderRadius: "50%", pointerEvents: "none",
-              background: "radial-gradient(circle, rgba(244,63,94,0.14) 0%, transparent 65%)",
+              position: "absolute", top: -60, right: -60, width: 260, height: 260,
+              borderRadius: "50%", pointerEvents: "none",
+              background: "radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 65%)",
             }} />
             <div style={{
-              position: "absolute", bottom: -50, left: -50,
-              width: 200, height: 200, borderRadius: "50%", pointerEvents: "none",
-              background: "radial-gradient(circle, rgba(124,92,255,0.13) 0%, transparent 65%)",
+              position: "absolute", bottom: -40, left: -40, width: 180, height: 180,
+              borderRadius: "50%", pointerEvents: "none",
+              background: "radial-gradient(circle, rgba(124,92,255,0.11) 0%, transparent 65%)",
             }} />
 
-            {/* Top bar */}
+            {/* Top: live badge */}
             <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative" }}>
               <span style={{
                 display: "inline-flex", alignItems: "center", gap: 6,
@@ -389,90 +389,71 @@ const FlagshipProduct = () => {
                   background: "#22c55e", boxShadow: "0 0 7px rgba(34,197,94,0.9)",
                   display: "inline-block", animation: "glamour-pulse 2s ease-in-out infinite",
                 }} />
-                LIVE STORE
+                LIVE
               </span>
               <span style={{
                 fontSize: 10.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)",
                 padding: "3px 10px", borderRadius: 999,
                 background: "var(--bg-elev)", border: "1px solid var(--line)",
-              }}>Built by Aura</span>
+              }}>Our Own Product</span>
             </div>
 
-            {/* Brand hero */}
-            <div style={{ position: "relative", textAlign: "center", padding: "20px 0" }}>
-              {/* Fake browser chrome */}
+            {/* Center: brand identity */}
+            <div style={{ position: "relative", textAlign: "center" }}>
               <div style={{
-                background: "rgba(0,0,0,0.35)", borderRadius: 12,
-                padding: "10px 16px 20px",
-                border: "1px solid rgba(255,255,255,0.06)",
-                backdropFilter: "blur(12px)",
+                fontSize: "clamp(30px, 4vw, 52px)",
+                fontWeight: 700, letterSpacing: "-0.02em",
+                fontFamily: "var(--font-serif)", fontStyle: "italic",
+                background: "linear-gradient(135deg, #fda4af 0%, #c084fc 50%, #67e8f9 100%)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                lineHeight: 1.1, marginBottom: 12,
+              }}>Glamours Touch</div>
+              <div style={{
+                fontSize: 11.5, color: "var(--text-faint)",
+                fontFamily: "var(--font-mono)", letterSpacing: "0.14em",
+                textTransform: "uppercase",
+              }}>Beauty · Lifestyle · E-Commerce</div>
+
+              {/* Divider line */}
+              <div style={{
+                width: 48, height: 2, margin: "20px auto",
+                background: "linear-gradient(90deg, #fda4af, #a78bfa)",
+                borderRadius: 2,
+              }} />
+
+              <p style={{
+                margin: 0, fontSize: 14, lineHeight: 1.6,
+                color: "var(--text-faint)", maxWidth: 280, marginLeft: "auto", marginRight: "auto",
               }}>
-                {/* Dots */}
-                <div style={{ display: "flex", gap: 5, marginBottom: 14 }}>
-                  {["#ef4444","#f59e0b","#22c55e"].map(c => (
-                    <div key={c} style={{ width: 8, height: 8, borderRadius: "50%", background: c, opacity: 0.7 }} />
-                  ))}
-                  <div style={{
-                    flex: 1, marginLeft: 8, height: 8, borderRadius: 4,
-                    background: "rgba(255,255,255,0.07)",
-                    display: "flex", alignItems: "center", paddingLeft: 8,
-                  }}>
-                    <span style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}>
-                      glamourstouch.com
-                    </span>
-                  </div>
-                </div>
-
-                {/* Brand name */}
-                <div style={{
-                  fontSize: "clamp(22px, 3.5vw, 38px)",
-                  fontWeight: 700,
-                  fontFamily: "var(--font-serif)",
-                  fontStyle: "italic",
-                  letterSpacing: "-0.01em",
-                  background: "linear-gradient(135deg, #fda4af 0%, #c084fc 50%, #67e8f9 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  marginBottom: 6,
-                }}>Glamours Touch</div>
-                <div style={{
-                  fontSize: 10.5, color: "rgba(255,255,255,0.35)",
-                  fontFamily: "var(--font-mono)", letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                }}>Beauty · Lifestyle · E-Commerce</div>
-
-                {/* Mock product row */}
-                <div style={{
-                  display: "flex", gap: 8, marginTop: 18, justifyContent: "center",
-                }}>
-                  {[
-                    { color: "rgba(253,164,175,0.3)", label: "Skincare" },
-                    { color: "rgba(167,139,250,0.3)", label: "Makeup" },
-                    { color: "rgba(103,232,249,0.3)", label: "Fragrance" },
-                  ].map(({ color, label }) => (
-                    <div key={label} style={{
-                      flex: 1, height: 44, borderRadius: 8,
-                      background: color,
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      display: "flex", alignItems: "flex-end",
-                      padding: "0 6px 5px",
-                    }}>
-                      <span style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-mono)" }}>{label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                A real, live store — browse it, buy from it. This is what Aura ships.
+              </p>
             </div>
 
-            {/* Stats row */}
-            <div style={{ display: "flex", gap: 16, position: "relative" }}>
-              {product.stats.map(s => (
-                <div key={s.label} style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: rose.text }}>{s.value}</div>
-                  <div style={{ fontSize: 10, color: "var(--text-faint)", fontFamily: "var(--font-mono)", marginTop: 2 }}>{s.label}</div>
-                </div>
-              ))}
+            {/* Bottom: real URL link */}
+            <div style={{ position: "relative", textAlign: "center" }}>
+              <a
+                href="https://glamourstouch.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 7,
+                  fontSize: 13, fontFamily: "var(--font-mono)",
+                  color: "#fda4af", textDecoration: "none",
+                  padding: "8px 18px",
+                  background: "rgba(244,63,94,0.09)",
+                  border: "1px solid rgba(244,63,94,0.22)",
+                  borderRadius: 8, transition: "all 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(244,63,94,0.17)"; e.currentTarget.style.borderColor = "rgba(244,63,94,0.38)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(244,63,94,0.09)"; e.currentTarget.style.borderColor = "rgba(244,63,94,0.22)"; }}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                glamourstouch.com ↗
+              </a>
             </div>
           </div>
 
