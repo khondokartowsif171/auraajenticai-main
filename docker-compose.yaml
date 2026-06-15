@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.auraajenticai-http.entrypoints=http"
+      - "traefik.http.routers.auraajenticai-http.rule=Host(`auraajenticai.cloud`)"
+      - "traefik.http.routers.auraajenticai-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.auraajenticai-https.entrypoints=https"
+      - "traefik.http.routers.auraajenticai-https.rule=Host(`auraajenticai.cloud`)"
+      - "traefik.http.routers.auraajenticai-https.tls=true"
+      - "traefik.http.routers.auraajenticai-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.auraajenticai.loadbalancer.server.port=80"
+      - "coolify.managed=true"
+    restart: unless-stopped
+    
+networks:
+  coolify:
+    external: true
+
