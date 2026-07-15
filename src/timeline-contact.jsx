@@ -141,15 +141,26 @@ const Contact = ({ lang = "en" }) => {
     if (Object.keys(e).length) return;
     setStatus("sending");
     try {
-      await fetch("https://n8n.auraajenticai.cloud/webhook/contact", {
+      const resp = await fetch("https://formsubmit.co/ajax/khondokartowsif171@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: `New Aura Inquiry — ${form.service}`,
+          _captcha: "false",
+          _template: "table",
+          name: form.name,
+          email: form.email,
+          service: form.service,
+          budget: form.budget || "Not specified",
+          message: form.message,
+        }),
       });
+      const data = await resp.json();
+      if (!data.success) throw new Error("failed");
       setStatus("sent");
     } catch {
       setStatus("idle");
-      setErrors({ message: "Network error — please email us directly." });
+      setErrors({ message: "Network error — please email us directly at hello@auraajenticai.cloud" });
     }
   };
 
