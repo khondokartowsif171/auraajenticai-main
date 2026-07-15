@@ -103,6 +103,10 @@ function App() {
         title: `Contact — ${BASE}`,
         desc: 'Get a quote for AI agents, automation, web development, Web3, or MT5 trading systems. Based in Dhaka, Bangladesh. Response within 24 hours.',
       },
+      'case-studies': {
+        title: `Case Studies — ${BASE}`,
+        desc: 'Real-world AI agent, MT5 trading, Meta Ads, and Web3 projects with production metrics. See what Aura actually ships for clients.',
+      },
       pricing: {
         title: `Pricing — ${BASE}`,
         desc: 'Transparent pricing for AI agents, automation, and full-stack development. Starter, Growth, and Enterprise tiers. Fixed scope, no surprises.',
@@ -174,6 +178,8 @@ function App() {
         return <T.PricingPage />;
       case 'blog':
         return <T.BlogPage />;
+      case 'case-studies':
+        return <T.CaseStudiesPage />;
       default:
         return (
           <main style={density === "compact" ? { fontSize: 14.5 } : undefined}>

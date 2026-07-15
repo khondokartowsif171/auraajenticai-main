@@ -1072,6 +1072,212 @@ const ServiceDetailPage = ({ svc }) => {
   );
 };
 
+// ─── CASE STUDIES PAGE ───────────────────────────────────────────────────────
+
+const CASE_COLORS = {
+  cyan:   { bg: "rgba(0,212,255,0.07)",  border: "rgba(0,212,255,0.20)",  text: "#67e8f9" },
+  amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
+  rose:   { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" },
+  green:  { bg: "rgba(34,197,94,0.07)",  border: "rgba(34,197,94,0.20)",  text: "#86efac" },
+  violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
+};
+
+const CaseStudyDetail = ({ cs, onBack }) => {
+  const c = CASE_COLORS[cs.color] || CASE_COLORS.cyan;
+  return (
+    <main>
+      <section style={{ padding: "140px 0 72px" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <button onClick={onBack} style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            fontSize: 12.5, color: "var(--text-faint)", background: "none",
+            border: "none", cursor: "pointer", marginBottom: 40,
+            fontFamily: "var(--font-mono)", padding: 0,
+          }}>← All Case Studies</button>
+
+          <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+            <span style={{
+              fontSize: 11, padding: "3px 10px", borderRadius: 999,
+              background: c.bg, border: `1px solid ${c.border}`,
+              color: c.text, fontFamily: "var(--font-mono)",
+            }}>{cs.service}</span>
+            <span style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+              {cs.clientType} · {cs.timeline}
+            </span>
+          </div>
+
+          <h1 style={{
+            fontSize: "clamp(26px, 4vw, 46px)", fontWeight: 500,
+            letterSpacing: "-0.02em", lineHeight: 1.1, margin: "0 0 40px",
+          }}>{cs.title}</h1>
+
+          {/* Results hero */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 12, marginBottom: 56,
+          }} className="cs-results-grid">
+            {cs.results.map((r, i) => (
+              <div key={i} style={{
+                padding: "24px 28px", borderRadius: "var(--radius)",
+                background: c.bg, border: `1px solid ${c.border}`,
+              }}>
+                <div style={{ fontSize: 34, fontWeight: 700, color: c.text, lineHeight: 1, marginBottom: 6 }}>{r.metric}</div>
+                <div style={{ fontSize: 13, color: "var(--text-dim)" }}>{r.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Challenge */}
+          <div style={{ marginBottom: 40 }}>
+            <h2 style={{ fontSize: 13, fontFamily: "var(--font-mono)", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 12px" }}>The Challenge</h2>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.75, color: "var(--text-dim)" }}>{cs.challenge}</p>
+          </div>
+
+          {/* Solution */}
+          <div style={{ marginBottom: 40 }}>
+            <h2 style={{ fontSize: 13, fontFamily: "var(--font-mono)", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 12px" }}>What We Built</h2>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.75, color: "var(--text-dim)" }}>{cs.solution}</p>
+          </div>
+
+          {/* Stack */}
+          <div style={{ marginBottom: 48 }}>
+            <h2 style={{ fontSize: 13, fontFamily: "var(--font-mono)", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 12px" }}>Stack</h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {cs.stack.map(s => (
+                <span key={s} style={{
+                  fontSize: 12.5, padding: "5px 12px", borderRadius: 7,
+                  background: c.bg, border: `1px solid ${c.border}`,
+                  color: c.text, fontFamily: "var(--font-mono)",
+                }}>{s}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Quote */}
+          {cs.quote && (
+            <div style={{
+              padding: "28px 32px", borderRadius: "var(--radius)",
+              background: c.bg, border: `1px solid ${c.border}`,
+              marginBottom: 48,
+            }}>
+              <div style={{ fontSize: 28, color: c.text, fontFamily: "var(--font-serif)", marginBottom: 12, lineHeight: 1 }}>"</div>
+              <p style={{ margin: "0 0 14px", fontSize: 16, lineHeight: 1.65, fontStyle: "italic" }}>{cs.quote.text}</p>
+              <span style={{ fontSize: 12.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>{cs.quote.author}</span>
+            </div>
+          )}
+
+          {/* CTA */}
+          <div style={{
+            padding: "36px 40px", borderRadius: "var(--radius)",
+            background: "var(--bg-card)", border: "1px solid var(--line)",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            flexWrap: "wrap", gap: 20,
+          }}>
+            <div>
+              <p style={{ margin: "0 0 4px", fontSize: 16, fontWeight: 500 }}>Want similar results?</p>
+              <p style={{ margin: 0, fontSize: 13.5, color: "var(--text-dim)" }}>
+                Describe your project — we respond within 24h with a scoped proposal.
+              </p>
+            </div>
+            <a href={`mailto:hello@auraajenticai.cloud?subject=Project: ${cs.service}`} style={{
+              padding: "11px 24px", background: "var(--text)", color: "var(--bg)",
+              borderRadius: 9, fontSize: 14, fontWeight: 500,
+              textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,
+            }}>Start a Project →</a>
+          </div>
+        </div>
+      </section>
+      <style>{`
+        @media (max-width: 540px) {
+          .cs-results-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </main>
+  );
+};
+
+const CaseStudiesPage = () => {
+  const D = PORTFOLIO_DATA;
+  const [active, setActive] = React.useState(null);
+  const cases = D.caseStudies || [];
+
+  const cs = active ? cases.find(c => c.slug === active) : null;
+  if (cs) return <CaseStudyDetail cs={cs} onBack={() => setActive(null)} />;
+
+  return (
+    <main>
+      <PageHero
+        eyebrow="Case Studies"
+        title={<>Real projects. Real <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>results.</span></>}
+        sub="Every case study is a production system — running live, serving real users, generating real metrics. No mock-ups."
+      />
+      <section style={{ padding: "80px 0 120px" }}>
+        <div className="container">
+          <div style={{ display: "grid", gap: 20 }}>
+            {cases.map((cs, i) => {
+              const c = CASE_COLORS[cs.color] || CASE_COLORS.cyan;
+              return (
+                <div
+                  key={i}
+                  className="reveal"
+                  onClick={() => setActive(cs.slug)}
+                  style={{
+                    background: "var(--bg-card)", border: "1px solid var(--line)",
+                    borderRadius: "var(--radius)", padding: "32px 36px",
+                    cursor: "pointer", transition: "border-color 0.2s, background 0.2s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = c.bg; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--line)"; e.currentTarget.style.background = "var(--bg-card)"; }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 14, flexWrap: "wrap" }}>
+                        <span style={{
+                          fontSize: 10.5, padding: "2px 9px", borderRadius: 999,
+                          background: c.bg, border: `1px solid ${c.border}`,
+                          color: c.text, fontFamily: "var(--font-mono)",
+                        }}>{cs.service}</span>
+                        <span style={{ fontSize: 11.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>{cs.clientType}</span>
+                      </div>
+                      <h3 style={{ margin: "0 0 12px", fontSize: "clamp(16px, 2vw, 20px)", fontWeight: 500, letterSpacing: "-0.01em" }}>
+                        {cs.title}
+                      </h3>
+                      <p style={{ margin: 0, fontSize: 14, color: "var(--text-dim)", lineHeight: 1.55, maxWidth: 600 }}>
+                        {cs.challenge.slice(0, 140)}…
+                      </p>
+                    </div>
+
+                    {/* Key metric highlight */}
+                    <div style={{ textAlign: "right", flexShrink: 0 }}>
+                      <div style={{ fontSize: 32, fontWeight: 700, color: c.text, lineHeight: 1 }}>{cs.results[0].metric}</div>
+                      <div style={{ fontSize: 11.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)", marginTop: 4, maxWidth: 140, textAlign: "right" }}>{cs.results[0].label}</div>
+                    </div>
+                  </div>
+
+                  {/* Mini results row */}
+                  <div style={{
+                    display: "flex", gap: 24, marginTop: 24,
+                    paddingTop: 20, borderTop: `1px solid ${c.border}`,
+                    flexWrap: "wrap",
+                  }}>
+                    {cs.results.slice(1).map((r, ri) => (
+                      <div key={ri}>
+                        <span style={{ fontSize: 15, fontWeight: 600, color: c.text }}>{r.metric}</span>
+                        <span style={{ fontSize: 11.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)", marginLeft: 6 }}>{r.label}</span>
+                      </div>
+                    ))}
+                    <span style={{ marginLeft: "auto", fontSize: 20, color: "var(--text-faint)", flexShrink: 0 }}>→</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
 window.ServicesPage     = ServicesPage;
 window.StackPage        = StackPage;
 window.AgentsPage       = AgentsPage;
@@ -1080,3 +1286,4 @@ window.ContactPage      = ContactPage;
 window.PricingPage      = PricingPage;
 window.BlogPage         = BlogPage;
 window.ServiceDetailPage = ServiceDetailPage;
+window.CaseStudiesPage  = CaseStudiesPage;
