@@ -164,6 +164,27 @@ const PORTFOLIO_DATA = {
         "Full Meta API access via official MCP integration",
       ],
     },
+    {
+      id: "courier-mcp",
+      name: "Aura Courier MCP",
+      nameBn: "অরা কুরিয়ার MCP",
+      kind: "Connector · Live",
+      badge: "LIVE · MCP Connector",
+      description:
+        "One Model Context Protocol connector for every Bangladesh courier. Add it to Claude, plug in your own courier keys, and book & track parcels — Steadfast & Pathao — straight from a conversation. Your shop's logistics, agentic.",
+      stack: ["MCP", "Steadfast", "Pathao", "Claude", "TypeScript"],
+      impact: { primary: "1", secondary: "connector · every courier" },
+      color: "amber",
+      highlights: [
+        "Book & track parcels from Claude — no dashboard hopping",
+        "One URL, your own courier keys — nothing stored by us",
+        "Steadfast & Pathao live · RedX & Paperfly coming",
+        "Works in Claude Desktop, Claude Code, or hosted",
+        "Open source — anyone can add it in seconds",
+      ],
+      demo: "https://aura-courier-mcp.auraajenticai.cloud",
+      repo: "https://github.com/auraajenticai/aura-courier-mcp",
+    },
   ],
 
   testimonials: [
