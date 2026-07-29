@@ -182,7 +182,7 @@ const PORTFOLIO_DATA = {
         "Works in Claude Desktop, Claude Code, or hosted",
         "Open source — anyone can add it in seconds",
       ],
-      demo: "https://aura-courier-mcp.auraajenticai.cloud",
+      demo: "https://courier.auraajenticai.cloud",
       repo: "https://github.com/auraajenticai/aura-courier-mcp",
     },
   ],
