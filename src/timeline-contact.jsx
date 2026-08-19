@@ -160,7 +160,7 @@ const Contact = ({ lang = "en" }) => {
       setStatus("sent");
     } catch {
       setStatus("idle");
-      setErrors({ message: "Network error — please email us directly at hello@auraajenticai.cloud" });
+      setErrors({ message: "Network error — please email us directly at ceo@auraajenticai.cloud" });
     }
   };
 
@@ -336,6 +336,17 @@ const Contact = ({ lang = "en" }) => {
                 gap: 10,
               }}>
                 <Icons.Mail size={18} /> {D.brand.email}
+              </a>
+              <a href={`https://wa.me/${D.brand.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{
+                fontSize: 15,
+                fontWeight: 500,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                marginTop: 12,
+                color: "#25D366",
+              }}>
+                <Icons.WhatsApp size={16} /> +{D.brand.whatsapp.replace(/^(\d{3})(\d{4})(\d{6})$/, "$1 $2-$3")}
               </a>
               <div style={{ marginTop: 24, display: "flex", gap: 8 }}>
                 {[

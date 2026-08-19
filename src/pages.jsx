@@ -221,7 +221,7 @@ const ServicesPage = ({ lang }) => {
                           )}
 
                           <a
-                            href={`mailto:hello@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
+                            href={`mailto:ceo@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
                             onClick={e => e.stopPropagation()}
                             style={{
                               alignSelf: "flex-start",
@@ -397,10 +397,10 @@ const ContactPage = ({ lang }) => {
       if (res.ok) {
         setSent(true);
       } else {
-        alert('Something went wrong. Please email us directly at hello@auraajenticai.cloud');
+        alert('Something went wrong. Please email us directly at ceo@auraajenticai.cloud');
       }
     } catch {
-      alert('Could not send message. Please email us at hello@auraajenticai.cloud');
+      alert('Could not send message. Please email us at ceo@auraajenticai.cloud');
     }
     setLoading(false);
   };
@@ -421,7 +421,8 @@ const ContactPage = ({ lang }) => {
             <div>
               <div style={{ display: "grid", gap: 24 }}>
                 {[
-                  { label: "Email", value: "hello@auraajenticai.cloud", href: "mailto:hello@auraajenticai.cloud" },
+                  { label: "Email", value: "ceo@auraajenticai.cloud", href: "mailto:ceo@auraajenticai.cloud" },
+                  { label: "WhatsApp", value: "+880 1911-877091", href: "https://wa.me/8801911877091" },
                   { label: "Response time", value: "< 24 hours" },
                   { label: "Location", value: "Dhaka, Bangladesh · Remote" },
                   { label: "Availability", value: "Open to new projects" },
@@ -636,7 +637,7 @@ const PricingPage = () => {
               <p style={{ margin: 0, fontSize: 14, color: "var(--text-dim)" }}>Email us a brief description — we'll scope it and get back within 24 hours.</p>
             </div>
             <a
-              href="mailto:hello@auraajenticai.cloud?subject=Project Scoping"
+              href="mailto:ceo@auraajenticai.cloud?subject=Project Scoping"
               style={{
                 padding: "12px 24px", background: "var(--text)", color: "var(--bg)",
                 borderRadius: 10, fontSize: 14, fontWeight: 500,
@@ -753,7 +754,7 @@ const BlogPage = () => {
                 Want to build something like this?
               </p>
               <a
-                href={`mailto:hello@auraajenticai.cloud?subject=Enquiry from blog: ${article.title}`}
+                href={`mailto:ceo@auraajenticai.cloud?subject=Enquiry from blog: ${article.title}`}
                 style={{
                   display: "inline-flex", padding: "10px 22px",
                   background: "var(--text)", color: "var(--bg)",
@@ -913,7 +914,7 @@ const ServiceDetailPage = ({ svc }) => {
             </a>
           )}
           <a
-            href={`mailto:hello@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
+            href={`mailto:ceo@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '10px 20px', borderRadius: 9,
@@ -1044,7 +1045,7 @@ const ServiceDetailPage = ({ svc }) => {
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a
-                href={`mailto:hello@auraajenticai.cloud?subject=Project: ${svc.name}`}
+                href={`mailto:ceo@auraajenticai.cloud?subject=Project: ${svc.name}`}
                 style={{
                   padding: '12px 28px', background: 'var(--text)', color: 'var(--bg)',
                   borderRadius: 10, fontSize: 14, fontWeight: 500,
@@ -1179,7 +1180,7 @@ const CaseStudyDetail = ({ cs, onBack }) => {
                 Describe your project — we respond within 24h with a scoped proposal.
               </p>
             </div>
-            <a href={`mailto:hello@auraajenticai.cloud?subject=Project: ${cs.service}`} style={{
+            <a href={`mailto:ceo@auraajenticai.cloud?subject=Project: ${cs.service}`} style={{
               padding: "11px 24px", background: "var(--text)", color: "var(--bg)",
               borderRadius: 9, fontSize: 14, fontWeight: 500,
               textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,

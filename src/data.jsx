@@ -9,7 +9,8 @@ const PORTFOLIO_DATA = {
     taglineBn: "আমরা AI এজেন্ট, অটোমেশন ও এন্টারপ্রাইজ সিস্টেম তৈরি করি যা ২৪/৭ কাজ করে।",
     location: "Dhaka, Bangladesh · Remote",
     yearsExp: 7,
-    email: "hello@auraajenticai.cloud",
+    email: "ceo@auraajenticai.cloud",
+    whatsapp: "8801911877091",
     domain: "auraajenticai.cloud",
     socials: {
       github: "https://github.com",
@@ -303,7 +304,7 @@ const PORTFOLIO_DATA = {
         "14-day support window",
       ],
       cta: "Get Started",
-      href: "mailto:hello@auraajenticai.cloud?subject=Starter Package Enquiry",
+      href: "mailto:ceo@auraajenticai.cloud?subject=Starter Package Enquiry",
     },
     {
       name: "Growth",
@@ -323,7 +324,7 @@ const PORTFOLIO_DATA = {
         "Performance monitoring setup",
       ],
       cta: "Start Project",
-      href: "mailto:hello@auraajenticai.cloud?subject=Growth Package Enquiry",
+      href: "mailto:ceo@auraajenticai.cloud?subject=Growth Package Enquiry",
     },
     {
       name: "Enterprise",
@@ -344,7 +345,7 @@ const PORTFOLIO_DATA = {
         "Direct engineer access via Slack",
       ],
       cta: "Book a Call",
-      href: "mailto:hello@auraajenticai.cloud?subject=Enterprise Enquiry",
+      href: "mailto:ceo@auraajenticai.cloud?subject=Enterprise Enquiry",
     },
   ],
 

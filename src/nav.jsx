@@ -127,7 +127,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {lang === "en" ? "বাং" : "EN"}
             </button>
 
-            <a href="mailto:hello@auraajenticai.cloud?subject=Project Quote" className="nav-quote-btn" style={{
+            <a href="mailto:ceo@auraajenticai.cloud?subject=Project Quote" className="nav-quote-btn" style={{
               padding: "7px 13px",
               background: "transparent",
               border: "1px solid var(--line)",
@@ -262,7 +262,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {lang === "en" ? "বাংলা" : "English"}
             </button>
             <a
-              href="mailto:hello@auraajenticai.cloud?subject=Project Quote"
+              href="mailto:ceo@auraajenticai.cloud?subject=Project Quote"
               onClick={() => setMenuOpen(false)}
               style={{
                 padding: "8px 14px",
