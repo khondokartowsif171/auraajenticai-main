@@ -175,7 +175,7 @@ const ProjectCard = ({ p }) => {
                 fontWeight: 500,
                 textDecoration: "none",
                 cursor: "pointer",
-              }}>Demo <Icons.ArrowUpRight size={12} /></a>
+              }}>Live Use Case <Icons.ArrowUpRight size={12} /></a>
             )}
           </div>
         </div>
