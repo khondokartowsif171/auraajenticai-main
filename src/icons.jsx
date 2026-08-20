@@ -49,7 +49,7 @@ const Icons = {
       src="logo.png"
       width={full ? size * 4 : size}
       height={size}
-      alt="Aura Agentic AI"
+      alt="Aura Ajentic AI"
       style={{
         objectFit: "contain",
         objectPosition: "center",

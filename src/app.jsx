@@ -73,7 +73,7 @@ function App() {
 
   // Dynamic meta tags per route
   React.useEffect(() => {
-    const BASE = 'Aura Agentic AI';
+    const BASE = 'Aura Ajentic AI';
     const SERVICE_IDS = (PORTFOLIO_DATA.services || []).reduce((m, s) => {
       m['services/' + s.id] = { title: `${s.name} — ${BASE}`, desc: s.description };
       return m;
@@ -97,7 +97,7 @@ function App() {
       },
       timeline: {
         title: `Experience — ${BASE}`,
-        desc: '7 years of shipping production AI systems — from fintech infrastructure to MT5 trading bots to founding Aura Agentic AI in Dhaka, Bangladesh.',
+        desc: '7 years of shipping production AI systems — from fintech infrastructure to MT5 trading bots to founding Aura Ajentic AI in Dhaka, Bangladesh.',
       },
       contact: {
         title: `Contact — ${BASE}`,
@@ -113,7 +113,7 @@ function App() {
       },
       blog: {
         title: `Blog — ${BASE}`,
-        desc: 'Technical deep-dives on building AI agents, MT5 Expert Advisors, Meta Ads automation, and the infrastructure behind Aura Agentic AI.',
+        desc: 'Technical deep-dives on building AI agents, MT5 Expert Advisors, Meta Ads automation, and the infrastructure behind Aura Ajentic AI.',
       },
       products: {
         title: `Our Products — ${BASE}`,
@@ -121,11 +121,11 @@ function App() {
       },
       privacy: {
         title: `Privacy Policy — ${BASE}`,
-        desc: 'What Aura Agentic AI collects, how it\'s used, and how to ask us to delete it.',
+        desc: 'What Aura Ajentic AI collects, how it\'s used, and how to ask us to delete it.',
       },
       terms: {
         title: `Terms of Service — ${BASE}`,
-        desc: 'Terms for Aura Agentic AI project engagements and client dashboard access.',
+        desc: 'Terms for Aura Ajentic AI project engagements and client dashboard access.',
       },
       ...SERVICE_IDS,
     };

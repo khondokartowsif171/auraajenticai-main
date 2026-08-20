@@ -1,7 +1,7 @@
 // Content for the portfolio
 const PORTFOLIO_DATA = {
   brand: {
-    name: "Aura Agentic AI",
+    name: "Aura Ajentic AI",
     handle: "@aura",
     title: "Agentic AI & Full-Stack Development",
     titleBn: "এজেন্টিক এআই ও ফুল-স্ট্যাক ডেভেলপমেন্ট",
@@ -604,7 +604,7 @@ const PORTFOLIO_DATA = {
     {
       year: "2024 — Present",
       role: "Founder & Principal Engineer",
-      company: "Aura Agentic Cloud",
+      company: "Aura Ajentic Cloud",
       kind: "Product",
       detail: "Building the agent runtime layer — orchestration, evals, observability — used by 12 enterprise teams.",
     },
