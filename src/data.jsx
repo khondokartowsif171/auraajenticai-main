@@ -13,8 +13,8 @@ const PORTFOLIO_DATA = {
     whatsapp: "8801911877091",
     domain: "auraajenticai.cloud",
     socials: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
+      github: "https://github.com/khondokartowsif171",
+      linkedin: "https://www.linkedin.com/in/amirul-islam-redwan-90114a3ab/",
       twitter: "https://twitter.com",
     },
   },
