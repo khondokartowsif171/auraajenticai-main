@@ -1,14 +1,15 @@
 // Timeline + Contact + Footer
 
-const Timeline = () => {
+const Timeline = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
+  const bn = lang === "bn";
   return (
     <section id="timeline" style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="Trajectory"
+          eyebrow={bn ? "যাত্রাপথ" : "Trajectory"}
           num="05 / 06"
-          title="Seven years, one through-line: shipping systems that work in production."
+          title={bn ? "সাত বছর, একটাই ধারা: প্রোডাকশনে কাজ করা সিস্টেম শিপ করা।" : "Seven years, one through-line: shipping systems that work in production."}
         />
 
         <div style={{ position: "relative", paddingLeft: 32 }}>
@@ -69,7 +70,7 @@ const Timeline = () => {
                     fontSize: 10.5,
                     color: "var(--text-dim)",
                     fontFamily: "var(--font-mono)",
-                  }}>{e.kind}</span>
+                  }}>{bn ? e.kindBn : e.kind}</span>
                 </div>
                 <div>
                   <h3 style={{
@@ -77,7 +78,7 @@ const Timeline = () => {
                     fontSize: 19,
                     fontWeight: 500,
                     letterSpacing: "-0.01em",
-                  }}>{e.role}</h3>
+                  }}>{bn ? e.roleBn : e.role}</h3>
                   <div style={{
                     marginTop: 4,
                     fontSize: 14,
@@ -90,7 +91,7 @@ const Timeline = () => {
                     lineHeight: 1.6,
                     color: "var(--text-dim)",
                     maxWidth: 600,
-                  }}>{e.detail}</p>
+                  }}>{bn ? e.detailBn : e.detail}</p>
                 </div>
               </div>
             </div>
@@ -526,8 +527,9 @@ const ChatbotWidget = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
+  const bn = lang === "bn";
   return (
     <footer style={{
       borderTop: "1px solid var(--line)",
@@ -545,10 +547,10 @@ const Footer = () => {
           <span style={{ fontSize: 13, color: "var(--text-dim)" }}>{D.brand.name} · {D.brand.domain}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <a href="#/privacy" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>Privacy</a>
-          <a href="#/terms" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>Terms</a>
+          <a href="#/privacy" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>{bn ? "প্রাইভেসি" : "Privacy"}</a>
+          <a href="#/terms" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>{bn ? "শর্তাবলী" : "Terms"}</a>
           <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
-            © 2026 — Built with intent.
+            {bn ? "© ২০২৬ — যত্ন করে তৈরি।" : "© 2026 — Built with intent."}
           </div>
         </div>
       </div>

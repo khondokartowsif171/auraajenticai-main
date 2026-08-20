@@ -1,16 +1,23 @@
 // Top nav — minimal, sticky, blurred — mobile-responsive
 const NAV_LINKS = [
-  { id: "services", label: "Services", url: "#/services" },
-  { id: "case-studies", label: "Case Studies", url: "#/case-studies" },
-  { id: "pricing", label: "Pricing", url: "#/pricing" },
-  { id: "blog", label: "Blog", url: "#/blog" },
-  { id: "contact", label: "Contact", url: "#/contact" },
+  { id: "services", label: "Services", labelBn: "সার্ভিস", url: "#/services" },
+  { id: "case-studies", label: "Case Studies", labelBn: "কেস স্টাডি", url: "#/case-studies" },
+  { id: "pricing", label: "Pricing", labelBn: "মূল্য", url: "#/pricing" },
+  { id: "blog", label: "Blog", labelBn: "ব্লগ", url: "#/blog" },
+  { id: "contact", label: "Contact", labelBn: "যোগাযোগ", url: "#/contact" },
 ]
+
+const NAV_TXT = {
+  en: { search: "Search", getQuote: "Get a Quote", clientLogin: "Client Login" },
+  bn: { search: "খুঁজুন", getQuote: "কোট নিন", clientLogin: "ক্লায়েন্ট লগইন" },
+};
 
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const links = NAV_LINKS;
+  const t = NAV_TXT[lang] || NAV_TXT.en;
+  const bn = lang === "bn";
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -72,7 +79,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                     e.currentTarget.style.color = isActive ? "var(--text)" : "var(--text-dim)";
                     e.currentTarget.style.background = isActive ? "var(--line)" : "transparent";
                   }}
-                >{l.label}</a>
+                >{bn && l.labelBn ? l.labelBn : l.label}</a>
               );
             })}
           </div>
@@ -91,7 +98,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               fontSize: 12.5,
             }}>
               <Icons.Search size={13} />
-              <span>Search</span>
+              <span>{t.search}</span>
               <kbd style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 10.5,
@@ -138,7 +145,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}>
-              Get a Quote
+              {t.getQuote}
             </a>
 
             <a href="https://auth.auraajenticai.cloud/login" className="nav-login-btn" style={{
@@ -154,7 +161,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}>
-              Client Login <Icons.Arrow size={13} />
+              {t.clientLogin} <Icons.Arrow size={13} />
             </a>
           </div>
 
@@ -196,7 +203,6 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
             .nav-search-btn { display: none !important; }
             .nav-quote-btn { display: none !important; }
             .nav-badge { display: none !important; }
-            .nav-lang-btn { display: none !important; }
           }
           @media (max-width: 480px) {
             .nav-login-btn { display: none !important; }
@@ -235,7 +241,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 display: "block",
                 borderBottom: "1px solid var(--line)",
               }}
-            >{l.label}</a>
+            >{bn && l.labelBn ? l.labelBn : l.label}</a>
           ))}
           <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
             <button onClick={() => { onToggleTheme(); setMenuOpen(false); }} style={{
@@ -273,7 +279,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 textDecoration: "none",
               }}
-            >Get a Quote</a>
+            >{t.getQuote}</a>
             <a
               href="https://auth.auraajenticai.cloud/login"
               onClick={() => setMenuOpen(false)}
@@ -286,7 +292,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 borderRadius: 8,
                 textDecoration: "none",
               }}
-            >Client Login</a>
+            >{t.clientLogin}</a>
           </div>
         </div>
       )}

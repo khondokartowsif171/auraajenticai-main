@@ -7,9 +7,16 @@ const colorMap = {
   amber:  { bg: "rgba(251, 191, 36, 0.08)", border: "rgba(251, 191, 36, 0.25)", text: "#fcd34d" },
 };
 
-const ProjectCard = ({ p }) => {
+const PROJ_TXT = {
+  en: { liveUseCase: "Live Use Case", noRepo: "No repository linked", viewRepo: "View repository" },
+  bn: { liveUseCase: "লাইভ ব্যবহার দেখুন", noRepo: "রিপোজিটরি যুক্ত নেই", viewRepo: "রিপোজিটরি দেখুন" },
+};
+
+const ProjectCard = ({ p, lang = "en" }) => {
   const tint = colorMap[p.color] || colorMap.violet;
   const [hover, setHover] = React.useState(false);
+  const t = PROJ_TXT[lang] || PROJ_TXT.en;
+  const bn = lang === "bn";
 
   return (
     <article
@@ -64,7 +71,7 @@ const ProjectCard = ({ p }) => {
           letterSpacing: "0.06em",
         }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: tint.text }} />
-          {p.kind}
+          {bn ? p.kindBn : p.kind}
         </div>
         <div style={{
           position: "absolute",
@@ -76,7 +83,7 @@ const ProjectCard = ({ p }) => {
           background: tint.bg,
           border: `1px solid ${tint.border}`,
           borderRadius: 4,
-        }}>{p.kind}</div>
+        }}>{bn ? p.kindBn : p.kind}</div>
       </div>
 
       <div style={{ padding: 24, position: "relative" }}>
@@ -85,15 +92,7 @@ const ProjectCard = ({ p }) => {
           fontSize: 20,
           fontWeight: 500,
           letterSpacing: "-0.02em",
-        }}>{p.name}</h3>
-        {p.nameBn && (
-          <div style={{
-            marginTop: 4,
-            fontSize: 12,
-            color: "var(--text-faint)",
-            fontFamily: "var(--font-sans)",
-          }}>{p.nameBn}</div>
-        )}
+        }}>{bn && p.nameBn ? p.nameBn : p.name}</h3>
 
         <p style={{
           marginTop: 12,
@@ -101,7 +100,7 @@ const ProjectCard = ({ p }) => {
           fontSize: 14,
           lineHeight: 1.55,
           color: "var(--text-dim)",
-        }}>{p.description}</p>
+        }}>{bn && p.descriptionBn ? p.descriptionBn : p.description}</p>
 
         {/* Stack badges */}
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
@@ -153,7 +152,7 @@ const ProjectCard = ({ p }) => {
                 borderRadius: 8,
                 color: "var(--text-dim)",
                 textDecoration: "none",
-              }} title="View repository"><Icons.Github size={14} /></a>
+              }} title={t.viewRepo}><Icons.Github size={14} /></a>
             ) : (
               <span style={{
                 width: 34, height: 34,
@@ -161,7 +160,7 @@ const ProjectCard = ({ p }) => {
                 border: "1px solid var(--line)",
                 borderRadius: 8,
                 color: "var(--line-strong)",
-              }} title="No repository linked"><Icons.Github size={14} /></span>
+              }} title={t.noRepo}><Icons.Github size={14} /></span>
             )}
             {p.demo && (
               <a href={p.demo} target="_blank" rel="noopener noreferrer" style={{
@@ -175,7 +174,7 @@ const ProjectCard = ({ p }) => {
                 fontWeight: 500,
                 textDecoration: "none",
                 cursor: "pointer",
-              }}>Live Use Case <Icons.ArrowUpRight size={12} /></a>
+              }}>{t.liveUseCase} <Icons.ArrowUpRight size={12} /></a>
             )}
           </div>
         </div>
@@ -329,9 +328,12 @@ function mergeServices(local, apiData) {
   });
 }
 
-const Projects = () => {
+const PROJECTS_NUM_WORDS_BN = ['শূন্য','এক','দুই','তিন','চার','পাঁচ','ছয়','সাত','আট','নয়'];
+
+const Projects = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
   const [services, setServices] = React.useState(D.services);
+  const bn = lang === "bn";
 
   React.useEffect(() => {
     const CACHE_KEY = 'aura_svc_v3';
@@ -361,10 +363,14 @@ const Projects = () => {
     <section id="work" style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="What we build"
+          eyebrow={bn ? "আমরা যা বানাই" : "What we build"}
           num={`03 / 06`}
-          title={<>{['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine'][services.length] || services.length} service{services.length !== 1 ? 's' : ''}. One team. All <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>production-grade</span>.</>}
-          sub="From landing pages to AI agent runtimes — we take your idea from spec to live deployment."
+          title={bn
+            ? <>{PROJECTS_NUM_WORDS_BN[services.length] || services.length}টা সার্ভিস। একটাই টিম। সব <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>প্রোডাকশন-গ্রেড</span>।</>
+            : <>{['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine'][services.length] || services.length} service{services.length !== 1 ? 's' : ''}. One team. All <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>production-grade</span>.</>}
+          sub={bn
+            ? "ল্যান্ডিং পেজ থেকে এআই এজেন্ট রানটাইম পর্যন্ত — আমরা আপনার আইডিয়া spec থেকে লাইভ ডিপ্লয়মেন্টে নিয়ে যাই।"
+            : "From landing pages to AI agent runtimes — we take your idea from spec to live deployment."}
         />
 
         <div style={{
@@ -372,7 +378,7 @@ const Projects = () => {
           gridTemplateColumns: "repeat(2, 1fr)",
           gap: 16,
         }} className="proj-grid">
-          {services.map(p => <ProjectCard key={p.id} p={p} />)}
+          {services.map(p => <ProjectCard key={p.id} p={p} lang={lang} />)}
         </div>
 
         <style>{`

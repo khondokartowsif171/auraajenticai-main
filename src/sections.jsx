@@ -28,15 +28,48 @@ const SectionHeader = ({ eyebrow, title, sub, num }) => (
   </div>
 );
 
-const About = () => {
+const ABOUT_TXT = {
+  en: {
+    eyebrow: "About",
+    title: <>I architect the systems that act — not the demos that <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>impress</span>.</>,
+    glance: "At a glance",
+    startConvo: "Start a conversation",
+    rows: [
+      ["Discipline", "Agentic systems · Full-stack"],
+      ["Stack range", "TS · Python · Solidity"],
+      ["Working with", "Founders · CTOs · Platform leads"],
+      ["Engagement", "Embedded · Lead architect"],
+      ["Location", "Location"],
+    ],
+    years: "shipping",
+  },
+  bn: {
+    eyebrow: "পরিচিতি",
+    title: <>আমি এমন সিস্টেম বানাই যা কাজ করে — যে ডেমো শুধু <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>মুগ্ধ করে</span> তা না।</>,
+    glance: "এক নজরে",
+    startConvo: "কথোপকথন শুরু করুন",
+    rows: [
+      ["ডিসিপ্লিন", "এজেন্টিক সিস্টেম · ফুল-স্ট্যাক"],
+      ["স্ট্যাক রেঞ্জ", "TS · Python · Solidity"],
+      ["কাজ করি", "ফাউন্ডার · CTO · প্ল্যাটফর্ম লিড"],
+      ["এনগেজমেন্ট", "এমবেডেড · লিড আর্কিটেক্ট"],
+      ["লোকেশন", "Location"],
+    ],
+    years: "শিপিং",
+  },
+};
+
+const About = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
+  const bn = lang === "bn";
+  const t = ABOUT_TXT[lang] || ABOUT_TXT.en;
   return (
     <section id="about" style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="About"
+          eyebrow={t.eyebrow}
           num="01 / 06"
-          title={<>I architect the systems that act — not the demos that <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>impress</span>.</>}
+          title={t.title}
         />
 
         <div style={{
@@ -51,7 +84,7 @@ const About = () => {
               lineHeight: 1.65,
               color: "var(--text-dim)",
               margin: 0,
-            }}>{D.about.pitch}</p>
+            }}>{bn ? D.about.pitchBn : D.about.pitch}</p>
 
             <ul style={{
               marginTop: 32,
@@ -60,7 +93,7 @@ const About = () => {
               display: "grid",
               gap: 14,
             }}>
-              {D.about.bullets.map((b, i) => (
+              {(bn ? D.about.bulletsBn : D.about.bullets).map((b, i) => (
                 <li key={i} style={{
                   display: "flex",
                   gap: 14,
@@ -82,16 +115,23 @@ const About = () => {
 
           {/* Side card: at a glance */}
           <div className="panel" style={{ padding: 28 }}>
-            <div className="eyebrow" style={{ marginBottom: 20 }}>At a glance</div>
+            <div className="eyebrow" style={{ marginBottom: 20 }}>{t.glance}</div>
             <div style={{ display: "grid", gap: 16 }}>
-              {[
+              {(bn ? [
+                ["ডিসিপ্লিন", "এজেন্টিক সিস্টেম · ফুল-স্ট্যাক"],
+                ["বছর", `${D.brand.yearsExp}+ শিপিং`],
+                ["স্ট্যাক রেঞ্জ", "TS · Python · Solidity"],
+                ["কাজ করি", "ফাউন্ডার · CTO · প্ল্যাটফর্ম লিড"],
+                ["এনগেজমেন্ট", "এমবেডেড · লিড আর্কিটেক্ট"],
+                ["লোকেশন", D.brand.location],
+              ] : [
                 ["Discipline", "Agentic systems · Full-stack"],
                 ["Years", `${D.brand.yearsExp}+ shipping`],
                 ["Stack range", "TS · Python · Solidity"],
                 ["Working with", "Founders · CTOs · Platform leads"],
                 ["Engagement", "Embedded · Lead architect"],
                 ["Location", D.brand.location],
-              ].map(([k, v]) => (
+              ]).map(([k, v]) => (
                 <div key={k} style={{
                   display: "grid",
                   gridTemplateColumns: "110px 1fr",
@@ -113,7 +153,7 @@ const About = () => {
               fontSize: 13,
               color: "var(--accent)",
             }}>
-              Start a conversation <Icons.ArrowUpRight size={13} />
+              {t.startConvo} <Icons.ArrowUpRight size={13} />
             </a>
           </div>
         </div>
@@ -128,8 +168,17 @@ const About = () => {
   );
 };
 
-const Skills = () => {
+const CAT_BN = {
+  "Frontend": "ফ্রন্টএন্ড",
+  "Backend": "ব্যাকএন্ড",
+  "AI / Agents": "এআই / এজেন্ট",
+  "Web3": "ওয়েব৩",
+  "DevOps": "ডেভঅপস",
+};
+
+const Skills = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
+  const bn = lang === "bn";
   const cats = Object.keys(D.stack);
   const [active, setActive] = React.useState(cats[0]);
   const items = D.stack[active];
@@ -146,10 +195,10 @@ const Skills = () => {
     <section id="stack" style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="Stack"
+          eyebrow={bn ? "স্ট্যাক" : "Stack"}
           num="02 / 06"
-          title="Tools I reach for, weighted by reps."
-          sub="Numbers are honest signal — not a vanity bar. They reflect production hours, not tutorials watched."
+          title={bn ? "যেসব টুল ব্যবহার করি, অভিজ্ঞতা অনুযায়ী।" : "Tools I reach for, weighted by reps."}
+          sub={bn ? "সংখ্যাগুলো সৎ সিগন্যাল — কোনো vanity bar না। এগুলো প্রোডাকশন সময় প্রতিফলিত করে, tutorial দেখা না।" : "Numbers are honest signal — not a vanity bar. They reflect production hours, not tutorials watched."}
         />
 
         {/* Category tabs */}
@@ -181,7 +230,7 @@ const Skills = () => {
                 fontWeight: 500,
                 transition: "all 0.15s",
               }}>
-                <I size={13} /> {c}
+                <I size={13} /> {bn ? CAT_BN[c] || c : c}
               </button>
             );
           })}
@@ -247,16 +296,19 @@ const TESTIMONIAL_COLORS = {
   violet: { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" },
 };
 
-const Testimonials = () => {
+const Testimonials = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
+  const bn = lang === "bn";
   return (
     <section style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="Client Results"
+          eyebrow={bn ? "ক্লায়েন্ট ফলাফল" : "Client Results"}
           num="05 / 06"
-          title={<>What clients say after we <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ship</span></>}
-          sub="Real projects. Real metrics. No stock-photo testimonials."
+          title={bn
+            ? <>শিপ করার পর ক্লায়েন্টরা যা <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>বলে</span></>
+            : <>What clients say after we <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ship</span></>}
+          sub={bn ? "আসল প্রজেক্ট। আসল মেট্রিক্স। কোনো stock-photo testimonial না।" : "Real projects. Real metrics. No stock-photo testimonials."}
         />
         <div style={{
           display: "grid",
@@ -283,7 +335,7 @@ const Testimonials = () => {
                 <p style={{
                   margin: "0 0 24px", fontSize: 15.5,
                   lineHeight: 1.65, color: "var(--text)",
-                }}>{t.text}</p>
+                }}>{bn && t.textBn ? t.textBn : t.text}</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: "50%",
@@ -331,7 +383,8 @@ const PRODUCT_COLORS = {
   amber:  { bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.22)", text: "#fde68a" },
 };
 
-const OwnProductCard = ({ product }) => {
+const OwnProductCard = ({ product, lang = "en" }) => {
+  const bn = lang === "bn";
   const c = PRODUCT_COLORS[product.color] || PRODUCT_COLORS.violet;
   return (
     <div className="reveal" style={{
@@ -364,7 +417,7 @@ const OwnProductCard = ({ product }) => {
               boxShadow: "0 0 6px rgba(34,197,94,0.9)", display: "inline-block",
               animation: "glamour-pulse 2s ease-in-out infinite",
             }} />
-            LIVE
+            {bn ? "লাইভ" : "LIVE"}
           </span>
           {product.badge && (
             <span style={{
@@ -378,7 +431,7 @@ const OwnProductCard = ({ product }) => {
             padding: "3px 9px", borderRadius: 999,
             background: "var(--bg-elev)", border: "1px solid var(--line)",
             marginLeft: "auto",
-          }}>Built by Aura</span>
+          }}>{bn ? "Aura-র তৈরি" : "Built by Aura"}</span>
         </div>
 
         {/* Brand name */}
@@ -396,19 +449,19 @@ const OwnProductCard = ({ product }) => {
             margin: 0, fontSize: 11.5, color: "var(--text-faint)",
             fontFamily: "var(--font-mono)", letterSpacing: "0.1em",
             textTransform: "uppercase",
-          }}>{product.tagline}</p>
+          }}>{bn && product.taglineBn ? product.taglineBn : product.tagline}</p>
         </div>
       </div>
 
       {/* Card body */}
       <div style={{ padding: "28px 36px 32px", display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
         <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.65, color: "var(--text-dim)" }}>
-          {product.description}
+          {bn && product.descriptionBn ? product.descriptionBn : product.description}
         </p>
 
         {/* Top 3 features */}
         <div style={{ display: "grid", gap: 8 }}>
-          {product.features.slice(0, 3).map((f, i) => (
+          {(bn && product.featuresBn ? product.featuresBn : product.features).slice(0, 3).map((f, i) => (
             <div key={i} style={{ display: "flex", gap: 10, fontSize: 13, color: "var(--text)" }}>
               <span style={{ color: c.text, flexShrink: 0, fontSize: 11, marginTop: 2 }}>✓</span>
               {f}
@@ -416,7 +469,7 @@ const OwnProductCard = ({ product }) => {
           ))}
           {product.features.length > 3 && (
             <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)", paddingLeft: 21 }}>
-              +{product.features.length - 3} more capabilities
+              {bn ? `+${product.features.length - 3}টা আরও ক্ষমতা` : `+${product.features.length - 3} more capabilities`}
             </div>
           )}
         </div>
@@ -451,7 +504,7 @@ const OwnProductCard = ({ product }) => {
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               <polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
             </svg>
-            Visit →
+            {bn ? "দেখুন →" : "Visit →"}
           </a>
           <a href="#/services/web-app-dev" style={{
             display: "inline-flex", alignItems: "center", gap: 7,
@@ -462,17 +515,18 @@ const OwnProductCard = ({ product }) => {
           }}
             onMouseEnter={e => e.currentTarget.style.background = c.bg}
             onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-          >Build Mine →</a>
+          >{bn ? "আমারটা বানান →" : "Build Mine →"}</a>
         </div>
       </div>
     </div>
   );
 };
 
-const FlagshipProduct = () => {
+const FlagshipProduct = ({ lang = "en" }) => {
   const D = PORTFOLIO_DATA;
   const products = D.ownProducts || [];
   if (!products.length) return null;
+  const bn = lang === "bn";
 
   const rose   = { bg: "rgba(244,63,94,0.08)",  border: "rgba(244,63,94,0.22)",  text: "#fda4af" };
   const violet = { bg: "rgba(124,92,255,0.08)", border: "rgba(124,92,255,0.22)", text: "#a78bfa" };
@@ -481,10 +535,14 @@ const FlagshipProduct = () => {
     <section style={{ padding: "120px 0", borderTop: "1px solid var(--line)" }}>
       <div className="container">
         <SectionHeader
-          eyebrow="Our Own Products"
+          eyebrow={bn ? "আমাদের নিজস্ব প্রোডাক্ট" : "Our Own Products"}
           num="03.5 / 06"
-          title={<>We don't just build for clients — we build for <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ourselves.</span></>}
-          sub="These are Aura's own live products — real businesses we built, run, and grow. Visit them. That's exactly what we ship for you."
+          title={bn
+            ? <>আমরা শুধু ক্লায়েন্টদের জন্য বানাই না — নিজেদের জন্যও <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>বানাই।</span></>
+            : <>We don't just build for clients — we build for <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ourselves.</span></>}
+          sub={bn
+            ? "এগুলো Aura-র নিজস্ব লাইভ প্রোডাক্ট — আসল ব্যবসা যা আমরা বানিয়েছি, চালাই, বড় করছি। ঘুরে দেখুন। এটাই আমরা আপনার জন্য শিপ করি।"
+            : "These are Aura's own live products — real businesses we built, run, and grow. Visit them. That's exactly what we ship for you."}
         />
 
         {/* Products grid */}
@@ -493,7 +551,7 @@ const FlagshipProduct = () => {
           gridTemplateColumns: `repeat(${Math.min(products.length, 2)}, 1fr)`,
           gap: 20,
         }}>
-          {products.map(p => <OwnProductCard key={p.id} product={p} />)}
+          {products.map(p => <OwnProductCard key={p.id} product={p} lang={lang} />)}
         </div>
 
         {/* Bottom nudge */}
@@ -506,13 +564,13 @@ const FlagshipProduct = () => {
         }}>
           <div>
             <span style={{ fontSize: 15, fontWeight: 500, color: "var(--text)" }}>
-              Want Aura to build your product?
+              {bn ? "Aura-কে দিয়ে আপনার প্রোডাক্ট বানাতে চান?" : "Want Aura to build your product?"}
             </span>
             <span style={{
               display: "block", fontSize: 13, color: "var(--text-faint)",
               marginTop: 3, fontFamily: "var(--font-mono)",
             }}>
-              E-commerce · AI marketplace · SaaS — from $499 · Delivered in 2–4 weeks
+              {bn ? "ই-কমার্স · এআই মার্কেটপ্লেস · SaaS — $৪৯৯ থেকে শুরু · ২–৪ সপ্তাহে ডেলিভারি" : "E-commerce · AI marketplace · SaaS — from $499 · Delivered in 2–4 weeks"}
             </span>
           </div>
           <a href="#/contact" style={{
@@ -520,7 +578,7 @@ const FlagshipProduct = () => {
             background: "var(--text)", color: "var(--bg)",
             borderRadius: 9, fontSize: 13.5, fontWeight: 500,
             textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,
-          }}>Start a Project →</a>
+          }}>{bn ? "প্রজেক্ট শুরু করুন →" : "Start a Project →"}</a>
         </div>
       </div>
 

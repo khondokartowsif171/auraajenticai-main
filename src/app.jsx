@@ -166,7 +166,7 @@ function App() {
     if (route.startsWith('services/')) {
       const id = route.slice('services/'.length);
       const svc = (PORTFOLIO_DATA.services || []).find(s => s.id === id);
-      if (svc) return <T.ServiceDetailPage svc={svc} />;
+      if (svc) return <T.ServiceDetailPage svc={svc} lang={lang} />;
       window.location.hash = '#/services';
       return null;
     }
@@ -175,34 +175,34 @@ function App() {
       case 'services':
         return <T.ServicesPage lang={lang} />;
       case 'stack':
-        return <T.StackPage />;
+        return <T.StackPage lang={lang} />;
       case 'agents':
-        return <T.AgentsPage />;
+        return <T.AgentsPage lang={lang} />;
       case 'timeline':
-        return <T.TimelinePage />;
+        return <T.TimelinePage lang={lang} />;
       case 'contact':
         return <T.ContactPage lang={lang} />;
       case 'pricing':
-        return <T.PricingPage />;
+        return <T.PricingPage lang={lang} />;
       case 'blog':
-        return <T.BlogPage />;
+        return <T.BlogPage lang={lang} />;
       case 'case-studies':
-        return <T.CaseStudiesPage />;
+        return <T.CaseStudiesPage lang={lang} />;
       case 'privacy':
-        return <T.PrivacyPage />;
+        return <T.PrivacyPage lang={lang} />;
       case 'terms':
-        return <T.TermsPage />;
+        return <T.TermsPage lang={lang} />;
       default:
         return (
           <main style={density === "compact" ? { fontSize: 14.5 } : undefined}>
             <T.Hero headlinePrefix={tweaks.heroHeadlinePrefix} headlineSuffix={tweaks.heroHeadlineSuffix} lang={lang} />
-            <T.About />
-            <T.Skills />
-            <T.Projects />
-            <T.FlagshipProduct />
-            <T.AgentShowcase />
-            <T.Testimonials />
-            <T.Timeline />
+            <T.About lang={lang} />
+            <T.Skills lang={lang} />
+            <T.Projects lang={lang} />
+            <T.FlagshipProduct lang={lang} />
+            <T.AgentShowcase lang={lang} />
+            <T.Testimonials lang={lang} />
+            <T.Timeline lang={lang} />
             <T.Contact lang={lang} />
           </main>
         );
@@ -213,9 +213,9 @@ function App() {
     <>
       <T.Nav {...navProps} />
       {renderPage()}
-      <T.Footer />
-      <T.CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
-      <T.ChatboxWidget />
+      <T.Footer lang={lang} />
+      <T.CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} lang={lang} />
+      <T.ChatboxWidget lang={lang} />
 
       <window.TweaksPanel title="Tweaks">
         <window.TweakSection label="Theme" />
