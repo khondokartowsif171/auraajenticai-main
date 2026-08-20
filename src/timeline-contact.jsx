@@ -544,8 +544,12 @@ const Footer = () => {
           <Icons.Logo size={22} />
           <span style={{ fontSize: 13, color: "var(--text-dim)" }}>{D.brand.name} · {D.brand.domain}</span>
         </div>
-        <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
-          © 2026 — Built with intent.
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <a href="#/privacy" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>Privacy</a>
+          <a href="#/terms" style={{ fontSize: 12.5, color: "var(--text-dim)" }}>Terms</a>
+          <div style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+            © 2026 — Built with intent.
+          </div>
         </div>
       </div>
     </footer>

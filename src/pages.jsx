@@ -1279,6 +1279,95 @@ const CaseStudiesPage = () => {
   );
 };
 
+const LEGAL_SECTIONS = [
+  {
+    h: "What we collect",
+    p: "When you use the contact form on this site, we collect your name, email address, the service you're asking about, your budget range (if given), and your project description. When you sign in to an Aura product (like the client dashboard), we collect your email, name, and — if you use Google Sign-In — the basic profile info Google shares with us (name, email, profile photo). We don't collect payment card details ourselves; any payment processing runs through the payment provider directly.",
+  },
+  {
+    h: "Analytics",
+    p: "This site uses Google Analytics, Google Tag Manager, and Plausible Analytics to understand traffic and usage — page views, referral source, rough device/location info. Plausible doesn't use cookies or track individuals across sites. Google's tools may use cookies; you can opt out via your browser's cookie settings or Google's own opt-out tools.",
+  },
+  {
+    h: "How we use it",
+    p: "Contact form submissions are used only to respond to your enquiry — we don't sell, rent, or share your contact details with third parties for marketing. Account info is used to run the product you signed up for (e.g. showing you your own projects and invoices in the client dashboard) and isn't shared outside Aura's own systems.",
+  },
+  {
+    h: "Third-party sign-in",
+    p: "If you sign in with Google, Aura only requests your basic profile (name, email) — never your Google password, contacts, files, or anything beyond what's needed to identify your existing Aura account. We don't post to your Google account or access any other Google service on your behalf.",
+  },
+  {
+    h: "Data retention",
+    p: "Contact form submissions and account records are kept as long as needed to run the relevant Aura service, or until you ask us to delete them.",
+  },
+  {
+    h: "Your rights",
+    p: "You can ask what data we hold about you, ask us to correct it, or ask us to delete it, at any time — email ceo@auraajenticai.cloud and we'll handle it directly, no automated runaround.",
+  },
+];
+
+const PrivacyPage = () => (
+  <main>
+    <PageHero
+      eyebrow="Legal"
+      title="Privacy Policy"
+      sub="Last updated August 20, 2026. Short version: we collect what's needed to run Aura's services and respond to you, we don't sell your data, and you can ask us to delete it anytime."
+    />
+    <section style={{ padding: "40px 0 120px" }}>
+      <div className="container" style={{ maxWidth: 760 }}>
+        <div style={{ display: "grid", gap: 32 }}>
+          {LEGAL_SECTIONS.map((s, i) => (
+            <div key={i}>
+              <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>{s.h}</h2>
+              <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "var(--text-dim)" }}>{s.p}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+);
+
+const TermsPage = () => (
+  <main>
+    <PageHero
+      eyebrow="Legal"
+      title="Terms of Service"
+      sub="Last updated August 20, 2026. The short version: we scope and quote work before starting, deliver what we agree to, and either side can end an ongoing engagement with notice."
+    />
+    <section style={{ padding: "40px 0 120px" }}>
+      <div className="container" style={{ maxWidth: 760 }}>
+        <div style={{ display: "grid", gap: 32 }}>
+          <div>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Engagements</h2>
+            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "var(--text-dim)" }}>
+              Project work starts from a scoped proposal — timeline, deliverables, and price agreed
+              before any work begins. Ongoing services (like a managed WhatsApp bot or social
+              autopilot) run monthly and can be paused or cancelled with notice as set out in your
+              service agreement.
+            </p>
+          </div>
+          <div>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Client accounts</h2>
+            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "var(--text-dim)" }}>
+              Access to the Aura client dashboard is provided to keep you informed on your own
+              projects, invoices, and services — it isn't a public sign-up product, and accounts are
+              provisioned by Aura's team for active clients.
+            </p>
+          </div>
+          <div>
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Questions</h2>
+            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "var(--text-dim)" }}>
+              Email ceo@auraajenticai.cloud for anything not covered here or in your specific project
+              agreement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+);
+
 window.ServicesPage     = ServicesPage;
 window.StackPage        = StackPage;
 window.AgentsPage       = AgentsPage;
@@ -1288,3 +1377,5 @@ window.PricingPage      = PricingPage;
 window.BlogPage         = BlogPage;
 window.ServiceDetailPage = ServiceDetailPage;
 window.CaseStudiesPage  = CaseStudiesPage;
+window.PrivacyPage      = PrivacyPage;
+window.TermsPage        = TermsPage;

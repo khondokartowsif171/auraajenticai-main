@@ -119,6 +119,14 @@ function App() {
         title: `Our Products — ${BASE}`,
         desc: 'GlamourTouch — Aura\'s own live e-commerce store in beauty & lifestyle. A real, production product built on our stack. See exactly what we ship for clients.',
       },
+      privacy: {
+        title: `Privacy Policy — ${BASE}`,
+        desc: 'What Aura Agentic AI collects, how it\'s used, and how to ask us to delete it.',
+      },
+      terms: {
+        title: `Terms of Service — ${BASE}`,
+        desc: 'Terms for Aura Agentic AI project engagements and client dashboard access.',
+      },
       ...SERVICE_IDS,
     };
 
@@ -180,6 +188,10 @@ function App() {
         return <T.BlogPage />;
       case 'case-studies':
         return <T.CaseStudiesPage />;
+      case 'privacy':
+        return <T.PrivacyPage />;
+      case 'terms':
+        return <T.TermsPage />;
       default:
         return (
           <main style={density === "compact" ? { fontSize: 14.5 } : undefined}>
