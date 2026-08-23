@@ -123,17 +123,21 @@ const TerminalRain = () => {
 const HERO_TXT = {
   en: {
     pill: "Accepting new projects · Q3 2026",
+    getStarted: "Get Started Free",
     viewServices: "View Services",
-    getQuote: "Get a Quote",
     lastShipped: "Last shipped: 2 days ago",
   },
   bn: {
     pill: "নতুন প্রজেক্ট নেওয়া হচ্ছে · Q3 2026",
+    getStarted: "ফ্রি শুরু করুন",
     viewServices: "সার্ভিস দেখুন",
-    getQuote: "কোট নিন",
     lastShipped: "সর্বশেষ শিপড: ২ দিন আগে",
   },
 };
+
+// Same self-serve destination as the nav's "Get Started" -- lands a fresh signup straight on the
+// client portal's service catalog instead of a blank dashboard.
+const HERO_REGISTER_URL = "https://auth.auraajenticai.cloud/register?next=" + encodeURIComponent("https://client.auraajenticai.cloud/services");
 
 const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
   const D = PORTFOLIO_DATA;
@@ -210,24 +214,25 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
 
         {/* CTAs */}
         <div style={{ display: "flex", gap: 12, marginTop: 40, flexWrap: "wrap" }}>
-          <a href="#work" style={{
+          <a href={HERO_REGISTER_URL} style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
             padding: "12px 20px",
-            background: "var(--text)",
-            color: "var(--bg)",
+            background: "linear-gradient(110deg, var(--accent), var(--accent-2))",
+            color: "#fff",
             fontSize: 14,
             fontWeight: 500,
             borderRadius: 10,
+            textDecoration: "none",
             transition: "transform 0.15s",
           }}
             onMouseEnter={e => e.currentTarget.style.transform = "translateY(-1px)"}
             onMouseLeave={e => e.currentTarget.style.transform = "none"}
           >
-            {t.viewServices} <Icons.Arrow size={14} />
+            {t.getStarted} <Icons.Arrow size={14} />
           </a>
-          <a href="#contact" style={{
+          <a href="#work" style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
@@ -240,7 +245,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
             borderRadius: 10,
             textDecoration: "none",
           }}>
-            {t.getQuote} <Icons.ArrowUpRight size={14} />
+            {t.viewServices} <Icons.ArrowUpRight size={14} />
           </a>
         </div>
 

@@ -8,9 +8,13 @@ const NAV_LINKS = [
 ]
 
 const NAV_TXT = {
-  en: { search: "Search", getQuote: "Get a Quote", clientLogin: "Client Login" },
-  bn: { search: "খুঁজুন", getQuote: "কোট নিন", clientLogin: "ক্লায়েন্ট লগইন" },
+  en: { search: "Search", getQuote: "Get a Quote", clientLogin: "Client Login", getStarted: "Get Started" },
+  bn: { search: "খুঁজুন", getQuote: "কোট নিন", clientLogin: "ক্লায়েন্ট লগইন", getStarted: "শুরু করুন" },
 };
+
+// Where a self-serve account should land right after signing up -- the client portal's own
+// service catalog, not a blank dashboard. aura-auth's /register already reads and honors `next`.
+const REGISTER_URL = "https://auth.auraajenticai.cloud/register?next=" + encodeURIComponent("https://client.auraajenticai.cloud/services");
 
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }) => {
   const [scrolled, setScrolled] = React.useState(false);
@@ -149,6 +153,20 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
             </a>
 
             <a href="https://auth.auraajenticai.cloud/login" className="nav-login-btn" style={{
+              padding: "8px 12px",
+              background: "transparent",
+              border: "1px solid var(--line)",
+              borderRadius: 8,
+              color: "var(--text-dim)",
+              fontSize: 13,
+              fontWeight: 500,
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+            }}>
+              {t.clientLogin}
+            </a>
+
+            <a href={REGISTER_URL} className="nav-signup-btn" style={{
               display: "flex",
               alignItems: "center",
               gap: 6,
@@ -161,7 +179,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}>
-              {t.clientLogin} <Icons.Arrow size={13} />
+              {t.getStarted} <Icons.Arrow size={13} />
             </a>
           </div>
 
@@ -206,6 +224,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
           }
           @media (max-width: 480px) {
             .nav-login-btn { display: none !important; }
+            .nav-signup-btn { display: none !important; }
             .nav-hamburger { display: flex !important; }
           }
         `}</style>
@@ -285,6 +304,20 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               onClick={() => setMenuOpen(false)}
               style={{
                 padding: "8px 14px",
+                background: "transparent",
+                border: "1px solid var(--line)",
+                color: "var(--text-dim)",
+                fontSize: 13,
+                fontWeight: 500,
+                borderRadius: 8,
+                textDecoration: "none",
+              }}
+            >{t.clientLogin}</a>
+            <a
+              href={REGISTER_URL}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                padding: "8px 14px",
                 background: "var(--text)",
                 color: "var(--bg)",
                 fontSize: 13,
@@ -292,7 +325,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 borderRadius: 8,
                 textDecoration: "none",
               }}
-            >{t.clientLogin}</a>
+            >{t.getStarted}</a>
           </div>
         </div>
       )}
