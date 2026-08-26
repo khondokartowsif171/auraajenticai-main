@@ -81,7 +81,7 @@ function App() {
     const META = {
       '': {
         title: `${BASE} — AI Agents, Automation & Full-Stack Dev`,
-        desc: 'We build custom AI agents, automation pipelines, Web3 infrastructure, MT5 trading systems, and enterprise web apps. Based in Dhaka, serving clients worldwide.',
+        desc: 'We build custom AI agents, automation pipelines, Web3 infrastructure, MT5 trading systems, and enterprise web apps. Based in Dhaka, Bangladesh — a new agency running our own live products first.',
       },
       services: {
         title: `Services — ${BASE}`,
@@ -89,7 +89,7 @@ function App() {
       },
       stack: {
         title: `Tech Stack — ${BASE}`,
-        desc: 'Production-tested stack: React, SvelteKit, Next.js, Node.js, Python, Anthropic Claude, n8n, Solidity, Docker, and more — across 40+ production agents.',
+        desc: 'What actually runs our own live products: React, SvelteKit, Next.js, Node.js, Supabase, Anthropic Claude, n8n, Solidity, Docker, Coolify, and more.',
       },
       agents: {
         title: `AI Agents — ${BASE}`,
@@ -97,7 +97,7 @@ function App() {
       },
       timeline: {
         title: `Experience — ${BASE}`,
-        desc: '7 years of shipping production AI systems — from fintech infrastructure to MT5 trading bots to founding Aura Ajentic AI in Dhaka, Bangladesh.',
+        desc: 'Founded July 2026. Real, dated milestones — from founding Aura Ajentic AI in Dhaka to our first paying client to Meta Tech Provider status. Not a résumé.',
       },
       contact: {
         title: `Contact — ${BASE}`,
@@ -105,7 +105,7 @@ function App() {
       },
       'case-studies': {
         title: `Case Studies — ${BASE}`,
-        desc: 'Real-world AI agent, MT5 trading, Meta Ads, and Web3 projects with production metrics. See what Aura actually ships for clients.',
+        desc: 'We\'re a new agency — real case studies are coming as our production work ships and proves out. See our own live products in the meantime.',
       },
       pricing: {
         title: `Pricing — ${BASE}`,
@@ -113,11 +113,11 @@ function App() {
       },
       blog: {
         title: `Blog — ${BASE}`,
-        desc: 'Technical deep-dives on building AI agents, MT5 Expert Advisors, Meta Ads automation, and the infrastructure behind Aura Ajentic AI.',
+        desc: 'Real technical write-ups on AI agents, automation, and the infrastructure behind Aura Ajentic AI — published as we ship, not before.',
       },
       products: {
         title: `Our Products — ${BASE}`,
-        desc: 'GlamourTouch — Aura\'s own live e-commerce store in beauty & lifestyle. A real, production product built on our stack. See exactly what we ship for clients.',
+        desc: 'Snehalata and Glamours Touch — Aura\'s own live products, built and run on our own stack. Real businesses, not demos.',
       },
       privacy: {
         title: `Privacy Policy — ${BASE}`,

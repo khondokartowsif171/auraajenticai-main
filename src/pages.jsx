@@ -330,9 +330,9 @@ const TimelinePage = () => {
   return (
     <main>
       <PageHero
-        eyebrow="Experience"
-        title="Seven years of shipping"
-        sub="From agency work to fintech infrastructure to founding Aura — the full arc."
+        eyebrow="Milestones"
+        title="Founded July 2026, shipping since day one"
+        sub="Real, dated milestones — not a résumé. We add one only when something actually happened."
       />
       <section style={{ padding: "80px 0 120px" }}>
         <div className="container">
@@ -774,10 +774,18 @@ const BlogPage = () => {
       <PageHero
         eyebrow="Blog"
         title={<>How we build — <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>openly</span></>}
-        sub="Technical deep-dives on AI agents, trading systems, and the infrastructure behind Aura."
+        sub="Technical write-ups on AI agents, trading systems, and the infrastructure behind Aura — as we ship them, not before."
       />
       <section style={{ padding: "80px 0 120px" }}>
         <div className="container">
+          {articles.length === 0 ? (
+            <div className="panel" style={{ padding: "56px 32px", textAlign: "center", borderRadius: "var(--radius)" }}>
+              <p style={{ margin: 0, fontSize: 17, color: "var(--text-dim)", lineHeight: 1.65, maxWidth: 560, marginInline: "auto" }}>
+                We're a new agency — real technical write-ups are coming as our work actually ships
+                and proves out in production. We'd rather show nothing here than a fabricated post.
+              </p>
+            </div>
+          ) : (
           <div style={{ display: "grid", gap: 20 }}>
             {articles.map((post, i) => {
               const c = BLOG_COLORS[post.color] || BLOG_COLORS.violet;
@@ -818,6 +826,7 @@ const BlogPage = () => {
               );
             })}
           </div>
+          )}
         </div>
       </section>
     </main>
@@ -1214,6 +1223,19 @@ const CaseStudiesPage = () => {
       />
       <section style={{ padding: "80px 0 120px" }}>
         <div className="container">
+          {cases.length === 0 ? (
+            <div className="panel" style={{ padding: "56px 32px", textAlign: "center", borderRadius: "var(--radius)" }}>
+              <p style={{ margin: 0, fontSize: 17, color: "var(--text-dim)", lineHeight: 1.65, maxWidth: 560, marginInline: "auto" }}>
+                We're a new agency — real case studies are coming as our production work ships and proves
+                out. We'd rather show nothing here than a fabricated result.
+              </p>
+              <a href="#/contact" style={{
+                display: "inline-flex", marginTop: 24,
+                padding: "11px 24px", background: "var(--text)", color: "var(--bg)",
+                borderRadius: 9, fontSize: 14, fontWeight: 500, textDecoration: "none",
+              }}>Be our next case study →</a>
+            </div>
+          ) : (
           <div style={{ display: "grid", gap: 20 }}>
             {cases.map((cs, i) => {
               const c = CASE_COLORS[cs.color] || CASE_COLORS.cyan;
@@ -1273,6 +1295,7 @@ const CaseStudiesPage = () => {
               );
             })}
           </div>
+          )}
         </div>
       </section>
     </main>

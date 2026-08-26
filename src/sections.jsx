@@ -31,7 +31,7 @@ const SectionHeader = ({ eyebrow, title, sub, num }) => (
 const ABOUT_TXT = {
   en: {
     eyebrow: "About",
-    title: <>I architect the systems that act — not the demos that <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>impress</span>.</>,
+    title: <>We build the systems that act — not the demos that <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>impress</span>.</>,
     glance: "At a glance",
     startConvo: "Start a conversation",
     rows: [
@@ -45,7 +45,7 @@ const ABOUT_TXT = {
   },
   bn: {
     eyebrow: "পরিচিতি",
-    title: <>আমি এমন সিস্টেম বানাই যা কাজ করে — যে ডেমো শুধু <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>মুগ্ধ করে</span> তা না।</>,
+    title: <>আমরা এমন সিস্টেম বানাই যা কাজ করে — যে ডেমো শুধু <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>মুগ্ধ করে</span> তা না।</>,
     glance: "এক নজরে",
     startConvo: "কথোপকথন শুরু করুন",
     rows: [
@@ -119,17 +119,17 @@ const About = ({ lang = "en" }) => {
             <div style={{ display: "grid", gap: 16 }}>
               {(bn ? [
                 ["ডিসিপ্লিন", "এজেন্টিক সিস্টেম · ফুল-স্ট্যাক"],
-                ["বছর", `${D.brand.yearsExp}+ শিপিং`],
+                ["প্রতিষ্ঠিত", D.brand.founded],
                 ["স্ট্যাক রেঞ্জ", "TS · Python · Solidity"],
                 ["কাজ করি", "ফাউন্ডার · CTO · প্ল্যাটফর্ম লিড"],
-                ["এনগেজমেন্ট", "এমবেডেড · লিড আর্কিটেক্ট"],
+                ["ইনফ্রা", "নিজস্ব VPS · Coolify"],
                 ["লোকেশন", D.brand.location],
               ] : [
                 ["Discipline", "Agentic systems · Full-stack"],
-                ["Years", `${D.brand.yearsExp}+ shipping`],
+                ["Founded", D.brand.founded],
                 ["Stack range", "TS · Python · Solidity"],
                 ["Working with", "Founders · CTOs · Platform leads"],
-                ["Engagement", "Embedded · Lead architect"],
+                ["Infra", "Own VPS · Coolify"],
                 ["Location", D.brand.location],
               ]).map(([k, v]) => (
                 <div key={k} style={{
@@ -197,8 +197,8 @@ const Skills = ({ lang = "en" }) => {
         <SectionHeader
           eyebrow={bn ? "স্ট্যাক" : "Stack"}
           num="02 / 06"
-          title={bn ? "যেসব টুল ব্যবহার করি, অভিজ্ঞতা অনুযায়ী।" : "Tools I reach for, weighted by reps."}
-          sub={bn ? "সংখ্যাগুলো সৎ সিগন্যাল — কোনো vanity bar না। এগুলো প্রোডাকশন সময় প্রতিফলিত করে, tutorial দেখা না।" : "Numbers are honest signal — not a vanity bar. They reflect production hours, not tutorials watched."}
+          title={bn ? "যেসব টুল দিয়ে আমরা বানাই।" : "The tools we build with."}
+          sub={bn ? "আমাদের নিজেদের live প্রোডাক্টে (GT, Snehalata, Aura Platform) সত্যিই ব্যবহৃত — কোনো fake স্কিল-বার না।" : "What actually runs our own live products (GT, Snehalata, Aura Platform) — no fabricated skill bars, just the real list."}
         />
 
         {/* Category tabs */}
@@ -238,49 +238,20 @@ const Skills = ({ lang = "en" }) => {
 
         {/* Items */}
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: 12,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 10,
         }}>
-          {items.map((s, i) => (
-            <div key={s.name} className="panel" style={{
-              padding: "20px 22px",
+          {items.map((name, i) => (
+            <div key={name} className="panel" style={{
+              padding: "12px 18px",
+              fontSize: 14, fontWeight: 500,
               animation: `float-up 0.5s ${i * 0.05}s both`,
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
-                <span style={{ fontSize: 14.5, fontWeight: 500 }}>{s.name}</span>
-                <span style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  color: "var(--text-faint)",
-                }}>{s.level}</span>
-              </div>
-              <div style={{
-                height: 3,
-                background: "var(--line)",
-                borderRadius: 2,
-                overflow: "hidden",
-                position: "relative",
-              }}>
-                <div style={{
-                  width: `${s.level}%`,
-                  height: "100%",
-                  background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
-                  borderRadius: 2,
-                  animation: `grow-w 0.9s ${0.1 + i * 0.04}s both cubic-bezier(0.2,0.8,0.2,1)`,
-                  transformOrigin: "left",
-                }} />
-              </div>
+              {name}
             </div>
           ))}
         </div>
-
-        <style>{`
-          @keyframes grow-w {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-          }
-        `}</style>
       </div>
     </section>
   );
@@ -310,6 +281,19 @@ const Testimonials = ({ lang = "en" }) => {
             : <>What clients say after we <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>ship</span></>}
           sub={bn ? "আসল প্রজেক্ট। আসল মেট্রিক্স। কোনো stock-photo testimonial না।" : "Real projects. Real metrics. No stock-photo testimonials."}
         />
+        {D.testimonials.length === 0 ? (
+          <div className="panel" style={{
+            padding: "48px 32px",
+            textAlign: "center",
+            borderRadius: "var(--radius)",
+          }}>
+            <p style={{ margin: 0, fontSize: 16, color: "var(--text-dim)", lineHeight: 1.6 }}>
+              {bn
+                ? "আমরা একটা নতুন এজেন্সি — real ফলাফল শীঘ্রই আসছে। এখনো কোনো বানানো testimonial দেখাব না।"
+                : "We're a new agency — real results coming soon. We'd rather show nothing than a made-up quote."}
+            </p>
+          </div>
+        ) : (
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
@@ -363,6 +347,7 @@ const Testimonials = ({ lang = "en" }) => {
             );
           })}
         </div>
+        )}
         <style>{`
           @media (max-width: 720px) {
             .testimonials-grid { grid-template-columns: 1fr !important; }
