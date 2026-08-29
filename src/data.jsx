@@ -10,7 +10,7 @@ const PORTFOLIO_DATA = {
     location: "Dhaka, Bangladesh · Remote",
     founded: "Jul 2026",
     email: "ceo@auraajenticai.cloud",
-    whatsapp: "8801911877091",
+    whatsapp: "8801317685758",
     domain: "auraajenticai.cloud",
     socials: {
       github: "https://github.com/khondokartowsif171",

@@ -422,7 +422,7 @@ const ContactPage = ({ lang }) => {
               <div style={{ display: "grid", gap: 24 }}>
                 {[
                   { label: "Email", value: "ceo@auraajenticai.cloud", href: "mailto:ceo@auraajenticai.cloud" },
-                  { label: "WhatsApp", value: "+880 1911-877091", href: "https://wa.me/8801911877091" },
+                  { label: "WhatsApp", value: "+880 1317-685758", href: "https://wa.me/8801317685758" },
                   { label: "Response time", value: "< 24 hours" },
                   { label: "Location", value: "Dhaka, Bangladesh · Remote" },
                   { label: "Availability", value: "Open to new projects" },
