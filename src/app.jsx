@@ -89,11 +89,11 @@ function App() {
       },
       stack: {
         title: `Tech Stack — ${BASE}`,
-        desc: 'What actually runs our own live products: React, SvelteKit, Next.js, Node.js, Supabase, Anthropic Claude, n8n, Solidity, Docker, Coolify, and more.',
+        desc: 'What actually runs our own live products: React, SvelteKit, Next.js, Node.js, Supabase, Google Gemini · Vertex AI, n8n, Solidity, Docker, Coolify, and more.',
       },
       agents: {
         title: `AI Agents — ${BASE}`,
-        desc: 'Live demos of AI agents built with Anthropic Claude, LangGraph, and n8n. Agents that triage, decide, and execute with tool access, memory, and audit trails.',
+        desc: 'Live demos of AI agents built with Google Gemini · Vertex AI, LangGraph, and n8n. Agents that triage, decide, and execute with tool access, memory, and audit trails.',
       },
       timeline: {
         title: `Experience — ${BASE}`,

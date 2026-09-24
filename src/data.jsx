@@ -35,13 +35,13 @@ const PORTFOLIO_DATA = {
       "Built and run our own WhatsApp + Messenger sales bot, live in Bengali, 24/7",
       "Self-host our entire stack on our own VPS with Coolify — no reselling AWS",
       "Meta Tech Provider status — we can onboard other businesses' WhatsApp numbers",
-      "Bangla-first team, built on Anthropic's Claude, not a wrapped GPT-4 API",
+      "Enterprise Agentic Architecture, natively powered by Google Gemini & Vertex AI",
     ],
     bulletsBn: [
       "নিজেদের WhatsApp + Messenger sales বট বানিয়ে চালাচ্ছি, বাংলায়, ২৪/৭ live",
       "পুরো স্ট্যাক নিজেদের VPS-এ Coolify দিয়ে self-host করি — AWS resell না",
       "Meta Tech Provider status অর্জন করেছি — অন্য ব্যবসার WhatsApp নম্বরও onboard করতে পারি",
-      "বাংলা-ফার্স্ট টিম, Anthropic-এর Claude-এর উপর বানানো — কোনো wrapped GPT-4 API না",
+      "গুগল জেমিনাই ও ভার্টেক্স এআই ইনফ্রাস্ট্রাকচারে পরিচালিত এন্টারপ্রাইজ এজেন্টিক সিস্টেম",
     ],
   },
 
@@ -50,7 +50,7 @@ const PORTFOLIO_DATA = {
   stack: {
     Frontend: ["React", "Next.js", "TypeScript", "Tailwind", "SvelteKit"],
     Backend: ["Node.js", "PostgreSQL", "Supabase", "Drizzle ORM", "Hono"],
-    "AI / Agents": ["Anthropic Claude", "n8n", "LangGraph", "Meta MCP", "Gemini"],
+    "AI / Agents": ["Google Gemini", "Vertex AI", "n8n", "LangGraph", "Meta MCP"],
     "Web3": ["Solidity", "viem", "wagmi", "Cloudflare Workers"],
     DevOps: ["Docker", "Coolify", "Traefik", "GitHub Actions", "Vercel"],
   },
@@ -78,10 +78,10 @@ const PORTFOLIO_DATA = {
       kind: "Core Service",
       kindBn: "কোর সার্ভিস",
       description:
-        "Custom AI agents that triage, decide, and execute — integrated with your tools via n8n, Anthropic, and OpenAI.",
+        "Custom AI agents that triage, decide, and execute — integrated with your enterprise workflows via n8n, Vertex AI, and Google Gemini.",
       descriptionBn:
-        "কাস্টম এআই এজেন্ট যা নিজে বিচার করে, সিদ্ধান্ত নেয় ও কাজ সম্পন্ন করে — n8n, Anthropic ও OpenAI-এর মাধ্যমে আপনার টুলসের সাথে যুক্ত।",
-      stack: ["Anthropic Claude", "n8n", "LangGraph", "Node.js", "Hono"],
+        "কাস্টম এআই এজেন্ট যা নিজে বিচার করে, সিদ্ধান্ত নেয় ও কাজ সম্পন্ন করে — n8n, Vertex AI ও Google Gemini-এর মাধ্যমে আপনার টুলসের সাথে যুক্ত।",
+      stack: ["Google Gemini", "Vertex AI", "n8n", "LangGraph", "Node.js", "Hono"],
       impact: { primary: "24/7", secondary: "our own agent, answering real customers" },
       color: "cyan",
       demo: "https://demo-agenticai-website.vercel.app",
@@ -156,7 +156,7 @@ const PORTFOLIO_DATA = {
         "AI agents connected directly to Meta's official API — optimizing bids, rotating creatives, and reallocating budgets every 15 minutes. Not a human checking ads twice a day. A system that never sleeps.",
       descriptionBn:
         "Meta-এর official API-এর সাথে সরাসরি যুক্ত এআই এজেন্ট — প্রতি ১৫ মিনিটে bid অপ্টিমাইজ করে, creative পাল্টায়, বাজেট পুনর্বণ্টন করে। দিনে দুইবার মানুষ চেক করার মতো না — এমন একটা সিস্টেম যা কখনো ঘুমায় না।",
-      stack: ["Meta MCP", "Meta Ads API", "n8n", "Claude AI", "Anthropic"],
+      stack: ["Meta MCP", "Meta Ads API", "n8n", "Gemini AI", "Vertex AI"],
       impact: { primary: "Official", secondary: "Meta MCP · direct API access" },
       color: "rose",
       highlights: [
@@ -274,24 +274,24 @@ const PORTFOLIO_DATA = {
       kindBn: "কানেক্টর · লাইভ",
       badge: "LIVE · MCP Connector",
       description:
-        "One Model Context Protocol connector for every Bangladesh courier. Add it to Claude, plug in your own courier keys, and book & track parcels — Steadfast & Pathao — straight from a conversation. Your shop's logistics, agentic.",
+        "Universal Model Context Protocol (MCP) connector for every Bangladesh courier. Plug in your own courier keys, and book & track parcels — Steadfast, Pathao & RedX — straight from an AI conversation. Your shop's logistics, fully agentic.",
       descriptionBn:
-        "বাংলাদেশের প্রতিটা কুরিয়ারের জন্য একটাই Model Context Protocol কানেক্টর। Claude-এ যোগ করুন, নিজের কুরিয়ার key বসান, আর কথোপকথন থেকেই পার্সেল বুক ও ট্র্যাক করুন — Steadfast ও Pathao। আপনার দোকানের লজিস্টিক্স, এজেন্টিক।",
-      stack: ["MCP", "Steadfast", "Pathao", "Claude", "TypeScript"],
+        "বাংলাদেশের প্রতিটা কুরিয়ারের জন্য সর্বজনীন Model Context Protocol (MCP) কানেক্টর। নিজের কুরিয়ার key বসান, আর এআই কথোপকথন থেকেই পার্সেল বুক ও ট্র্যাক করুন — Steadfast, Pathao ও RedX। আপনার লজিস্টিক্স, ফুল্লি এজেন্টিক।",
+      stack: ["MCP Standard", "Steadfast", "Pathao", "RedX", "TypeScript"],
       impact: { primary: "1", secondary: "connector · every courier" },
       color: "amber",
       highlights: [
-        "Book & track parcels from Claude — no dashboard hopping",
+        "Book & track parcels from any AI agent — no dashboard hopping",
         "One URL, your own courier keys — nothing stored by us",
         "Steadfast & Pathao live · RedX & Paperfly coming",
-        "Works in Claude Desktop, Claude Code, or hosted",
+        "Works across Gemini, Antigravity, MCP clients, or hosted API",
         "Open source — anyone can add it in seconds",
       ],
       highlightsBn: [
-        "Claude থেকেই পার্সেল বুক ও ট্র্যাক — ড্যাশবোর্ড ঘোরাঘুরি লাগবে না",
+        "যেকোনো এআই এজেন্ট থেকে পার্সেল বুক ও ট্র্যাক — ড্যাশবোর্ড ঘোরাঘুরি লাগবে না",
         "একটা URL, আপনার নিজের কুরিয়ার key — আমরা কিছুই সংরক্ষণ করি না",
         "Steadfast ও Pathao লাইভ · RedX ও Paperfly আসছে",
-        "Claude Desktop, Claude Code, বা hosted — সব জায়গায় কাজ করে",
+        "Gemini, Antigravity ও যেকোনো MCP ক্লায়েন্টে কাজ করে",
         "ওপেন সোর্স — যে কেউ কয়েক সেকেন্ডে যোগ করতে পারে",
       ],
       demo: "https://courier.auraajenticai.cloud",
