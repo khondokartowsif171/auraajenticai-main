@@ -33,7 +33,6 @@ const CLIENT_LOGIN_URL = "https://auth.auraajenticai.cloud/login?next=" + encode
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const [clientModalOpen, setClientModalOpen] = React.useState(false);
   const [installModalOpen, setInstallModalOpen] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState(null);
   const [isInstalled, setIsInstalled] = React.useState(false);
@@ -240,13 +239,8 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {t.getQuote}
             </a>
 
-            {/* Client Login Gateway Trigger */}
             <a
               href={CLIENT_LOGIN_URL}
-              onClick={(e) => {
-                e.preventDefault();
-                setClientModalOpen(true);
-              }}
               className="nav-login-btn"
               style={{
                 padding: "8px 12px",
@@ -258,7 +252,6 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontWeight: 500,
                 textDecoration: "none",
                 whiteSpace: "nowrap",
-                cursor: "pointer",
               }}
             >
               {t.clientLogin}
@@ -441,12 +434,9 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 textDecoration: "none",
               }}
-            >{t.getQuote}</a>
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                setClientModalOpen(true);
-              }}
+            <a
+              href={CLIENT_LOGIN_URL}
+              onClick={() => setMenuOpen(false)}
               style={{
                 padding: "8px 14px",
                 background: "transparent",
@@ -455,9 +445,9 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 fontWeight: 500,
                 borderRadius: 8,
-                cursor: "pointer",
+                textDecoration: "none",
               }}
-            >{t.clientLogin}</button>
+            >{t.clientLogin}</a>
             <a
               href={REGISTER_URL}
               onClick={() => setMenuOpen(false)}
@@ -471,164 +461,6 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 textDecoration: "none",
               }}
             >{t.getStarted}</a>
-          </div>
-        </div>
-      )}
-
-      {/* Client Portal Gateway Modal */}
-      {clientModalOpen && (
-        <div
-          onClick={() => setClientModalOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 100,
-            background: "rgba(0, 0, 0, 0.72)",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            display: "grid",
-            placeItems: "center",
-            padding: 16,
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              position: "relative",
-              width: "100%",
-              maxWidth: 460,
-              background: "var(--bg-card, #0c1222)",
-              border: "1px solid rgba(124, 92, 255, 0.35)",
-              borderRadius: 16,
-              padding: "26px 24px",
-              boxShadow: "0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(124, 92, 255, 0.15)",
-              animation: "float-up 0.25s ease-out",
-            }}
-          >
-            {/* Modal Header */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 10,
-                  background: "linear-gradient(135deg, rgba(124, 92, 255, 0.25), rgba(0, 212, 255, 0.25))",
-                  border: "1px solid rgba(124, 92, 255, 0.4)",
-                  display: "grid",
-                  placeItems: "center",
-                }}>
-                  <Icons.Logo size={22} />
-                </div>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, color: "var(--text)" }}>
-                    {bn ? "অরা ক্লায়েন্ট ড্যাশবোর্ড" : "Aura Client Portal"}
-                  </h3>
-                  <div style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 2 }}>
-                    client.auraajenticai.cloud
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => setClientModalOpen(false)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "var(--text-dim)",
-                  cursor: "pointer",
-                  fontSize: 20,
-                  padding: 4,
-                  lineHeight: 1,
-                }}
-              >
-                ✕
-              </button>
-            </div>
-
-            <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.5, margin: "0 0 18px" }}>
-              {bn
-                ? "আপনার মার্চেন্ট একাউন্টে প্রবেশ করে AI সেলস বট, Steadfast/Pathao কুরিয়ার ট্র্যাকিং এবং ক্যাশ-অন-ডেলিভারি ফ্রড ডিফেন্স পরিচালনা করুন।"
-                : "Sign in to your merchant workspace to manage AI conversational agents, track live Steadfast & Pathao shipments, and prevent COD fraud."}
-            </p>
-
-            {/* Quick Workspace Info */}
-            <div style={{
-              background: "rgba(255, 255, 255, 0.03)",
-              border: "1px solid var(--line)",
-              borderRadius: 10,
-              padding: "12px 14px",
-              marginBottom: 18,
-              fontSize: 12,
-              color: "var(--text-dim)",
-            }}>
-              <div style={{ fontWeight: 600, color: "var(--text)", marginBottom: 6 }}>
-                {bn ? "সক্রিয় মার্চেন্ট ওয়ার্কস্পেসসমূহ:" : "Active Enterprise Workspaces:"}
-              </div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                <span style={{
-                  padding: "3px 8px",
-                  borderRadius: 6,
-                  background: "rgba(236, 72, 153, 0.15)",
-                  color: "#f472b6",
-                  border: "1px solid rgba(236, 72, 153, 0.3)",
-                }}>✨ Glamour's Touch</span>
-                <span style={{
-                  padding: "3px 8px",
-                  borderRadius: 6,
-                  background: "rgba(59, 130, 246, 0.15)",
-                  color: "#60a5fa",
-                  border: "1px solid rgba(59, 130, 246, 0.3)",
-                }}>🔧 Applix BD</span>
-                <span style={{
-                  padding: "3px 8px",
-                  borderRadius: 6,
-                  background: "rgba(34, 197, 94, 0.15)",
-                  color: "#4ade80",
-                  border: "1px solid rgba(34, 197, 94, 0.3)",
-                }}>🛡️ All Enterprise</span>
-              </div>
-            </div>
-
-            {/* Direct Login CTA */}
-            <a
-              href={CLIENT_LOGIN_URL}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                width: "100%",
-                padding: "12px 18px",
-                background: "linear-gradient(135deg, #7c5cff, #00d4ff)",
-                color: "#ffffff",
-                fontWeight: 600,
-                fontSize: 14,
-                borderRadius: 10,
-                textDecoration: "none",
-                textAlign: "center",
-                boxShadow: "0 4px 18px rgba(124, 92, 255, 0.4)",
-                marginBottom: 14,
-                boxSizing: "border-box",
-              }}
-            >
-              <span>{bn ? "ড্যাশবোর্ডে লগইন করুন" : "Sign In to Client Dashboard"}</span>
-              <Icons.Arrow size={14} />
-            </a>
-
-            {/* Deep Links / Shortcuts */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-              <a
-                href={REGISTER_URL}
-                style={{ color: "var(--text-dim)", textDecoration: "underline" }}
-              >
-                {bn ? "নতুন একাউন্ট তৈরি করুন" : "Create merchant account"}
-              </a>
-              <a
-                href="https://client.auraajenticai.cloud#view-courier"
-                style={{ color: "var(--accent)", textDecoration: "none" }}
-              >
-                {bn ? "কুরিয়ার হাব ↗" : "Courier Hub ↗"}
-              </a>
-            </div>
           </div>
         </div>
       )}
