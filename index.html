@@ -17,7 +17,16 @@
     <meta name="twitter:image" content="https://auraajenticai.cloud/logo.png" />
     <link rel="canonical" href="https://auraajenticai.cloud" />
     <link rel="icon" type="image/png" href="logo.png" />
-    <link rel="apple-touch-icon" href="logo.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#080d1a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Aura Cloud" />
 
     <meta name="google-site-verification" content="vEK4vy89hAbckU9sUlqn7mZlMxLjNT--CvuLruocMfQ" />
 
@@ -350,5 +359,20 @@
     <script type="text/babel" src="src/chatbox.jsx?v=9"></script>
     <script type="text/babel" src="src/pages.jsx?v=9"></script>
     <script type="text/babel" src="src/app.jsx?v=9"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(function(reg) {
+              console.log('[Aura PWA] Service Worker registered with scope:', reg.scope);
+            })
+            .catch(function(err) {
+              console.warn('[Aura PWA] Service Worker registration failed:', err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

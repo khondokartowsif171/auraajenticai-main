@@ -1,24 +1,43 @@
-// Top nav — minimal, sticky, blurred — mobile-responsive
+// Top nav — minimal, sticky, blurred — mobile-responsive + PWA Install & Client Gateway
 const NAV_LINKS = [
   { id: "services", label: "Services", labelBn: "সার্ভিস", url: "#/services" },
   { id: "case-studies", label: "Case Studies", labelBn: "কেস স্টাডি", url: "#/case-studies" },
   { id: "pricing", label: "Pricing", labelBn: "মূল্য", url: "#/pricing" },
   { id: "blog", label: "Blog", labelBn: "ব্লগ", url: "#/blog" },
   { id: "contact", label: "Contact", labelBn: "যোগাযোগ", url: "#/contact" },
-]
+];
 
 const NAV_TXT = {
-  en: { search: "Search", getQuote: "Get a Quote", clientLogin: "Client Login", getStarted: "Get Started" },
-  bn: { search: "খুঁজুন", getQuote: "কোট নিন", clientLogin: "ক্লায়েন্ট লগইন", getStarted: "শুরু করুন" },
+  en: {
+    search: "Search",
+    getQuote: "Get a Quote",
+    clientLogin: "Client Login",
+    getStarted: "Get Started",
+    installApp: "Install App",
+    appInstalled: "App Installed",
+  },
+  bn: {
+    search: "খুঁজুন",
+    getQuote: "কোট নিন",
+    clientLogin: "ক্লায়েন্ট লগইন",
+    getStarted: "শুরু করুন",
+    installApp: "অ্যাপ ইনস্টল",
+    appInstalled: "অ্যাপ ইনস্টলড",
+  },
 };
 
-// Where a self-serve account should land right after signing up -- the client portal's own
-// service catalog, not a blank dashboard. aura-auth's /register already reads and honors `next`.
+// Next redirects ensure clients land seamlessly in the right SaaS portal
 const REGISTER_URL = "https://auth.auraajenticai.cloud/register?next=" + encodeURIComponent("https://client.auraajenticai.cloud/services");
+const CLIENT_LOGIN_URL = "https://auth.auraajenticai.cloud/login?next=" + encodeURIComponent("https://client.auraajenticai.cloud");
 
 const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [clientModalOpen, setClientModalOpen] = React.useState(false);
+  const [installModalOpen, setInstallModalOpen] = React.useState(false);
+  const [deferredPrompt, setDeferredPrompt] = React.useState(null);
+  const [isInstalled, setIsInstalled] = React.useState(false);
+
   const links = NAV_LINKS;
   const t = NAV_TXT[lang] || NAV_TXT.en;
   const bn = lang === "bn";
@@ -28,6 +47,49 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // PWA standalone detection & prompt listener
+  React.useEffect(() => {
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+    if (isStandalone) {
+      setIsInstalled(true);
+    }
+
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstall);
+    window.addEventListener("appinstalled", handleAppInstalled);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      try {
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          setIsInstalled(true);
+          setDeferredPrompt(null);
+        }
+      } catch (err) {
+        console.warn("PWA install prompt error:", err);
+      }
+    } else {
+      setInstallModalOpen(true);
+    }
+  };
 
   return (
     <>
@@ -138,6 +200,32 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {lang === "en" ? "বাং" : "EN"}
             </button>
 
+            {/* PWA Install Button (Desktop) */}
+            {!isInstalled && (
+              <button
+                onClick={handleInstallClick}
+                className="nav-install-btn"
+                title={bn ? "Aura Cloud অ্যাপ আপনার ডিভাইসে ইনস্টল করুন" : "Install Aura Cloud App on your device"}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "6px 11px",
+                  background: "linear-gradient(135deg, rgba(124,92,255,0.16), rgba(0,212,255,0.16))",
+                  border: "1px solid rgba(124,92,255,0.45)",
+                  borderRadius: 8,
+                  color: "var(--text)",
+                  fontSize: 12.5,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>📲</span>
+                <span>{t.installApp}</span>
+              </button>
+            )}
+
             <a href="mailto:ceo@auraajenticai.cloud?subject=Project Quote" className="nav-quote-btn" style={{
               padding: "7px 13px",
               background: "transparent",
@@ -152,17 +240,27 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {t.getQuote}
             </a>
 
-            <a href="https://auth.auraajenticai.cloud/login" className="nav-login-btn" style={{
-              padding: "8px 12px",
-              background: "transparent",
-              border: "1px solid var(--line)",
-              borderRadius: 8,
-              color: "var(--text-dim)",
-              fontSize: 13,
-              fontWeight: 500,
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-            }}>
+            {/* Client Login Gateway Trigger */}
+            <a
+              href={CLIENT_LOGIN_URL}
+              onClick={(e) => {
+                e.preventDefault();
+                setClientModalOpen(true);
+              }}
+              className="nav-login-btn"
+              style={{
+                padding: "8px 12px",
+                background: "transparent",
+                border: "1px solid var(--line)",
+                borderRadius: 8,
+                color: "var(--text-dim)",
+                fontSize: 13,
+                fontWeight: 500,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                cursor: "pointer",
+              }}
+            >
               {t.clientLogin}
             </a>
 
@@ -220,6 +318,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
           @media (max-width: 640px) {
             .nav-search-btn { display: none !important; }
             .nav-quote-btn { display: none !important; }
+            .nav-install-btn { display: none !important; }
             .nav-badge { display: none !important; }
           }
           @media (max-width: 480px) {
@@ -246,7 +345,51 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
           display: "flex",
           flexDirection: "column",
           gap: 2,
+          maxHeight: "calc(100vh - 64px)",
+          overflowY: "auto",
         }}>
+          {/* Mobile PWA Install Banner */}
+          {!isInstalled && (
+            <div style={{
+              padding: "12px 14px",
+              borderRadius: 12,
+              background: "linear-gradient(135deg, rgba(124,92,255,0.18), rgba(0,212,255,0.18))",
+              border: "1px solid rgba(124,92,255,0.35)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+            }}>
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 13, color: "var(--text)" }}>
+                  {bn ? "📲 Aura Cloud অ্যাপ" : "📲 Aura Cloud App"}
+                </div>
+                <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 2 }}>
+                  {bn ? "হোমস্ক্রিনে ১-ট্যাপে ইনস্টল করুন" : "Install to home screen for 1-tap launch"}
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleInstallClick();
+                }}
+                style={{
+                  padding: "6px 12px",
+                  background: "var(--text)",
+                  color: "var(--bg)",
+                  border: "none",
+                  borderRadius: 8,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {bn ? "ইনস্টল" : "Install"}
+              </button>
+            </div>
+          )}
+
           {links.map(l => (
             <a
               key={l.id}
@@ -299,9 +442,11 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 textDecoration: "none",
               }}
             >{t.getQuote}</a>
-            <a
-              href="https://auth.auraajenticai.cloud/login"
-              onClick={() => setMenuOpen(false)}
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                setClientModalOpen(true);
+              }}
               style={{
                 padding: "8px 14px",
                 background: "transparent",
@@ -310,9 +455,9 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 fontWeight: 500,
                 borderRadius: 8,
-                textDecoration: "none",
+                cursor: "pointer",
               }}
-            >{t.clientLogin}</a>
+            >{t.clientLogin}</button>
             <a
               href={REGISTER_URL}
               onClick={() => setMenuOpen(false)}
@@ -326,6 +471,264 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 textDecoration: "none",
               }}
             >{t.getStarted}</a>
+          </div>
+        </div>
+      )}
+
+      {/* Client Portal Gateway Modal */}
+      {clientModalOpen && (
+        <div
+          onClick={() => setClientModalOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 100,
+            background: "rgba(0, 0, 0, 0.72)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            display: "grid",
+            placeItems: "center",
+            padding: 16,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 460,
+              background: "var(--bg-card, #0c1222)",
+              border: "1px solid rgba(124, 92, 255, 0.35)",
+              borderRadius: 16,
+              padding: "26px 24px",
+              boxShadow: "0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(124, 92, 255, 0.15)",
+              animation: "float-up 0.25s ease-out",
+            }}
+          >
+            {/* Modal Header */}
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  background: "linear-gradient(135deg, rgba(124, 92, 255, 0.25), rgba(0, 212, 255, 0.25))",
+                  border: "1px solid rgba(124, 92, 255, 0.4)",
+                  display: "grid",
+                  placeItems: "center",
+                }}>
+                  <Icons.Logo size={22} />
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, color: "var(--text)" }}>
+                    {bn ? "অরা ক্লায়েন্ট ড্যাশবোর্ড" : "Aura Client Portal"}
+                  </h3>
+                  <div style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 2 }}>
+                    client.auraajenticai.cloud
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => setClientModalOpen(false)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "var(--text-dim)",
+                  cursor: "pointer",
+                  fontSize: 20,
+                  padding: 4,
+                  lineHeight: 1,
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.5, margin: "0 0 18px" }}>
+              {bn
+                ? "আপনার মার্চেন্ট একাউন্টে প্রবেশ করে AI সেলস বট, Steadfast/Pathao কুরিয়ার ট্র্যাকিং এবং ক্যাশ-অন-ডেলিভারি ফ্রড ডিফেন্স পরিচালনা করুন।"
+                : "Sign in to your merchant workspace to manage AI conversational agents, track live Steadfast & Pathao shipments, and prevent COD fraud."}
+            </p>
+
+            {/* Quick Workspace Info */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid var(--line)",
+              borderRadius: 10,
+              padding: "12px 14px",
+              marginBottom: 18,
+              fontSize: 12,
+              color: "var(--text-dim)",
+            }}>
+              <div style={{ fontWeight: 600, color: "var(--text)", marginBottom: 6 }}>
+                {bn ? "সক্রিয় মার্চেন্ট ওয়ার্কস্পেসসমূহ:" : "Active Enterprise Workspaces:"}
+              </div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <span style={{
+                  padding: "3px 8px",
+                  borderRadius: 6,
+                  background: "rgba(236, 72, 153, 0.15)",
+                  color: "#f472b6",
+                  border: "1px solid rgba(236, 72, 153, 0.3)",
+                }}>✨ Glamour's Touch</span>
+                <span style={{
+                  padding: "3px 8px",
+                  borderRadius: 6,
+                  background: "rgba(59, 130, 246, 0.15)",
+                  color: "#60a5fa",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                }}>🔧 Applix BD</span>
+                <span style={{
+                  padding: "3px 8px",
+                  borderRadius: 6,
+                  background: "rgba(34, 197, 94, 0.15)",
+                  color: "#4ade80",
+                  border: "1px solid rgba(34, 197, 94, 0.3)",
+                }}>🛡️ All Enterprise</span>
+              </div>
+            </div>
+
+            {/* Direct Login CTA */}
+            <a
+              href={CLIENT_LOGIN_URL}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                width: "100%",
+                padding: "12px 18px",
+                background: "linear-gradient(135deg, #7c5cff, #00d4ff)",
+                color: "#ffffff",
+                fontWeight: 600,
+                fontSize: 14,
+                borderRadius: 10,
+                textDecoration: "none",
+                textAlign: "center",
+                boxShadow: "0 4px 18px rgba(124, 92, 255, 0.4)",
+                marginBottom: 14,
+                boxSizing: "border-box",
+              }}
+            >
+              <span>{bn ? "ড্যাশবোর্ডে লগইন করুন" : "Sign In to Client Dashboard"}</span>
+              <Icons.Arrow size={14} />
+            </a>
+
+            {/* Deep Links / Shortcuts */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
+              <a
+                href={REGISTER_URL}
+                style={{ color: "var(--text-dim)", textDecoration: "underline" }}
+              >
+                {bn ? "নতুন একাউন্ট তৈরি করুন" : "Create merchant account"}
+              </a>
+              <a
+                href="https://client.auraajenticai.cloud#view-courier"
+                style={{ color: "var(--accent)", textDecoration: "none" }}
+              >
+                {bn ? "কুরিয়ার হাব ↗" : "Courier Hub ↗"}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PWA Install Help Modal (iOS & Fallback) */}
+      {installModalOpen && (
+        <div
+          onClick={() => setInstallModalOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 100,
+            background: "rgba(0, 0, 0, 0.72)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            display: "grid",
+            placeItems: "center",
+            padding: 16,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 440,
+              background: "var(--bg-card, #0c1222)",
+              border: "1px solid rgba(0, 212, 255, 0.35)",
+              borderRadius: 16,
+              padding: "24px 22px",
+              boxShadow: "0 24px 60px rgba(0, 0, 0, 0.6)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 22 }}>📲</span>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, color: "var(--text)" }}>
+                  {bn ? "Aura Cloud অ্যাপ ইনস্টল গাইড" : "Install Aura Cloud App"}
+                </h3>
+              </div>
+              <button
+                onClick={() => setInstallModalOpen(false)}
+                style={{ background: "transparent", border: "none", color: "var(--text-dim)", cursor: "pointer", fontSize: 18 }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.5, margin: "0 0 16px" }}>
+              {bn
+                ? "Aura Cloud অ্যাপ আপনার মোবাইল বা কম্পিউটারে ইনস্টল করে সরাসরি ১-ট্যাপে ওপেন করুন:"
+                : "Install the Aura Cloud App directly to your device for 1-tap instant launch and offline access:"}
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 12.5, color: "var(--text)" }}>
+              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid var(--line)" }}>
+                <strong>🍏 iOS / iPhone (Safari):</strong>
+                <div style={{ color: "var(--text-dim)", marginTop: 4 }}>
+                  {bn
+                    ? "সাফারি ব্রাউজারের নিচে শেয়ার বাটনে (Share ⎋) ট্যাপ করুন, এরপর নিচে স্ক্রল করে 'Add to Home Screen ⊞' সিলেক্ট করুন।"
+                    : "Tap the Share icon (⎋) at bottom of Safari, scroll down and tap 'Add to Home Screen ⊞'."}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid var(--line)" }}>
+                <strong>🤖 Android (Chrome):</strong>
+                <div style={{ color: "var(--text-dim)", marginTop: 4 }}>
+                  {bn
+                    ? "ব্রাউজারের উপরের ডান কোণায় ৩-ডট মেনুতে (⋮) ট্যাপ করে 'Install app' বা 'Add to Home screen' নির্বাচন করুন।"
+                    : "Tap the 3 dots menu (⋮) in Chrome and select 'Install app' or 'Add to Home screen'."}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid var(--line)" }}>
+                <strong>💻 Windows / Mac (Chrome & Edge):</strong>
+                <div style={{ color: "var(--text-dim)", marginTop: 4 }}>
+                  {bn
+                    ? "ব্রাউজারের অ্যাড্রেস বারের ডানপাশে ইনস্টল আইকন (⊕) ক্লিক করে ইনস্টল করুন।"
+                    : "Click the Install icon (⊕) in the browser address bar to install to desktop."}
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setInstallModalOpen(false)}
+              style={{
+                width: "100%",
+                marginTop: 18,
+                padding: "10px",
+                background: "var(--text)",
+                color: "var(--bg)",
+                border: "none",
+                borderRadius: 8,
+                fontWeight: 600,
+                fontSize: 13,
+                cursor: "pointer",
+              }}
+            >
+              {bn ? "ঠিক আছে, বুঝেছি" : "Got it"}
+            </button>
           </div>
         </div>
       )}
