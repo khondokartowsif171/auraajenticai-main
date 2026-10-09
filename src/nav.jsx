@@ -434,6 +434,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 textDecoration: "none",
               }}
+            >{t.quote}</a>
             <a
               href={CLIENT_LOGIN_URL}
               onClick={() => setMenuOpen(false)}

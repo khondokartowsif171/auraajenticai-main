@@ -1,5 +1,5 @@
 // Aura Cloud Service Worker — High-Performance Offline & Shell Cache v2.0
-const CACHE_NAME = 'aura-cloud-pwa-v2';
+const CACHE_NAME = 'aura-cloud-pwa-v3';
 
 const STATIC_PRECACHE = [
   '/',

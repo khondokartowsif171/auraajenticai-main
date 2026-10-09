@@ -41,21 +41,21 @@
       "name": "Client Portal Login",
       "short_name": "Client Login",
       "description": "Sign in to Aura Client Dashboard",
-      "url": "https://auth.auraajenticai.cloud/login?next=https%3A%2F%2Fclient.auraajenticai.cloud",
+      "url": "/?action=client-login",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Courier Logistics Hub",
       "short_name": "Courier Hub",
       "description": "Steadfast, Pathao & RedX Logistics Automation",
-      "url": "https://client.auraajenticai.cloud#view-courier",
+      "url": "/?action=courier-hub",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "AI Agent Studio",
       "short_name": "AI Studio",
       "description": "Omnichannel AI Agent Copilot & Inbox",
-      "url": "https://client.auraajenticai.cloud#view-inbox",
+      "url": "/?action=ai-studio",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ],
