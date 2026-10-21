@@ -342,18 +342,19 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           >
             <div style={{
               background: "#ffffff",
-              padding: "5px 10px",
-              borderRadius: "6px",
+              padding: "8px 18px",
+              borderRadius: "9px",
               display: "inline-flex",
               alignItems: "center",
               width: "fit-content",
-              marginBottom: "8px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+              maxWidth: "100%",
+              marginBottom: "10px",
+              boxShadow: "0 3px 12px rgba(0, 0, 0, 0.22)",
             }}>
               <img 
                 src="/google_cloud_partner_advantage_badge.svg" 
                 alt="Google Cloud Partner Advantage"
-                style={{ height: "20px", width: "auto", display: "block" }} 
+                style={{ height: "38px", maxWidth: "100%", width: "auto", display: "block" }} 
               />
             </div>
             <div style={{
