@@ -497,7 +497,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           }
         `}</style>
 
-        {/* Interactive Meta Verification In-App Modal */}
+        {/* Interactive Meta Verification In-App Modal (Mobile-Optimized & Fully Scrollable) */}
         {metaModalOpen && (
           <div 
             onClick={() => setMetaModalOpen(false)}
@@ -505,24 +505,31 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
               position: "fixed",
               inset: 0,
               zIndex: 999999,
-              background: "rgba(5, 7, 13, 0.78)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
+              background: "rgba(5, 7, 13, 0.82)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "center",
-              padding: 20,
+              padding: "12px",
+              overflowY: "auto",
+              WebkitOverflowScrolling: "touch",
+              overscrollBehavior: "contain",
               animation: "fadeIn 0.2s ease-out",
             }}
           >
             <div 
               onClick={(e) => e.stopPropagation()}
               style={{
-                background: "linear-gradient(145deg, rgba(20, 24, 33, 0.96), rgba(13, 16, 23, 0.98))",
+                background: "linear-gradient(145deg, rgba(20, 24, 33, 0.97), rgba(13, 16, 23, 0.99))",
                 border: "1px solid rgba(255, 255, 255, 0.12)",
                 borderRadius: 18,
                 maxWidth: 620,
                 width: "100%",
+                maxHeight: "calc(100dvh - 24px)",
+                margin: "auto",
+                display: "flex",
+                flexDirection: "column",
                 boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 104, 225, 0.15)",
                 overflow: "hidden",
                 fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
@@ -530,22 +537,23 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
               }}
             >
               {/* Top Accent Gradient Bar */}
-              <div style={{ height: 4, background: "linear-gradient(90deg, #0668E1, #00C6FF, #0668E1)" }} />
+              <div style={{ height: 4, background: "linear-gradient(90deg, #0668E1, #00C6FF, #0668E1)", flexShrink: 0 }} />
 
-              {/* Modal Header */}
+              {/* Modal Header (Pinned at Top) */}
               <div style={{
-                padding: "24px 28px 20px",
+                padding: "18px 22px 14px",
                 borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                 display: "flex",
-                alignItems: "flex-start",
+                alignItems: "center",
                 justifyContent: "space-between",
-                gap: 16,
+                gap: 12,
+                flexShrink: 0,
               }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
                     background: "rgba(6, 104, 225, 0.12)",
                     border: "1px solid rgba(6, 104, 225, 0.3)",
                     display: "flex",
@@ -553,13 +561,13 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                     justifyContent: "center",
                     flexShrink: 0,
                   }}>
-                    <svg viewBox="0 0 100 100" style={{ height: 24, width: "auto" }} fill="#0668E1">
+                    <svg viewBox="0 0 100 100" style={{ height: 22, width: "auto" }} fill="#0668E1">
                       <path d="M49.999 59.832c-6.84 0-12.87-4.63-14.72-11.31-.83-3.02-.75-6.2.24-9.17 1.83-5.53 6.94-9.33 12.8-9.52 7.04-.22 13.06 4.34 14.7 11.09.83 3.4.67 6.95-.47 10.27-1.8 5.25-6.52 8.64-12.55 8.64zm35.29-37.45C76.999 13.9 66.86 9.87 56.63 10.74c-12.22 1.05-22.95 8.89-27.42 20.06-2.52 6.28-3.07 13.14-1.58 19.74 2.82 12.5 12.79 21.99 25.39 24.16 8.52 1.47 17.2-.18 24.58-4.66 4.96-3.02 9.07-7.25 11.96-12.31l-14.76-8.52c-1.53 2.68-3.7 4.93-6.33 6.53-3.9 2.37-8.49 3.25-13 2.47-6.68-1.16-11.99-6.22-13.49-12.87-.79-3.5-.5-7.14.84-10.48 2.37-5.92 8.05-10.07 14.52-10.63 5.42-.46 10.79 1.67 14.73 5.84 2.67 2.83 4.41 6.38 5.04 10.26l17.02-3.15c-1.2-7.39-4.5-14.16-9.56-19.57z"/>
                     </svg>
                   </div>
                   <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <h3 style={{ margin: 0, fontSize: 19, fontWeight: 600, color: "#ffffff", letterSpacing: "-0.01em" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, color: "#ffffff", letterSpacing: "-0.01em" }}>
                         Meta Verified Tech Provider
                       </h3>
                       <span style={{
@@ -569,16 +577,16 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                         background: "rgba(16, 185, 129, 0.15)",
                         border: "1px solid rgba(16, 185, 129, 0.4)",
                         color: "#34d399",
-                        fontSize: 11,
+                        fontSize: 10.5,
                         fontWeight: 600,
-                        padding: "2px 8px",
+                        padding: "2px 7px",
                         borderRadius: 9999,
                       }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         VERIFIED
                       </span>
                     </div>
-                    <p style={{ margin: "3px 0 0", fontSize: 13, color: "#94a3b8" }}>
+                    <p style={{ margin: "2px 0 0", fontSize: 12, color: "#94a3b8" }}>
                       Official Meta Developer Platform Verification Record
                     </p>
                   </div>
@@ -597,24 +605,31 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 16,
+                    flexShrink: 0,
                   }}
                 >✕</button>
               </div>
 
-              {/* Modal Body */}
-              <div style={{ padding: "24px 28px" }}>
+              {/* Modal Body (Vertically Scrollable) */}
+              <div style={{
+                padding: "18px 22px",
+                overflowY: "auto",
+                WebkitOverflowScrolling: "touch",
+                overscrollBehavior: "contain",
+                flex: "1 1 auto",
+              }}>
                 {/* Status Box from Meta Developer Dashboard */}
                 <div style={{
                   background: "rgba(6, 104, 225, 0.08)",
                   border: "1px solid rgba(6, 104, 225, 0.25)",
                   borderRadius: 12,
-                  padding: "16px 18px",
-                  marginBottom: 20,
+                  padding: "14px 16px",
+                  marginBottom: 16,
                 }}>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                     <div style={{
-                      width: 28,
-                      height: 28,
+                      width: 24,
+                      height: 24,
                       borderRadius: "50%",
                       background: "#0668E1",
                       display: "flex",
@@ -624,13 +639,13 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                       color: "#ffffff",
                       marginTop: 1,
                     }}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <div>
-                      <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#ffffff", lineHeight: 1.4 }}>
+                      <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#ffffff", lineHeight: 1.4 }}>
                         Your business was verified as a Tech Provider.
                       </div>
-                      <div style={{ fontSize: "12.5px", color: "#cbd5e1", marginTop: 4, lineHeight: 1.5 }}>
+                      <div style={{ fontSize: "12px", color: "#cbd5e1", marginTop: 4, lineHeight: 1.45 }}>
                         Meta Developer Access Verification confirms that <strong style={{ color: "#60a5fa" }}>Aura Agentic AI</strong> is officially approved to deploy client messaging solutions, WhatsApp Cloud API integrations, and AI automation on behalf of businesses.
                       </div>
                     </div>
@@ -638,66 +653,60 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                 </div>
 
                 {/* Verification Key Details Grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginBottom: 20 }}>
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Registered App ID</div>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: "#f8fafc", marginTop: 4, fontFamily: "monospace", letterSpacing: "0.02em" }}>950490494806230</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 16 }}>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
+                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Registered App ID</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#f8fafc", marginTop: 3, fontFamily: "monospace", letterSpacing: "0.02em" }}>950490494806230</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verification Tier</div>
-                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#38bdf8", marginTop: 4 }}>Tech Provider (Direct Access)</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
+                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verification Tier</div>
+                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#38bdf8", marginTop: 3 }}>Tech Provider (Direct Access)</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Authorized Submitter</div>
-                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#f8fafc", marginTop: 4 }}>A. I. Redwan</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
+                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Authorized Submitter</div>
+                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#f8fafc", marginTop: 3 }}>A. I. Redwan</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verified Date</div>
-                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#f8fafc", marginTop: 4 }}>August 2, 2026</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
+                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verified Date</div>
+                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#f8fafc", marginTop: 3 }}>August 2, 2026</div>
                   </div>
                 </div>
 
                 {/* Authorized Capabilities */}
                 <div>
-                  <div style={{ fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.06em", color: "#94a3b8", fontWeight: 600, marginBottom: 10 }}>
+                  <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", color: "#94a3b8", fontWeight: 600, marginBottom: 8 }}>
                     Approved Meta Solutions & API Capabilities:
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#25D366", fontSize: 15 }}>💬</span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#25D366", fontSize: 14 }}>💬</span>
                       <span><strong>WhatsApp Business Cloud API:</strong> Co-Management, On-Behalf-Of Embedded Onboarding & 24/7 AI Sales</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#0084FF", fontSize: 15 }}>⚡</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#0084FF", fontSize: 14 }}>⚡</span>
                       <span><strong>Meta Messenger Platform:</strong> Omnichannel Multi-Tenant Ingestion, Live Auto-Replies & Order Handover</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#E1306C", fontSize: 15 }}>📸</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#E1306C", fontSize: 14 }}>📸</span>
                       <span><strong>Instagram Graph API:</strong> D2C Direct Message Automation & High-Ticket Lead Triage</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Modal Footer */}
+              {/* Modal Footer (Pinned at Bottom — Clean Done Button Only) */}
               <div style={{
-                padding: "16px 28px 20px",
+                padding: "12px 22px 14px",
                 background: "rgba(0, 0, 0, 0.25)",
                 borderTop: "1px solid rgba(255, 255, 255, 0.06)",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
+                justifyContent: "flex-end",
+                flexShrink: 0,
               }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#64748b" }}>
-                  <span>Dual Tech Partner:</span>
-                  <a href="https://cloud.google.com/find-a-partner/partner/aura-ajentic-ai" target="_blank" rel="noopener noreferrer" style={{ color: "#38bdf8", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 3 }}>
-                    Google Cloud Partner ↗
-                  </a>
-                </div>
                 <button 
                   onClick={() => setMetaModalOpen(false)}
                   style={{
@@ -706,10 +715,13 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                     color: "#ffffff",
                     fontSize: 13,
                     fontWeight: 500,
-                    padding: "8px 20px",
+                    padding: "8px 24px",
                     borderRadius: 8,
                     cursor: "pointer",
+                    transition: "background 0.15s",
                   }}
+                  onMouseEnter={e => e.currentTarget.style.background = "#0557be"}
+                  onMouseLeave={e => e.currentTarget.style.background = "#0668E1"}
                 >
                   Done
                 </button>
