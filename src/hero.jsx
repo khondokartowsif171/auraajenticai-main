@@ -139,11 +139,57 @@ const HERO_TXT = {
 // client portal's service catalog instead of a blank dashboard.
 const HERO_REGISTER_URL = "https://auth.auraajenticai.cloud/register?next=" + encodeURIComponent("https://client.auraajenticai.cloud/services");
 
+// Dynamic Site Links Hook — seamlessly reads from Aura Admin Dashboard Control Center
+const useDynamicLinks = () => {
+  const [links, setLinks] = React.useState({
+    google: "https://cloud.google.com/find-a-partner/partner/aura-ajentic-ai",
+    meta: null, // null activates the interactive in-app verification modal
+    courier: "https://courier.auraajenticai.cloud",
+  });
+
+  React.useEffect(() => {
+    const ctrl = new AbortController();
+    fetch("https://aura.auraajenticai.cloud/api/public/links?page=home", {
+      signal: ctrl.signal,
+    })
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (!Array.isArray(data) || data.length === 0) return;
+        const updated = {};
+        data.forEach((item) => {
+          const l = (item.label || "").toLowerCase();
+          if (l.includes("google")) updated.google = item.url;
+          if (l.includes("meta")) updated.meta = item.url;
+          if (l.includes("courier") || l.includes("mcp")) updated.courier = item.url;
+        });
+        setLinks((prev) => ({ ...prev, ...updated }));
+      })
+      .catch(() => {
+        // Safe transparent fallback to official defaults
+      });
+    return () => ctrl.abort();
+  }, []);
+
+  return links;
+};
+
 const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
   const D = PORTFOLIO_DATA;
   const prefix = headlinePrefix || "Agentic AI &";
   const suffix = headlineSuffix || "automation engineer";
   const t = HERO_TXT[lang] || HERO_TXT.en;
+
+  const dynamicLinks = useDynamicLinks();
+  const [metaModalOpen, setMetaModalOpen] = React.useState(false);
+
+  // Close modal on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setMetaModalOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <section id="top" style={{
@@ -266,7 +312,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           <span>{t.lastShipped}</span>
         </div>
 
-        {/* metric strip */}
+        {/* metric strip: 4 Pillars of Aura Tech Infrastructure */}
         <div style={{
           marginTop: 56,
           display: "grid",
@@ -275,38 +321,402 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           borderTop: "1px solid var(--line)",
           borderBottom: "1px solid var(--line)",
         }} className="metric-strip">
-          {D.metrics.map((m, i) => (
-            <div key={m.label} style={{
+
+          {/* Column 1: Google Cloud Partner Advantage */}
+          <a 
+            href={dynamicLinks.google}
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
               padding: "24px 20px",
-              borderRight: i < D.metrics.length - 1 ? "1px solid var(--line)" : "none",
+              borderRight: "1px solid var(--line)",
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              background: "rgba(37, 132, 252, 0.03)",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "rgba(37, 132, 252, 0.08)"}
+            onMouseLeave={e => e.currentTarget.style.background = "rgba(37, 132, 252, 0.03)"}
+          >
+            <div style={{
+              background: "#ffffff",
+              padding: "5px 10px",
+              borderRadius: "6px",
+              display: "inline-flex",
+              alignItems: "center",
+              width: "fit-content",
+              marginBottom: "8px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
             }}>
-              <div style={{
+              <img 
+                src="/google_cloud_partner_advantage_badge.svg" 
+                alt="Google Cloud Partner Advantage"
+                style={{ height: "20px", width: "auto", display: "block" }} 
+              />
+            </div>
+            <div style={{
+              fontSize: "11.5px",
+              color: "var(--text-faint)",
+              fontFamily: "var(--font-mono)",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              marginTop: "4px",
+            }}>
+              Google Cloud Partner <span style={{ color: "var(--accent)" }}>↗</span>
+            </div>
+          </a>
+
+          {/* Column 2: Meta Official Tech Provider (Symmetric Arrow + Verification Modal) */}
+          <a 
+            href={dynamicLinks.meta || "#meta-verification"}
+            onClick={(e) => {
+              if (!dynamicLinks.meta) {
+                e.preventDefault();
+                setMetaModalOpen(true);
+              }
+            }}
+            target={dynamicLinks.meta ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            style={{
+              padding: "24px 20px",
+              borderRight: "1px solid var(--line)",
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              background: "rgba(6, 104, 225, 0.03)",
+              cursor: "pointer",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "rgba(6, 104, 225, 0.08)"}
+            onMouseLeave={e => e.currentTarget.style.background = "rgba(6, 104, 225, 0.03)"}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+              <svg viewBox="0 0 100 100" style={{ height: "22px", width: "auto", display: "block" }} fill="#0668E1">
+                <path d="M49.999 59.832c-6.84 0-12.87-4.63-14.72-11.31-.83-3.02-.75-6.2.24-9.17 1.83-5.53 6.94-9.33 12.8-9.52 7.04-.22 13.06 4.34 14.7 11.09.83 3.4.67 6.95-.47 10.27-1.8 5.25-6.52 8.64-12.55 8.64zm35.29-37.45C76.999 13.9 66.86 9.87 56.63 10.74c-12.22 1.05-22.95 8.89-27.42 20.06-2.52 6.28-3.07 13.14-1.58 19.74 2.82 12.5 12.79 21.99 25.39 24.16 8.52 1.47 17.2-.18 24.58-4.66 4.96-3.02 9.07-7.25 11.96-12.31l-14.76-8.52c-1.53 2.68-3.7 4.93-6.33 6.53-3.9 2.37-8.49 3.25-13 2.47-6.68-1.16-11.99-6.22-13.49-12.87-.79-3.5-.5-7.14.84-10.48 2.37-5.92 8.05-10.07 14.52-10.63 5.42-.46 10.79 1.67 14.73 5.84 2.67 2.83 4.41 6.38 5.04 10.26l17.02-3.15c-1.2-7.39-4.5-14.16-9.56-19.57z"/>
+              </svg>
+              <span style={{ fontSize: "clamp(20px, 2.4vw, 24px)", fontWeight: 600, color: "#ffffff", letterSpacing: "-0.02em" }}>Meta</span>
+            </div>
+            <div style={{
+              fontSize: "11.5px",
+              color: "var(--text-faint)",
+              fontFamily: "var(--font-mono)",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              marginTop: "4px",
+            }}>
+              Official Tech Provider <span style={{ color: "var(--accent)" }}>↗</span>
+            </div>
+          </a>
+
+          {/* Column 3: 4-in-1 BD's 1st Aura Courier MCP */}
+          <a 
+            href={dynamicLinks.courier} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              padding: "24px 20px",
+              borderRight: "1px solid var(--line)",
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "rgba(255, 255, 255, 0.03)"}
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+          >
+            <div style={{
+              fontSize: "clamp(28px, 3.4vw, 40px)",
+              fontWeight: 500,
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              color: "#ffffff",
+            }}>4-in-1</div>
+            <div style={{
+              marginTop: 8,
+              fontSize: "11.5px",
+              color: "var(--text-faint)",
+              fontFamily: "var(--font-mono)",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              lineHeight: 1.4,
+            }}>
+              <span style={{ color: "var(--accent)", fontWeight: 600 }}>BD's 1st</span> Aura Courier MCP
+            </div>
+          </a>
+
+          {/* Column 4: 24/7 Autonomous Agentic Workforce */}
+          <div style={{
+            padding: "24px 20px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{
                 fontSize: "clamp(28px, 3.4vw, 40px)",
                 fontWeight: 500,
                 letterSpacing: "-0.02em",
                 lineHeight: 1,
-              }}>{m.value}</div>
-              <div style={{
-                marginTop: 8,
-                fontSize: 12,
-                color: "var(--text-faint)",
-                fontFamily: "var(--font-mono)",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
-              }}>{lang === "bn" ? m.labelBn : m.label}</div>
+                color: "#ffffff",
+              }}>24/7</span>
+              <span style={{
+                display: "inline-block",
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#34A853",
+                boxShadow: "0 0 8px #34A853",
+              }} />
             </div>
-          ))}
+            <div style={{
+              marginTop: 8,
+              fontSize: 12,
+              color: "var(--text-faint)",
+              fontFamily: "var(--font-mono)",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+            }}>
+              Autonomous Agentic Workforce
+            </div>
+          </div>
+
         </div>
 
         <style>{`
           @media (max-width: 720px) {
             .metric-strip { grid-template-columns: repeat(2, 1fr) !important; }
-            .metric-strip > div:nth-child(2) { border-right: none !important; }
-            .metric-strip > div:nth-child(1), .metric-strip > div:nth-child(2) {
+            .metric-strip > a:nth-child(2) { border-right: none !important; }
+            .metric-strip > a:nth-child(1), .metric-strip > a:nth-child(2) {
               border-bottom: 1px solid var(--line);
             }
           }
         `}</style>
+
+        {/* Interactive Meta Verification In-App Modal */}
+        {metaModalOpen && (
+          <div 
+            onClick={() => setMetaModalOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 999999,
+              background: "rgba(5, 7, 13, 0.78)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 20,
+              animation: "fadeIn 0.2s ease-out",
+            }}
+          >
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: "linear-gradient(145deg, rgba(20, 24, 33, 0.96), rgba(13, 16, 23, 0.98))",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
+                borderRadius: 18,
+                maxWidth: 620,
+                width: "100%",
+                boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 104, 225, 0.15)",
+                overflow: "hidden",
+                fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                color: "#f1f5f9",
+              }}
+            >
+              {/* Top Accent Gradient Bar */}
+              <div style={{ height: 4, background: "linear-gradient(90deg, #0668E1, #00C6FF, #0668E1)" }} />
+
+              {/* Modal Header */}
+              <div style={{
+                padding: "24px 28px 20px",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: 16,
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                  <div style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 12,
+                    background: "rgba(6, 104, 225, 0.12)",
+                    border: "1px solid rgba(6, 104, 225, 0.3)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}>
+                    <svg viewBox="0 0 100 100" style={{ height: 24, width: "auto" }} fill="#0668E1">
+                      <path d="M49.999 59.832c-6.84 0-12.87-4.63-14.72-11.31-.83-3.02-.75-6.2.24-9.17 1.83-5.53 6.94-9.33 12.8-9.52 7.04-.22 13.06 4.34 14.7 11.09.83 3.4.67 6.95-.47 10.27-1.8 5.25-6.52 8.64-12.55 8.64zm35.29-37.45C76.999 13.9 66.86 9.87 56.63 10.74c-12.22 1.05-22.95 8.89-27.42 20.06-2.52 6.28-3.07 13.14-1.58 19.74 2.82 12.5 12.79 21.99 25.39 24.16 8.52 1.47 17.2-.18 24.58-4.66 4.96-3.02 9.07-7.25 11.96-12.31l-14.76-8.52c-1.53 2.68-3.7 4.93-6.33 6.53-3.9 2.37-8.49 3.25-13 2.47-6.68-1.16-11.99-6.22-13.49-12.87-.79-3.5-.5-7.14.84-10.48 2.37-5.92 8.05-10.07 14.52-10.63 5.42-.46 10.79 1.67 14.73 5.84 2.67 2.83 4.41 6.38 5.04 10.26l17.02-3.15c-1.2-7.39-4.5-14.16-9.56-19.57z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <h3 style={{ margin: 0, fontSize: 19, fontWeight: 600, color: "#ffffff", letterSpacing: "-0.01em" }}>
+                        Meta Verified Tech Provider
+                      </h3>
+                      <span style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 4,
+                        background: "rgba(16, 185, 129, 0.15)",
+                        border: "1px solid rgba(16, 185, 129, 0.4)",
+                        color: "#34d399",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        padding: "2px 8px",
+                        borderRadius: 9999,
+                      }}>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        VERIFIED
+                      </span>
+                    </div>
+                    <p style={{ margin: "3px 0 0", fontSize: 13, color: "#94a3b8" }}>
+                      Official Meta Developer Platform Verification Record
+                    </p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setMetaModalOpen(false)}
+                  style={{
+                    background: "rgba(255, 255, 255, 0.06)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    color: "#94a3b8",
+                    width: 32,
+                    height: 32,
+                    borderRadius: 8,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 16,
+                  }}
+                >✕</button>
+              </div>
+
+              {/* Modal Body */}
+              <div style={{ padding: "24px 28px" }}>
+                {/* Status Box from Meta Developer Dashboard */}
+                <div style={{
+                  background: "rgba(6, 104, 225, 0.08)",
+                  border: "1px solid rgba(6, 104, 225, 0.25)",
+                  borderRadius: 12,
+                  padding: "16px 18px",
+                  marginBottom: 20,
+                }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                    <div style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: "50%",
+                      background: "#0668E1",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      color: "#ffffff",
+                      marginTop: 1,
+                    }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#ffffff", lineHeight: 1.4 }}>
+                        Your business was verified as a Tech Provider.
+                      </div>
+                      <div style={{ fontSize: "12.5px", color: "#cbd5e1", marginTop: 4, lineHeight: 1.5 }}>
+                        Meta Developer Access Verification confirms that <strong style={{ color: "#60a5fa" }}>Aura Agentic AI</strong> is officially approved to deploy client messaging solutions, WhatsApp Cloud API integrations, and AI automation on behalf of businesses.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Verification Key Details Grid */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginBottom: 20 }}>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Registered App ID</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: "#f8fafc", marginTop: 4, fontFamily: "monospace", letterSpacing: "0.02em" }}>950490494806230</div>
+                  </div>
+
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verification Tier</div>
+                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#38bdf8", marginTop: 4 }}>Tech Provider (Direct Access)</div>
+                  </div>
+
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Authorized Submitter</div>
+                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#f8fafc", marginTop: 4 }}>A. I. Redwan</div>
+                  </div>
+
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "12px 14px" }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verified Date</div>
+                    <div style={{ fontSize: "14.5px", fontWeight: 600, color: "#f8fafc", marginTop: 4 }}>August 2, 2026</div>
+                  </div>
+                </div>
+
+                {/* Authorized Capabilities */}
+                <div>
+                  <div style={{ fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.06em", color: "#94a3b8", fontWeight: 600, marginBottom: 10 }}>
+                    Approved Meta Solutions & API Capabilities:
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#25D366", fontSize: 15 }}>💬</span>
+                      <span><strong>WhatsApp Business Cloud API:</strong> Co-Management, On-Behalf-Of Embedded Onboarding & 24/7 AI Sales</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#0084FF", fontSize: 15 }}>⚡</span>
+                      <span><strong>Meta Messenger Platform:</strong> Omnichannel Multi-Tenant Ingestion, Live Auto-Replies & Order Handover</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#E1306C", fontSize: 15 }}>📸</span>
+                      <span><strong>Instagram Graph API:</strong> D2C Direct Message Automation & High-Ticket Lead Triage</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div style={{
+                padding: "16px 28px 20px",
+                background: "rgba(0, 0, 0, 0.25)",
+                borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#64748b" }}>
+                  <span>Dual Tech Partner:</span>
+                  <a href="https://cloud.google.com/find-a-partner/partner/aura-ajentic-ai" target="_blank" rel="noopener noreferrer" style={{ color: "#38bdf8", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 3 }}>
+                    Google Cloud Partner ↗
+                  </a>
+                </div>
+                <button 
+                  onClick={() => setMetaModalOpen(false)}
+                  style={{
+                    background: "#0668E1",
+                    border: "none",
+                    color: "#ffffff",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    padding: "8px 20px",
+                    borderRadius: 8,
+                    cursor: "pointer",
+                  }}
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </section>
   );
