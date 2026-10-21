@@ -191,6 +191,18 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Lock body scrolling when modal is active
+  React.useEffect(() => {
+    if (metaModalOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [metaModalOpen]);
+
+
   return (
     <section id="top" style={{
       position: "relative",
@@ -497,21 +509,22 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           }
         `}</style>
 
-        {/* Interactive Meta Verification In-App Modal (Mobile-Optimized & Fully Scrollable) */}
-        {metaModalOpen && (
+        {/* Interactive Meta Verification In-App Modal (Portaled directly to document.body) */}
+        {metaModalOpen && typeof document !== "undefined" && ReactDOM.createPortal(
           <div 
+            id="meta-verification-modal-backdrop"
             onClick={() => setMetaModalOpen(false)}
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 999999,
-              background: "rgba(5, 7, 13, 0.82)",
+              zIndex: 9999999,
+              background: "rgba(5, 7, 13, 0.85)",
               backdropFilter: "blur(14px)",
               WebkitBackdropFilter: "blur(14px)",
               display: "flex",
-              alignItems: "flex-start",
+              alignItems: "center",
               justifyContent: "center",
-              padding: "12px",
+              padding: "16px 12px",
               overflowY: "auto",
               WebkitOverflowScrolling: "touch",
               overscrollBehavior: "contain",
@@ -526,7 +539,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                 borderRadius: 18,
                 maxWidth: 620,
                 width: "100%",
-                maxHeight: "calc(100dvh - 24px)",
+                maxHeight: "calc(100dvh - 32px)",
                 margin: "auto",
                 display: "flex",
                 flexDirection: "column",
@@ -541,7 +554,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
 
               {/* Modal Header (Pinned at Top) */}
               <div style={{
-                padding: "18px 22px 14px",
+                padding: "18px 20px 14px",
                 borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                 display: "flex",
                 alignItems: "center",
@@ -567,7 +580,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                   </div>
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                      <h3 style={{ margin: 0, fontSize: 17, fontWeight: 600, color: "#ffffff", letterSpacing: "-0.01em" }}>
+                      <h3 style={{ margin: 0, fontSize: 16.5, fontWeight: 600, color: "#ffffff", letterSpacing: "-0.01em" }}>
                         Meta Verified Tech Provider
                       </h3>
                       <span style={{
@@ -577,16 +590,16 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                         background: "rgba(16, 185, 129, 0.15)",
                         border: "1px solid rgba(16, 185, 129, 0.4)",
                         color: "#34d399",
-                        fontSize: 10.5,
+                        fontSize: 10,
                         fontWeight: 600,
                         padding: "2px 7px",
                         borderRadius: 9999,
                       }}>
-                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
                         VERIFIED
                       </span>
                     </div>
-                    <p style={{ margin: "2px 0 0", fontSize: 12, color: "#94a3b8" }}>
+                    <p style={{ margin: "2px 0 0", fontSize: 11.5, color: "#94a3b8" }}>
                       Official Meta Developer Platform Verification Record
                     </p>
                   </div>
@@ -612,7 +625,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
 
               {/* Modal Body (Vertically Scrollable) */}
               <div style={{
-                padding: "18px 22px",
+                padding: "16px 20px",
                 overflowY: "auto",
                 WebkitOverflowScrolling: "touch",
                 overscrollBehavior: "contain",
@@ -623,8 +636,8 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                   background: "rgba(6, 104, 225, 0.08)",
                   border: "1px solid rgba(6, 104, 225, 0.25)",
                   borderRadius: 12,
-                  padding: "14px 16px",
-                  marginBottom: 16,
+                  padding: "13px 15px",
+                  marginBottom: 14,
                 }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                     <div style={{
@@ -639,13 +652,13 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                       color: "#ffffff",
                       marginTop: 1,
                     }}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <div>
-                      <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#ffffff", lineHeight: 1.4 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: "#ffffff", lineHeight: 1.4 }}>
                         Your business was verified as a Tech Provider.
                       </div>
-                      <div style={{ fontSize: "12px", color: "#cbd5e1", marginTop: 4, lineHeight: 1.45 }}>
+                      <div style={{ fontSize: 11.5, color: "#cbd5e1", marginTop: 4, lineHeight: 1.45 }}>
                         Meta Developer Access Verification confirms that <strong style={{ color: "#60a5fa" }}>Aura Agentic AI</strong> is officially approved to deploy client messaging solutions, WhatsApp Cloud API integrations, and AI automation on behalf of businesses.
                       </div>
                     </div>
@@ -653,44 +666,44 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                 </div>
 
                 {/* Verification Key Details Grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 16 }}>
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
-                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Registered App ID</div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: "#f8fafc", marginTop: 3, fontFamily: "monospace", letterSpacing: "0.02em" }}>950490494806230</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 9, marginBottom: 14 }}>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "9px 11px" }}>
+                    <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Registered App ID</div>
+                    <div style={{ fontSize: 13.5, fontWeight: 600, color: "#f8fafc", marginTop: 2, fontFamily: "monospace", letterSpacing: "0.02em" }}>950490494806230</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
-                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verification Tier</div>
-                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#38bdf8", marginTop: 3 }}>Tech Provider (Direct Access)</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "9px 11px" }}>
+                    <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verification Tier</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#38bdf8", marginTop: 2 }}>Tech Provider (Direct Access)</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
-                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Authorized Submitter</div>
-                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#f8fafc", marginTop: 3 }}>A. I. Redwan</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "9px 11px" }}>
+                    <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Authorized Submitter</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc", marginTop: 2 }}>A. I. Redwan</div>
                   </div>
 
-                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "10px 12px" }}>
-                    <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verified Date</div>
-                    <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#f8fafc", marginTop: 3 }}>August 2, 2026</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.07)", borderRadius: 10, padding: "9px 11px" }}>
+                    <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b", fontFamily: "monospace" }}>Verified Date</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc", marginTop: 2 }}>August 2, 2026</div>
                   </div>
                 </div>
 
-                {/* Authorized Capabilities */}
+                {/* Approved Meta Solutions & API Capabilities */}
                 <div>
-                  <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", color: "#94a3b8", fontWeight: 600, marginBottom: 8 }}>
+                  <div style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "#94a3b8", fontWeight: 600, marginBottom: 7 }}>
                     Approved Meta Solutions & API Capabilities:
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#25D366", fontSize: 14 }}>💬</span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "7px 9px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#25D366", fontSize: 13.5 }}>💬</span>
                       <span><strong>WhatsApp Business Cloud API:</strong> Co-Management, On-Behalf-Of Embedded Onboarding & 24/7 AI Sales</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#0084FF", fontSize: 14 }}>⚡</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "7px 9px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#0084FF", fontSize: 13.5 }}>⚡</span>
                       <span><strong>Meta Messenger Platform:</strong> Omnichannel Multi-Tenant Ingestion, Live Auto-Replies & Order Handover</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <span style={{ color: "#E1306C", fontSize: 14 }}>📸</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#e2e8f0", background: "rgba(255, 255, 255, 0.02)", padding: "7px 9px", borderRadius: 8, border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <span style={{ color: "#E1306C", fontSize: 13.5 }}>📸</span>
                       <span><strong>Instagram Graph API:</strong> D2C Direct Message Automation & High-Ticket Lead Triage</span>
                     </div>
                   </div>
@@ -699,7 +712,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
 
               {/* Modal Footer (Pinned at Bottom — Clean Done Button Only) */}
               <div style={{
-                padding: "12px 22px 14px",
+                padding: "11px 20px 13px",
                 background: "rgba(0, 0, 0, 0.25)",
                 borderTop: "1px solid rgba(255, 255, 255, 0.06)",
                 display: "flex",
@@ -713,7 +726,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                     background: "#0668E1",
                     border: "none",
                     color: "#ffffff",
-                    fontSize: 13,
+                    fontSize: 12.5,
                     fontWeight: 500,
                     padding: "8px 24px",
                     borderRadius: 8,
@@ -727,7 +740,8 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
       </div>
