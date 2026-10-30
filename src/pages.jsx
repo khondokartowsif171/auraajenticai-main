@@ -221,7 +221,7 @@ const ServicesPage = ({ lang }) => {
                           )}
 
                           <a
-                            href={`mailto:ceo@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
+                            href="#/pricing"
                             onClick={e => e.stopPropagation()}
                             style={{
                               alignSelf: "flex-start",
@@ -230,7 +230,7 @@ const ServicesPage = ({ lang }) => {
                               borderRadius: 9, fontSize: 13.5, fontWeight: 500,
                               textDecoration: "none", marginTop: "auto",
                             }}
-                          >Get a Quote →</a>
+                          >View Pricing Plans →</a>
                         </div>
                       </div>
                     </div>
@@ -425,7 +425,7 @@ const ContactPage = ({ lang }) => {
                   { label: "WhatsApp", value: "+880 1911-877091", href: "https://wa.me/8801911877091" },
                   { label: "Response time", value: "< 24 hours" },
                   { label: "Location", value: "Dhaka, Bangladesh · Remote" },
-                  { label: "Availability", value: "Open to new projects" },
+                  { label: "Platform Status", value: "Live & Accepting Subscribers" },
                 ].map(item => (
                   <div key={item.label} style={{
                     padding: "20px 24px", borderRadius: "var(--radius)",
@@ -923,14 +923,14 @@ const ServiceDetailPage = ({ svc }) => {
             </a>
           )}
           <a
-            href={`mailto:ceo@auraajenticai.cloud?subject=Enquiry: ${svc.name}`}
+            href="#/pricing"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '10px 20px', borderRadius: 9,
               background: 'var(--text)', color: 'var(--bg)',
               fontSize: 13.5, fontWeight: 500, textDecoration: 'none',
             }}
-          >Get a Quote →</a>
+          >View Pricing Plans →</a>
         </div>
       </PageHero>
 

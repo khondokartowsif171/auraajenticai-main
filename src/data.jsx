@@ -3,10 +3,10 @@ const PORTFOLIO_DATA = {
   brand: {
     name: "Aura Ajentic AI",
     handle: "@aura",
-    title: "Agentic AI & Full-Stack Development",
-    titleBn: "এজেন্টিক এআই ও ফুল-স্ট্যাক ডেভেলপমেন্ট",
-    tagline: "We build AI agents, automation & enterprise systems that work 24/7.",
-    taglineBn: "আমরা AI এজেন্ট, অটোমেশন ও এন্টারপ্রাইজ সিস্টেম তৈরি করি যা ২৪/৭ কাজ করে।",
+    title: "Autonomous AI Sales Agents & Courier MCP Platform",
+    titleBn: "স্বয়ংক্রিয় এআই সেলস এজেন্ট ও কুরিয়ার এমসিপি প্ল্যাটফর্ম",
+    tagline: "Autonomous B2B SaaS platform powering e-commerce with 24/7 AI sales agents, Courier MCP logistics, and real-time COD fraud defense.",
+    taglineBn: "স্বয়ংক্রিয় এআই সেলস এজেন্ট, দেশের ১ম কুরিয়ার এমসিপি ইঞ্জিন এবং রিয়েল-টাইম সিওডি ফ্রড ডিফেন্স সহ বি২বি সাশ প্ল্যাটফর্ম।",
     location: "Dhaka, Bangladesh · Remote",
     founded: "Jul 2026",
     email: "ceo@auraajenticai.cloud",
@@ -22,15 +22,15 @@ const PORTFOLIO_DATA = {
   // Every number below is real and checkable today -- never add a stat we can't stand behind if
   // someone asks where it comes from.
   metrics: [
-    { label: "Products we built & run ourselves", labelBn: "আমাদের নিজের বানানো ও চালানো প্রোডাক্ট", value: "2" },
+    { label: "Proprietary SaaS platform products", labelBn: "আমাদের নিজস্ব সাশ প্ল্যাটফর্ম প্রোডাক্ট", value: "2" },
     { label: "Products in our own live catalog", labelBn: "আমাদের নিজের catalog-এ প্রোডাক্ট", value: "560+" },
     { label: "Meta-approved WhatsApp bot", labelBn: "Meta-approved WhatsApp বট", value: "Live" },
     { label: "Self-hosted infrastructure", labelBn: "নিজস্ব হোস্টেড ইনফ্রাস্ট্রাকচার", value: "100%" },
   ],
 
   about: {
-    pitch: "We're a new studio building the systems that act on behalf of teams — agents that triage, route, decide, and execute. Rather than pitch and disappear, we build our own products first and run them ourselves: a live WhatsApp sales bot answering real customers today, on infrastructure we host and pay for out of pocket, not resold AWS margins.",
-    pitchBn: "আমরা একটা নতুন স্টুডিও, যারা এমন সিস্টেম তৈরি করি যা টিমের হয়ে সরাসরি কাজ করে — এজেন্ট যা বিচার করে, route করে, সিদ্ধান্ত নেয়, এবং কাজ সম্পন্ন করে। শুধু পিচ দিয়ে হারিয়ে না গিয়ে, আমরা আগে নিজেদের প্রোডাক্ট বানাই ও নিজেরাই চালাই — একটা live WhatsApp sales বট যা আজই real কাস্টমারদের উত্তর দিচ্ছে, নিজেদের হোস্ট করা ইনফ্রাস্ট্রাকচারে, resold AWS margin না।",
+    pitch: "We build systems that act autonomously on behalf of modern e-commerce teams — AI agents that triage, converse, close sales, and coordinate courier logistics. Our proprietary software platform powers live 24/7 sales, instant carrier dispatch, and fraud scoring with transparent SaaS subscriptions.",
+    pitchBn: "আমরা আধুনিক ই-কমার্স টিমের জন্য স্বয়ংক্রিয় এআই সিস্টেম তৈরি করি — যা কাস্টমারের সাথে কথা বলে, সেলস ক্লোজ করে এবং সরাসরি কুরিয়ার পার্সেল তৈরি করে। আমাদের নিজস্ব সফটওয়্যার প্ল্যাটফর্ম ২৪/৭ সেলস, ইনস্ট্যান্ট কুরিয়ার ডিসপ্যাচ ও ফ্রড ডিফেন্স পরিচালনা করে।",
     bullets: [
       "Built and run our own WhatsApp + Messenger sales bot, live in Bengali, 24/7",
       "Self-host our entire stack on our own VPS with Coolify — no reselling AWS",

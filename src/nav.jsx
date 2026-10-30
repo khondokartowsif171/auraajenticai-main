@@ -10,7 +10,7 @@ const NAV_LINKS = [
 const NAV_TXT = {
   en: {
     search: "Search",
-    getQuote: "Get a Quote",
+    pricing: "Pricing & Plans",
     clientLogin: "Client Login",
     getStarted: "Get Started",
     installApp: "Install App",
@@ -18,7 +18,7 @@ const NAV_TXT = {
   },
   bn: {
     search: "খুঁজুন",
-    getQuote: "কোট নিন",
+    pricing: "মূল্য ও প্ল্যান",
     clientLogin: "ক্লায়েন্ট লগইন",
     getStarted: "শুরু করুন",
     installApp: "অ্যাপ ইনস্টল",
@@ -225,7 +225,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               </button>
             )}
 
-            <a href="mailto:ceo@auraajenticai.cloud?subject=Project Quote" className="nav-quote-btn" style={{
+            <a href="#/pricing" className="nav-quote-btn" style={{
               padding: "7px 13px",
               background: "transparent",
               border: "1px solid var(--line)",
@@ -236,7 +236,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}>
-              {t.getQuote}
+              {t.pricing}
             </a>
 
             <a
@@ -423,7 +423,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
               {lang === "en" ? "বাংলা" : "English"}
             </button>
             <a
-              href="mailto:ceo@auraajenticai.cloud?subject=Project Quote"
+              href="#/pricing"
               onClick={() => setMenuOpen(false)}
               style={{
                 padding: "8px 14px",
@@ -434,7 +434,7 @@ const Nav = ({ onCmdK, theme, onToggleTheme, accent, lang, onToggleLang, route }
                 fontSize: 13,
                 textDecoration: "none",
               }}
-            >{t.quote}</a>
+            >{t.pricing}</a>
             <a
               href={CLIENT_LOGIN_URL}
               onClick={() => setMenuOpen(false)}

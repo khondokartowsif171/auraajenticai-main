@@ -122,15 +122,15 @@ const TerminalRain = () => {
 
 const HERO_TXT = {
   en: {
-    pill: "Accepting new projects · Q3 2026",
+    pill: "Autonomous B2B SaaS Platform · Powering South Asian E-Commerce",
     getStarted: "Get Started Free",
-    viewServices: "View Services",
+    viewServices: "Explore Platform",
     lastShipped: "Last shipped: 2 days ago",
   },
   bn: {
-    pill: "নতুন প্রজেক্ট নেওয়া হচ্ছে · Q3 2026",
+    pill: "স্বয়ংক্রিয় B2B SaaS প্ল্যাটফর্ম · ই-কমার্স ও লজিস্টিকস",
     getStarted: "ফ্রি শুরু করুন",
-    viewServices: "সার্ভিস দেখুন",
+    viewServices: "প্ল্যাটফর্ম দেখুন",
     lastShipped: "সর্বশেষ শিপড: ২ দিন আগে",
   },
 };
@@ -175,8 +175,8 @@ const useDynamicLinks = () => {
 
 const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
   const D = PORTFOLIO_DATA;
-  const prefix = headlinePrefix || "Agentic AI &";
-  const suffix = headlineSuffix || "automation engineer";
+  const prefix = headlinePrefix || "Autonomous AI Agents &";
+  const suffix = headlineSuffix || "operations cloud";
   const t = HERO_TXT[lang] || HERO_TXT.en;
 
   const dynamicLinks = useDynamicLinks();
@@ -250,7 +250,7 @@ const Hero = ({ headlinePrefix, headlineSuffix, lang = "en" }) => {
           maxWidth: 980,
         }}>
           {prefix}<br/>
-          <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>full-stack</span>{" "}
+          <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>e-commerce</span>{" "}
           <span style={{
             background: "linear-gradient(110deg, var(--accent), var(--accent-2))",
             WebkitBackgroundClip: "text",

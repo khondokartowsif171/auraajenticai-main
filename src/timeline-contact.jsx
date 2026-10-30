@@ -258,8 +258,8 @@ const Contact = ({ lang = "en" }) => {
         <SectionHeader
           eyebrow="Contact"
           num="06 / 06"
-          title={<>Have a project that needs to <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>actually ship</span>?</>}
-          sub="Tell us what you're building — we'll respond within 24 hours with a plan and a quote."
+          title={<>Ready to automate your <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}>sales & logistics</span>?</>}
+          sub="Connect with our engineering team for autonomous AI agents, Courier MCP logistics, or dedicated enterprise cloud deployments."
         />
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }} className="contact-grid">

@@ -4,8 +4,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "#7c5cff",
   "accent2": "#00d4ff",
   "density": "spacious",
-  "heroHeadlinePrefix": "Agentic AI &",
-  "heroHeadlineSuffix": "automation engineer"
+  "heroHeadlinePrefix": "Autonomous AI Agents &",
+  "heroHeadlineSuffix": "operations cloud"
 }/*EDITMODE-END*/;
 
 // Simple hash router — reads window.location.hash
@@ -101,7 +101,7 @@ function App() {
       },
       contact: {
         title: `Contact — ${BASE}`,
-        desc: "Get a quote for AI agents, automation, web development, Web3, or MT5 trading systems. Based in Dhaka, Bangladesh. Response within 24 hours.",
+        desc: "Connect with Aura's engineering team for autonomous AI agents, Courier MCP logistics, and enterprise cloud platform support.",
       },
       'case-studies': {
         title: `Case Studies — ${BASE}`,
